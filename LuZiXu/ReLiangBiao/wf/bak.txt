@@ -1,0 +1,140 @@
+//累积
+#define s1_com LCD_RAM_REGISTER0
+#define s1_seg 27
+
+//热量
+#define s2_com LCD_RAM_REGISTER0
+#define s2_seg 25
+
+//冷量
+#define s3_com LCD_RAM_REGISTER0
+#define s3_seg 15
+
+//流量
+#define s4_com LCD_RAM_REGISTER0
+#define s4_seg 13
+
+//功率
+#define s5_com LCD_RAM_REGISTER0
+#define s5_seg 30
+
+//进水
+#define s6_com LCD_RAM_REGISTER0
+#define s6_seg 7
+
+//回水
+#define s7_com LCD_RAM_REGISTER0
+#define s7_seg 9
+
+//温差
+#define s8_com LCD_RAM_REGISTER0
+#define s8_seg 11
+
+//检定
+#define h1_com LCD_RAM_REGISTER0
+#define h1_seg 22
+
+//报警
+#define h2_com LCD_RAM_REGISTER2
+#define h2_seg 22
+
+//DP3
+#define h3_com LCD_RAM_REGISTER6
+#define h3_seg 22
+
+//DP4
+#define h4_com LCD_RAM_REGISTER6
+#define h4_seg 21
+
+//DP5
+#define h5_com LCD_RAM_REGISTER6
+#define h5_seg 20
+
+//DP6
+#define h6_com LCD_RAM_REGISTER6
+#define h6_seg 19
+
+//DP7
+#define h7_com LCD_RAM_REGISTER6
+#define h7_seg 16
+
+//P1
+#define t1_com LCD_RAM_REGISTER4
+#define t1_seg 22
+
+//P2
+#define t2_com LCD_RAM_REGISTER4
+#define t2_seg 21
+
+//P3
+#define t3_com LCD_RAM_REGISTER2
+#define t3_seg 21
+
+//P4
+#define t4_com LCD_RAM_REGISTER0
+#define t4_seg 21
+
+//地址
+#define t5_com LCD_RAM_REGISTER0
+#define t5_seg 20
+
+//日期
+#define t6_com LCD_RAM_REGISTER2
+#define t6_seg 20
+
+//时间
+#define t7_com LCD_RAM_REGISTER4
+#define t7_seg 20
+
+//B
+#define B_com LCD_RAM_REGISTER4
+#define B_seg 16
+//B1
+#define B1_com LCD_RAM_REGISTER2
+#define B1_seg 16
+//B2
+#define B2_com LCD_RAM_REGISTER2
+#define B2_seg 19
+//B3
+#define B3_com LCD_RAM_REGISTER4
+#define B3_seg 19
+
+//℃
+#define a1_com LCD_RAM_REGISTER0
+#define a1_seg 4
+
+//K
+#define k1_com LCD_RAM_REGISTER0
+#define k1_seg 3
+
+//k
+#define k_com LCD_RAM_REGISTER2
+#define k_seg 4
+
+//W
+#define W_com LCD_RAM_REGISTER4
+#define W_seg 4
+
+//.h
+#define a6_com LCD_RAM_REGISTER6
+#define a6_seg 4
+
+//MW.h
+#define a7_com LCD_RAM_REGISTER2
+#define a7_seg 3
+
+//GJ
+#define GJ_com LCD_RAM_REGISTER6
+#define GJ_seg 3
+
+//MJ
+#define MJ_com LCD_RAM_REGISTER4
+#define MJ_seg 3
+
+//m3
+#define a8_com LCD_RAM_REGISTER0
+#define a8_seg 19
+
+///h
+#define _h_com LCD_RAM_REGISTER0
+#define _h_seg 16
