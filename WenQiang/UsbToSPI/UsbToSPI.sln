@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsbToSPI", "UsbToSPI\UsbToSPI.csproj", "{0B050729-A861-4656-88F6-B3B7DAA3A6B8}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "APS老炼程序安装", "APS老炼程序安装\APS老炼程序安装.vdproj", "{8B008FF3-C84D-4467-B6C2-BA6DFD5E61C4}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = UsbToSPI\\UsbToSPI.csproj
+		SccProjectName1 = UsbToSPI
+		SccLocalPath1 = UsbToSPI
+		SccProjectUniqueName2 = APS老炼程序安装\\APS老炼程序安装.vdproj
+		SccProjectName2 = APS老炼程序安装
+		SccLocalPath2 = APS老炼程序安装
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B050729-A861-4656-88F6-B3B7DAA3A6B8}.Debug|x86.ActiveCfg = Debug|x86
+		{0B050729-A861-4656-88F6-B3B7DAA3A6B8}.Debug|x86.Build.0 = Debug|x86
+		{0B050729-A861-4656-88F6-B3B7DAA3A6B8}.Release|x86.ActiveCfg = Release|x86
+		{0B050729-A861-4656-88F6-B3B7DAA3A6B8}.Release|x86.Build.0 = Release|x86
+		{8B008FF3-C84D-4467-B6C2-BA6DFD5E61C4}.Debug|x86.ActiveCfg = Debug
+		{8B008FF3-C84D-4467-B6C2-BA6DFD5E61C4}.Release|x86.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
