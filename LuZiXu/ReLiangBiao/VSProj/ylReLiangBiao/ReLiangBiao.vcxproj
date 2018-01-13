@@ -43,7 +43,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath>.;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\arm-eabi\thumb\cortex_m0plus;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\backward;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include-fixed;$(TOOLCHAIN_ROOT)\arm-eabi\sys-include;$(TOOLCHAIN_ROOT)\arm-eabi\include;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\../../../../WF_Device_STM32;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\../../wf;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Inc;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Include;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>.;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\arm-eabi\thumb\cortex_m0plus;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\backward;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include-fixed;$(TOOLCHAIN_ROOT)\arm-eabi\sys-include;$(TOOLCHAIN_ROOT)\arm-eabi\include;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\../../wf;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Inc;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Include;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\../../../../../WF_Device;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(BSP_ROOT)\stm32_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -55,7 +55,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <NMakePreprocessorDefinitions>__VisualGDB_CFG_Release;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
-    <NMakeIncludeSearchPath>.;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\arm-eabi\thumb\cortex_m0plus;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\backward;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include-fixed;$(TOOLCHAIN_ROOT)\arm-eabi\sys-include;$(TOOLCHAIN_ROOT)\arm-eabi\include;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Inc;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Include;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc;F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath>.;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\arm-eabi\thumb\cortex_m0plus;$(TOOLCHAIN_ROOT)\arm-eabi\include\c++\7.2.0\backward;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include;$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include-fixed;$(TOOLCHAIN_ROOT)\arm-eabi\sys-include;$(TOOLCHAIN_ROOT)\arm-eabi\include;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Inc;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Include;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc;F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Release.h;$(VISUALGDB_DIR)\gcc_compat.h;$(BSP_ROOT)\stm32_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -74,13 +74,13 @@
   </ImportGroup>
   <ItemGroup />
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\ADS1112.c" />
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\CP68_Client.c" />
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\SimI2C.c" />
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\SimSPI.c" />
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\Verify.c" />
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\wfEEPROM.c" />
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\wfSys.c" />
+    <ClCompile Include="..\..\..\..\..\WF_Device\ADS1112.c" />
+    <ClCompile Include="..\..\..\..\..\WF_Device\CP68_Client.c" />
+    <ClCompile Include="..\..\..\..\..\WF_Device\SimI2C.c" />
+    <ClCompile Include="..\..\..\..\..\WF_Device\SimSPI.c" />
+    <ClCompile Include="..\..\..\..\..\WF_Device\Verify.c" />
+    <ClCompile Include="..\..\..\..\..\WF_Device\wfEEPROM.c" />
+    <ClCompile Include="..\..\..\..\..\WF_Device\wfSys.c" />
     <ClCompile Include="..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rtc.c" />
     <ClCompile Include="..\..\Drivers\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rtc_ex.c" />
     <ClCompile Include="..\..\Src\gpio.c" />
@@ -117,11 +117,11 @@
     <ClCompile Include="..\..\wf\DP600J.c" />
     <ClCompile Include="..\..\wf\Key.c" />
     <ClCompile Include="..\..\wf\Variables.c" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\ADS1112.h" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\SimI2C.h" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\SimSPI.h" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\TypeDefine.h" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\Verify.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\ADS1112.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\SimI2C.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\SimSPI.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\TypeDefine.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\Verify.h" />
     <ClInclude Include="..\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_rtc.h" />
     <ClInclude Include="..\..\Drivers\STM32L0xx_HAL_Driver\Inc\stm32l0xx_hal_rtc_ex.h" />
     <ClInclude Include="..\..\Inc\rtc.h" />
@@ -138,9 +138,9 @@
     <None Include="..\..\wf\bak.txt" />
     <None Include="stm32.mak" />
     <ClCompile Include="$(BSP_ROOT)\STM32L0xxxx\StartupFiles\startup_stm32l053xx.c" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\CP68_Client.h" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\wfEEPROM.h" />
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\wfSys.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\CP68_Client.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\wfEEPROM.h" />
+    <ClInclude Include="..\..\..\..\..\WF_Device\wfSys.h" />
     <ClInclude Include="..\..\Inc\gpio.h" />
     <ClInclude Include="..\..\Inc\adc.h" />
     <ClInclude Include="..\..\Inc\lcd.h" />

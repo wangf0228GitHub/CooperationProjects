@@ -41,7 +41,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>..\..\ReLiangBiao.gpdsc</RelativePath>
-        <Timestamp>131573583476770469</Timestamp>
+        <Timestamp>131602357505804754</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>
@@ -352,11 +352,11 @@
       <ImportedConfiguration>
         <Settings>
           <IncludeDirectories>
-            <string>F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Inc</string>
-            <string>F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Include</string>
-            <string>F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include</string>
-            <string>F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc</string>
-            <string>F:\work_tfs\MCU\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy</string>
+            <string>F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Inc</string>
+            <string>F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Include</string>
+            <string>F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include</string>
+            <string>F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc</string>
+            <string>F:\work\CooperationProjects\LuZiXu\ReLiangBiao\VSProj\ylReLiangBiao\..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy</string>
           </IncludeDirectories>
           <PreprocessorMacros>
             <string>$$com.sysprogs.bspoptions.primary_memory$$_layout</string>
