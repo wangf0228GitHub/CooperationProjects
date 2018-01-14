@@ -652,11 +652,11 @@ namespace 采集测试
                 }
                 for (int j = 0; j < yG.Length; j++)
                 {
-                    Calc2.G_delta_y50[j] += (yR[j] - Calc2.G_y50[j]) * (yR[j] - Calc2.G_y50[j]);
+                    Calc2.G_delta_y50[j] += (yG[j] - Calc2.G_y50[j]) * (yG[j] - Calc2.G_y50[j]);
                 }
                 for (int j = 0; j < yB.Length; j++)
                 {
-                    Calc2.B_delta_y50[j] += (yR[j] - Calc2.B_y50[j]) * (yR[j] - Calc2.B_y50[j]);
+                    Calc2.B_delta_y50[j] += (yB[j] - Calc2.B_y50[j]) * (yB[j] - Calc2.B_y50[j]);
                 }                
                 if (waitProc.HasBeenCancelled())
                 {
@@ -698,11 +698,11 @@ namespace 采集测试
                 }
                 for (int j = 0; j < yG.Length; j++)
                 {
-                    Calc2.G_delta_y50_dark[j] += (yR[j] - Calc2.G_y50_dark[j]) * (yR[j] - Calc2.G_y50_dark[j]);
+                    Calc2.G_delta_y50_dark[j] += (yG[j] - Calc2.G_y50_dark[j]) * (yG[j] - Calc2.G_y50_dark[j]);
                 }
                 for (int j = 0; j < yB.Length; j++)
                 {
-                    Calc2.B_delta_y50_dark[j] += (yR[j] - Calc2.B_y50_dark[j]) * (yR[j] - Calc2.B_y50_dark[j]);
+                    Calc2.B_delta_y50_dark[j] += (yB[j] - Calc2.B_y50_dark[j]) * (yB[j] - Calc2.B_y50_dark[j]);
                 } 
                 if (waitProc.HasBeenCancelled())
                 {

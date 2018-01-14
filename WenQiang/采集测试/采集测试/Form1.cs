@@ -73,12 +73,7 @@ namespace 采集测试
         CMOSTestLib.WaitingProc waitProc;
         private void 开始测试_Click(object sender, EventArgs e)
         {
-            //EnvironmentInfo ei = SerialFunc.SerialCommand2();           
-            
-            if (SystemParam.cmosInfo.bRGB != 0)
-            {
-                wfSapGUI.GetRGBPixelInfo(SystemParam.cmosInfo.RowPixels, SystemParam.cmosInfo.ColPixels, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
-            }
+            //EnvironmentInfo ei = SerialFunc.SerialCommand2();  
             MessageBox.Show("请转入明场，点击确定继续");
             /************************************************************************/
             /* 界面初始化                                                           */
@@ -96,18 +91,21 @@ namespace 采集测试
             iniFileOP.Write("System Run", "DeviceID", SystemParam.DeviceID);
             Calc1.p1 = (int)((Calc1.percent_base - Calc1.percent) * SystemParam.ExposureTest_Ns/100);
             Calc1.p2 = (int)((Calc1.percent_base + Calc1.percent) * SystemParam.ExposureTest_Ns/100);
-            InitListView();            
-//             if (m_online)
-//             {
-//                 SystemParam.cmosInfo = SerialFunc.SerialCommand1();
-//                 if (SystemParam.cmosInfo == null)
-//                 {
-//                     MessageBox.Show("与采集器通信失败");
-//                     return;
-//                 }
-//                 SystemParam.Ts = (double)SystemParam.cmosInfo.Ts / 100/1000/1000;//ms
-//                 SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
-//             }
+            InitListView();
+            if (m_online)
+            {
+                CMOSInfo cmosInfo = SerialFunc.SerialCommand1();
+                if (cmosInfo == null)
+                {
+                    MessageBox.Show("与采集器通信失败");
+                    toolStrip1.Enabled = true;
+                    return;
+                }
+                SystemParam.cmosInfo.Ts = cmosInfo.Ts;
+
+                SystemParam.Ts = (double)SystemParam.cmosInfo.Ts / 100 / 1000 / 1000;//ms
+                //SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
+            }
 
             /************************************************************************/
             /*                                                                      */
@@ -115,6 +113,10 @@ namespace 采集测试
             //第一步、采集图像
             testStep = 1;
             InitCam(2+CamEx);
+            if (SystemParam.cmosInfo.bRGB != 0)
+            {
+                wfSapGUI.GetRGBPixelInfo(SystemParam.cmosInfo.RowPixels, SystemParam.cmosInfo.ColPixels, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
+            }
             StatusLabelInfoTrash.Text = "";  
             m_Xfer.Grab();
             waitProc = new CMOSTestLib.WaitingProc();
@@ -159,6 +161,7 @@ namespace 采集测试
                     toolStrip1.Enabled = true;
                     return;
                 }
+                
                 wpf = new CMOSTestLib.WaitingProcFunc(RGB_计算饱和输出电压_动态范围_平均暗信号_暗信号均方差);
                 if (!waitProc.Execute(wpf, "RGB：计算饱和输出电压_动态范围_平均暗信号_暗信号均方差", CMOSTestLib.WaitingType.None, ""))
                 {
@@ -308,6 +311,7 @@ namespace 采集测试
                 }
                 chart2.ChartAreas[0].AxisY.Title = "明场均值";
                 chart2.ChartAreas[0].AxisY.Minimum = double.NaN;
+                chart2.Series[0].Color = System.Drawing.Color.Red; 
                 for (int i = 0; i < Calc1.R_miu_y.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -316,6 +320,7 @@ namespace 采集测试
                 chart2.SaveImage(SystemParam.TempPicPath + "1_R.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 chart2.Series[0].Points.Clear();
+                chart2.Series[0].Color = System.Drawing.Color.Lime; 
                 for (int i = 0; i < Calc1.G_miu_y.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -324,6 +329,7 @@ namespace 采集测试
                 chart2.SaveImage(SystemParam.TempPicPath + "1_G.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 chart2.Series[0].Points.Clear();
+                chart2.Series[0].Color = System.Drawing.Color.Blue; 
                 for (int i = 0; i < Calc1.B_miu_y.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -333,9 +339,10 @@ namespace 采集测试
                 /************************************************************************/
                 /*                                                                      */
                 /************************************************************************/
-                chart2.ChartAreas[0].AxisY.Title = "平均暗信号";
-                chart2.ChartAreas[0].AxisY.Minimum = Calc1.miu_d.Min<double>();
+                chart2.ChartAreas[0].AxisY.Title = "平均暗信号";                
                 chart2.Series[0].Points.Clear();
+                chart2.Series[0].Color = System.Drawing.Color.Red;
+                chart2.ChartAreas[0].AxisY.Minimum = Calc1.R_miu_d.Min<double>();
                 for (int i = 0; i < Calc1.R_miu_d.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -344,6 +351,8 @@ namespace 采集测试
                 chart2.SaveImage(SystemParam.TempPicPath + "2_R.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 chart2.Series[0].Points.Clear();
+                chart2.Series[0].Color = System.Drawing.Color.Lime;
+                chart2.ChartAreas[0].AxisY.Minimum = Calc1.G_miu_d.Min<double>();
                 for (int i = 0; i < Calc1.G_miu_d.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -352,6 +361,8 @@ namespace 采集测试
                 chart2.SaveImage(SystemParam.TempPicPath + "2_G.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
 
                 chart2.Series[0].Points.Clear();
+                chart2.Series[0].Color = System.Drawing.Color.Blue;
+                chart2.ChartAreas[0].AxisY.Minimum = Calc1.B_miu_d.Min<double>();
                 for (int i = 0; i < Calc1.B_miu_d.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -364,6 +375,7 @@ namespace 采集测试
 
 
                 chart2.ChartAreas[0].AxisY.Title = "暗信号均方差";
+                chart2.Series[0].Color = System.Drawing.Color.Red; 
                 List<double> axhjfc = new List<double>();
                 for (int i = 0; i < Calc1.R_delta_y_dark.Count; i++)
                 {
@@ -385,6 +397,7 @@ namespace 采集测试
                 }
                 chart2.Series[0].Points.Clear();
                 chart2.ChartAreas[0].AxisY.Minimum = axhjfc.Min<double>();
+                chart2.Series[0].Color = System.Drawing.Color.Lime; 
                 for (int i = 0; i < axhjfc.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -399,6 +412,7 @@ namespace 采集测试
                 }
                 chart2.Series[0].Points.Clear();
                 chart2.ChartAreas[0].AxisY.Minimum = axhjfc.Min<double>();
+                chart2.Series[0].Color = System.Drawing.Color.Blue; 
                 for (int i = 0; i < axhjfc.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -411,6 +425,7 @@ namespace 采集测试
 
                 chart2.ChartAreas[0].AxisY.Title = "信噪比";
                 chart2.Series[0].Points.Clear();
+                chart2.Series[0].Color = System.Drawing.Color.Red; 
                 chart2.ChartAreas[0].AxisY.Minimum = double.NaN;
                 for (int i = 0; i < Calc1.R_SNR.Count; i++)
                 {
@@ -427,6 +442,7 @@ namespace 采集测试
 
                 chart2.Series[0].Points.Clear();
                 chart2.ChartAreas[0].AxisY.Minimum = double.NaN;
+                chart2.Series[0].Color = System.Drawing.Color.Lime; 
                 for (int i = 0; i < Calc1.G_SNR.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -442,6 +458,7 @@ namespace 采集测试
 
                 chart2.Series[0].Points.Clear();
                 chart2.ChartAreas[0].AxisY.Minimum = double.NaN;
+                chart2.Series[0].Color = System.Drawing.Color.Blue; 
                 for (int i = 0; i < Calc1.B_SNR.Count; i++)
                 {
                     t = SystemParam.GetTime(i);
@@ -769,16 +786,13 @@ namespace 采集测试
                     if (m_online)
                     {
                         m_ServerLocation = new SapLocation("X64-CL_iPro_1", 0);
-                        m_ConfigFileName = @"C:\Program Files\Teledyne DALSA\Sapera\CamFiles\User\w512x512.ccf";
+                        m_ConfigFileName = SystemParam.cmosInfo.ccfPath;//@"C:\Program Files\Teledyne DALSA\Sapera\CamFiles\User\w512x512.ccf";
                         // define on-line object
                         m_Acquisition = new SapAcquisition(m_ServerLocation, m_ConfigFileName);
 
                         m_Buffers = new SapBufferWithTrash(n, m_Acquisition, SapBuffer.MemoryType.ScatterGather);
 
-                        m_Buffers.PixelDepth = SystemParam.cmosInfo.PixelDepth;
-                        m_Buffers.Format = SapFormat.Mono16;
-                        m_Buffers.Height = SystemParam.cmosInfo.ColPixels;
-                        m_Buffers.Width = SystemParam.cmosInfo.RowPixels;
+
                         m_Xfer = new SapAcqToBuf(m_Acquisition, m_Buffers);
                         //                 m_View = new SapView(m_Buffers);
                         //                 m_View.SetScalingMode(true);
@@ -818,6 +832,14 @@ namespace 采集测试
                             WFNetLib.WFGlobal.WaitMS(20);
                         }
                     }
+                    SystemParam.cmosInfo.PixelDepth = m_Buffers.PixelDepth;
+                    SystemParam.cmosInfo.ColPixels = m_Buffers.Height;
+                    SystemParam.cmosInfo.RowPixels = m_Buffers.Width;
+                    if (SystemParam.cmosInfo.bRGB != 0)
+                    {
+                        wfSapGUI.GetRGBPixelInfo(SystemParam.cmosInfo.RowPixels, SystemParam.cmosInfo.ColPixels, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
+                    }
+                    SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
                     float WidthScalor = (float)(splitContainer1.Panel2.Size.Width) / m_Buffers.Width;
                     float HeightScalor = (float)(splitContainer1.Panel2.Size.Height) / m_Buffers.Height;
                     //m_View.SetScalingMode(WidthScalor, HeightScalor);

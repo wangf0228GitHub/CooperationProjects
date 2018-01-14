@@ -136,11 +136,14 @@ namespace 采集测试
                 {
                     /************************************************************************/
                     /* 环境信息                                                             */
-                    /************************************************************************/
+                    /************************************************************************/                    
                     EnvironmentInfo ei = SerialFunc.SerialCommand2();
                     if (ei == null)
                     {
-                        textBox1.AppendText("环境信息采集失败\r\n");
+                        this.Invoke((EventHandler)(delegate
+                        {
+                            textBox1.AppendText("环境信息采集失败\r\n");
+                        }));
                     }
                     else
                     {
@@ -165,7 +168,7 @@ namespace 采集测试
                         }
                         Temperature = Temperature / Calc1.TList.Count;
                         
-                        E = ei.E / 3 / SystemParam.eInfo.Rf / SystemParam.eInfo.rho / SystemParam.eInfo.S;
+                        E = (double)ei.E / 3 / SystemParam.eInfo.Rf / SystemParam.eInfo.rho / SystemParam.eInfo.S;
                         str111 += ",E=" + E.ToString("F1");
                         Calc1.EList.Add(E);
                         E = 0;
@@ -208,12 +211,12 @@ namespace 采集测试
                     yb = wfSapGUI.ReadPicDatas(m_Buffers, 1 + CamEx);
 //                     SystemParam.WriteTempFile(ya, 0, "1.bin");
 //                     SystemParam.WriteTempFile(yb, 0, "2.bin");
-                    Calc1.TestExposureTime(ya, yb, m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth, out y, out d);
+                    Calc1.TestExposureTime(ya, yb, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth, out y, out d);
                     Calc1.miu_y.Add(y);
                     Calc1.delta_y.Add(d);
                     if (SystemParam.cmosInfo.bRGB != 0)
                     {
-                        Calc1.Get_miu_delta(true, ya, yb, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
+                        Calc1.Get_miu_delta(true, ya, yb, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
                     }
                     t = ls * SystemParam.Ts;
                     this.Invoke((EventHandler)(delegate
@@ -337,6 +340,12 @@ namespace 采集测试
             double t;
             Calc1.miu_y_dark = new List<double>();
             Calc1.delta_y_dark = new List<double>();
+            Calc1.R_miu_y_dark = new List<double>();
+            Calc1.G_miu_y_dark = new List<double>();
+            Calc1.B_miu_y_dark = new List<double>();
+            Calc1.R_delta_y_dark = new List<double>();
+            Calc1.G_delta_y_dark = new List<double>();
+            Calc1.B_delta_y_dark = new List<double>();
             this.Invoke((EventHandler)(delegate
             {                            
                 chart1.ChartAreas[0].AxisY.Title = "暗场均值";
@@ -381,12 +390,12 @@ namespace 采集测试
 
                 ya = wfSapGUI.ReadPicDatas(m_Buffers, 0 + CamEx);
                 yb = wfSapGUI.ReadPicDatas(m_Buffers, 1 + CamEx);
-                Calc1.TestExposureTime(ya, yb, m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth, out y, out d);
+                Calc1.TestExposureTime(ya, yb, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth, out y, out d);
                 Calc1.miu_y_dark.Add(y);
                 Calc1.delta_y_dark.Add(d);
                 if (SystemParam.cmosInfo.bRGB != 0)
                 {
-                    Calc1.Get_miu_delta(false,ya,yb,m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth,SystemParam.cmosInfo.RGB1,SystemParam.cmosInfo.RGB2,SystemParam.cmosInfo.RGB3,SystemParam.cmosInfo.RGB4);
+                    Calc1.Get_miu_delta(false, ya, yb, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
                 }
                 this.Invoke((EventHandler)(delegate
                 {
@@ -415,8 +424,11 @@ namespace 采集测试
         }
         void 计算饱和输出电压_动态范围_平均暗信号_暗信号均方差(object LockWatingThread)
         {
-            for (int i = 0; i < chart1.Series.Count; i++)
-                chart1.Series[i].Points.Clear();
+            this.Invoke((EventHandler)(delegate
+            {
+                for (int i = 0; i < chart1.Series.Count; i++)
+                    chart1.Series[i].Points.Clear();
+            }));            
             //输出txt文件
             TextLog.AddTextLog("--------------" + DateTime.Now.ToString() + "----------------", SystemParam.TxtDataPath + SystemParam.DeviceID + ".txt", false);
             TextLog.AddTextLog(String.Format(SystemParam.TxtDataTitleFormat, "曝光时间", "明场均值", "明场方差", "暗场均值", "暗场方差"), SystemParam.TxtDataPath + SystemParam.DeviceID + ".txt", false);
@@ -489,21 +501,21 @@ namespace 采集测试
                 for (int i = 0; i < SystemParam.ExposureTest_Ns; i++)
                 {
                     t = SystemParam.GetTime(i);
-                    chart1.Series[0].Points.AddXY(t, Calc1.miu_y[i] - Calc1.miu_y_dark[i]);
+                    chart1.Series["Gray_miu"].Points.AddXY(t, Calc1.miu_y[i] - Calc1.miu_y_dark[i]);
                     if (i < fitlen)
-                        chart1.Series[2].Points.AddXY(t, Calc1.PhotoelectricResponseCurve_k * t + Calc1.PhotoelectricResponseCurve_b);
+                        chart1.Series["Gray_PELine"].Points.AddXY(t, Calc1.PhotoelectricResponseCurve_k * t + Calc1.PhotoelectricResponseCurve_b);
                     else
                     {
-                        p=chart1.Series[2].Points.AddXY(t, 0);
-                        chart1.Series[2].Points[p].IsEmpty = true;
+                        p = chart1.Series["Gray_PELine"].Points.AddXY(t, 0);
+                        chart1.Series["Gray_PELine"].Points[p].IsEmpty = true;
                     }
                     if (Calc1.SNR[i] == double.MaxValue)
                     {
-                        p = chart1.Series[1].Points.AddXY(t, 0);
-                        chart1.Series[1].Points[p].IsEmpty = true;
+                        p = chart1.Series["Gray_delta"].Points.AddXY(t, 0);
+                        chart1.Series["Gray_delta"].Points[p].IsEmpty = true;
                     }
                     else
-                        chart1.Series[1].Points.AddXY(t, Calc1.SNR[i]); 
+                        chart1.Series["Gray_delta"].Points.AddXY(t, Calc1.SNR[i]); 
                 }
             }));
             waitProc.SetProcessBar(20);
@@ -575,13 +587,13 @@ namespace 采集测试
             this.Invoke((EventHandler)(delegate
             {
                 textBox1.AppendText("查找输出饱和点完成\r\n");
-                chart1.Series[0].Points[Calc1.SaturatedIndex].IsValueShownAsLabel=true;
-                chart1.Series[0].Points[Calc1.SaturatedIndex].MarkerSize = 20;
-                chart1.Series[0].Points[Calc1.SaturatedIndex].Label = "饱和点:" + SystemParam.GetTime(Calc1.SaturatedIndex).ToString("F2") + "ms";
+                chart1.Series["Gray_miu"].Points[Calc1.SaturatedIndex].IsValueShownAsLabel = true;
+                chart1.Series["Gray_miu"].Points[Calc1.SaturatedIndex].MarkerSize = 20;
+                chart1.Series["Gray_miu"].Points[Calc1.SaturatedIndex].Label = "饱和点:" + SystemParam.GetTime(Calc1.SaturatedIndex).ToString("F2") + "ms";
 
-                chart1.Series[0].Points[Calc1.Saturated50Index].IsValueShownAsLabel = true;
-                chart1.Series[0].Points[Calc1.Saturated50Index].MarkerSize = 15;
-                chart1.Series[0].Points[Calc1.Saturated50Index].Label = "50%饱和点:" + SystemParam.GetTime(Calc1.Saturated50Index).ToString("F2") + "ms";
+                chart1.Series["Gray_miu"].Points[Calc1.Saturated50Index].IsValueShownAsLabel = true;
+                chart1.Series["Gray_miu"].Points[Calc1.Saturated50Index].MarkerSize = 15;
+                chart1.Series["Gray_miu"].Points[Calc1.Saturated50Index].Label = "50%饱和点:" + SystemParam.GetTime(Calc1.Saturated50Index).ToString("F2") + "ms";
 
                 listView1.Items[8].SubItems[1].Text = "完成";
                 listView1.Items[8].SubItems[2].Text = "饱和曝光时间为:" + SystemParam.GetTime(Calc1.SaturatedIndex).ToString("F2") + "ms";
@@ -627,8 +639,11 @@ namespace 采集测试
         }
         void RGB_计算饱和输出电压_动态范围_平均暗信号_暗信号均方差(object LockWatingThread)
         {
-//             for (int i = 1; i < chart1.Series.Count; i++)
-//                 chart1.Series[i].Points.Clear();
+            this.Invoke((EventHandler)(delegate
+            {
+                for (int i = 0; i < chart1.Series.Count; i++)
+                    chart1.Series[i].Points.Clear();
+            }));  
             TextLog.AddTextLog("--------------" + DateTime.Now.ToString() + "----------------", SystemParam.TxtDataPath + SystemParam.DeviceID + ".txt", false);
             TextLog.AddTextLog(String.Format(SystemParam.TxtDataTitleFormat_RGB, "曝光时间", "R明场均值", "R明场方差", "R暗场均值", "R暗场方差", "G明场均值", "G明场方差", "G暗场均值", "G暗场方差", "B明场均值", "B明场方差", "B暗场均值", "B暗场方差"), SystemParam.TxtDataPath + SystemParam.DeviceID + ".txt", false);
             //输出txt文件
