@@ -95,7 +95,7 @@ packages/
 #NET
 [Oo]bj*/
 [Bb]in*/
-[Tt]emp*/
+[Tt]emp
 [Hh]istory*/
 *.opensdf
 NoUp_*/

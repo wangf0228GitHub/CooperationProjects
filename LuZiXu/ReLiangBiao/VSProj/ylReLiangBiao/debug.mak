@@ -6,7 +6,7 @@ BINARYDIR := Debug
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1 flash_layout STM32L053xx
-INCLUDE_DIRS := ../../../../WF_Device_STM32 ../../wf ..\..\Inc ..\..\Drivers\CMSIS\Include ..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include ..\..\Drivers\STM32L0xx_HAL_Driver\Inc ..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy
+INCLUDE_DIRS := ../../wf ..\..\Inc ..\..\Drivers\CMSIS\Include ..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include ..\..\Drivers\STM32L0xx_HAL_Driver\Inc ..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy ../../../../../WF_Device
 LIBRARY_DIRS := 
 LIBRARY_NAMES := 
 ADDITIONAL_LINKER_INPUTS := 

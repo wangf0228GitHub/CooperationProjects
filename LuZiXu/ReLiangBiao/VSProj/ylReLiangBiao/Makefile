@@ -36,7 +36,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := ../../../../WF_Device_STM32/ADS1112.c ../../../../WF_Device_STM32/CP68_Client.c ../../../../WF_Device_STM32/SimI2C.c ../../../../WF_Device_STM32/SimSPI.c ../../../../WF_Device_STM32/Verify.c ../../../../WF_Device_STM32/wfEEPROM.c ../../../../WF_Device_STM32/wfSys.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c ../../Src/gpio.c ../../Src/adc.c ../../Src/lcd.c ../../Src/rtc.c ../../Src/tim.c ../../Src/usart.c ../../Src/stm32l0xx_it.c ../../Src/stm32l0xx_hal_msp.c ../../Src/main.c ../../Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/system_stm32l0xx.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_lcd.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c ../../wf/Display.c ../../wf/DP600J.c ../../wf/Key.c ../../wf/Variables.c $(BSP_ROOT)/STM32L0xxxx/StartupFiles/startup_stm32l053xx.c
+SOURCEFILES := ../../../../../WF_Device/ADS1112.c ../../../../../WF_Device/CP68_Client.c ../../../../../WF_Device/SimI2C.c ../../../../../WF_Device/SimSPI.c ../../../../../WF_Device/Verify.c ../../../../../WF_Device/wfEEPROM.c ../../../../../WF_Device/wfSys.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rtc_ex.c ../../Src/gpio.c ../../Src/adc.c ../../Src/lcd.c ../../Src/rtc.c ../../Src/tim.c ../../Src/usart.c ../../Src/stm32l0xx_it.c ../../Src/stm32l0xx_hal_msp.c ../../Src/main.c ../../Drivers/CMSIS/Device/ST/STM32L0xx/Source/Templates/system_stm32l0xx.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_i2c_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_adc_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_tim_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_uart_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_dma.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_lcd.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ramfunc.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_flash_ex.c ../../Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.c ../../wf/Display.c ../../wf/DP600J.c ../../wf/Key.c ../../wf/Variables.c $(BSP_ROOT)/STM32L0xxxx/StartupFiles/startup_stm32l053xx.c
 EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
@@ -182,31 +182,31 @@ $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated. Remove this line to suppress auto-generation of file rules.
 
 
-$(BINARYDIR)/ADS1112.o : ../../../../WF_Device_STM32/ADS1112.c $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/ADS1112.o : ../../../../../WF_Device/ADS1112.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 
-$(BINARYDIR)/CP68_Client.o : ../../../../WF_Device_STM32/CP68_Client.c $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/CP68_Client.o : ../../../../../WF_Device/CP68_Client.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 
-$(BINARYDIR)/SimI2C.o : ../../../../WF_Device_STM32/SimI2C.c $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/SimI2C.o : ../../../../../WF_Device/SimI2C.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 
-$(BINARYDIR)/SimSPI.o : ../../../../WF_Device_STM32/SimSPI.c $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/SimSPI.o : ../../../../../WF_Device/SimSPI.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 
-$(BINARYDIR)/Verify.o : ../../../../WF_Device_STM32/Verify.c $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/Verify.o : ../../../../../WF_Device/Verify.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 
-$(BINARYDIR)/wfEEPROM.o : ../../../../WF_Device_STM32/wfEEPROM.c $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/wfEEPROM.o : ../../../../../WF_Device/wfEEPROM.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 
-$(BINARYDIR)/wfSys.o : ../../../../WF_Device_STM32/wfSys.c $(all_make_files) |$(BINARYDIR)
+$(BINARYDIR)/wfSys.o : ../../../../../WF_Device/wfSys.c $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 

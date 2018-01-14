@@ -1332,13 +1332,13 @@
 //$(TOOLCHAIN_ROOT)\lib\gcc\arm-eabi\7.2.0\include-fixed
 //$(TOOLCHAIN_ROOT)\arm-eabi\sys-include
 //$(TOOLCHAIN_ROOT)\arm-eabi\include
-//../../../../WF_Device_STM32
 //../../wf
 //..\..\Inc
 //..\..\Drivers\CMSIS\Include
 //..\..\Drivers\CMSIS\Device\ST\STM32L0xx\Include
 //..\..\Drivers\STM32L0xx_HAL_Driver\Inc
 //..\..\Drivers\STM32L0xx_HAL_Driver\Inc\Legacy
+//../../../../../WF_Device
 // --- Include directories end --- //
 
 

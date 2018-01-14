@@ -346,18 +346,6 @@
     <None Include="stm32.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\wfEEPROM.c">
-      <Filter>wf\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\CP68_Client.c">
-      <Filter>wf\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\wfSys.c">
-      <Filter>wf\Lib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\Verify.c">
-      <Filter>wf\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Src\rtc.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -370,9 +358,6 @@
     <ClCompile Include="..\..\wf\Display.c">
       <Filter>wf</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\SimSPI.c">
-      <Filter>wf\Lib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\wf\DP600J.c">
       <Filter>wf</Filter>
     </ClCompile>
@@ -382,29 +367,29 @@
     <ClCompile Include="..\..\wf\Key.c">
       <Filter>wf</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\ADS1112.c">
+    <ClCompile Include="..\..\..\..\..\WF_Device\ADS1112.c">
       <Filter>wf\Lib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\WF_Device_STM32\SimI2C.c">
+    <ClCompile Include="..\..\..\..\..\WF_Device\CP68_Client.c">
+      <Filter>wf\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\WF_Device\SimI2C.c">
+      <Filter>wf\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\WF_Device\SimSPI.c">
+      <Filter>wf\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\WF_Device\Verify.c">
+      <Filter>wf\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\WF_Device\wfEEPROM.c">
+      <Filter>wf\Lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\WF_Device\wfSys.c">
       <Filter>wf\Lib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\wfEEPROM.h">
-      <Filter>wf\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\CP68_Client.h">
-      <Filter>wf\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\wfSys.h">
-      <Filter>wf\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\Verify.h">
-      <Filter>wf\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\TypeDefine.h">
-      <Filter>wf\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Inc\rtc.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -416,9 +401,6 @@
     </ClInclude>
     <ClInclude Include="..\..\wf\Display.h">
       <Filter>wf</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\SimSPI.h">
-      <Filter>wf\Lib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\wf\DP600J.h">
       <Filter>wf</Filter>
@@ -441,14 +423,32 @@
     <ClInclude Include="..\..\wf\Key.h">
       <Filter>wf</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\ADS1112.h">
-      <Filter>wf\Lib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\WF_Device_STM32\SimI2C.h">
-      <Filter>wf\Lib</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\wf\SimI2C_Conf.h">
       <Filter>wf\conf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\ADS1112.h">
+      <Filter>wf\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\CP68_Client.h">
+      <Filter>wf\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\SimI2C.h">
+      <Filter>wf\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\SimSPI.h">
+      <Filter>wf\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\TypeDefine.h">
+      <Filter>wf\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\Verify.h">
+      <Filter>wf\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\wfEEPROM.h">
+      <Filter>wf\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\WF_Device\wfSys.h">
+      <Filter>wf\Lib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
