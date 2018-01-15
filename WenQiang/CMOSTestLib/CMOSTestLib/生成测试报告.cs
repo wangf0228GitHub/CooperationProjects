@@ -96,7 +96,7 @@ namespace CMOSTestLib
         {
             WordReport report = new WordReport();
             double d;
-            report.CreateNewDocument(System.Windows.Forms.Application.StartupPath + "\\测试报告模板.dot");
+            report.CreateNewDocument(System.Windows.Forms.Application.StartupPath + "\\RGB测试报告模板.dot");
             report.InsertValue("报告生成时间", DateTime.Now.ToString("yyyy.MM.dd   HH:mm"));
             report.InsertValue("芯片编号", SystemParam.DeviceID);
             double Temperature;

@@ -19,9 +19,9 @@ namespace CMOSTestLib.SaperaGUI
             RPixel = new List<PixelInfo>();
             GPixel = new List<PixelInfo>();
             BPixel = new List<PixelInfo>();
-            for (int i = 0; i < (row / 2); i += 2)
+            for (int i = 0; i < row; i += 2)
             {
-                for (int j = 0; j < (col / 2); j += 2)
+                for (int j = 0; j < col; j += 2)
                 {
                     PixelInfo p = new PixelInfo();
                     p.row = i;
@@ -147,9 +147,9 @@ namespace CMOSTestLib.SaperaGUI
             List<ushort> R = new List<ushort>();
             List<ushort> G = new List<ushort>();
             List<ushort> B = new List<ushort>();
-            for (int i = 0; i < (row / 2); i+=2)
+            for (int i = 0; i < row; i+=2)
             {
-                for (int j = 0; j < (col / 2); j += 2)
+                for (int j = 0; j < col; j += 2)
                 {
                     switch (rgb1)
                     {

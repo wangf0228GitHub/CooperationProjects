@@ -162,7 +162,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(84, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(81, 22);
             this.toolStripButton1.Text = "设置系统参数";
             this.toolStripButton1.Click += new System.EventHandler(this.设置系统参数_Click_1);
             // 
@@ -172,7 +172,7 @@
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(57, 22);
             this.toolStripButton3.Text = "开始测试";
             this.toolStripButton3.Click += new System.EventHandler(this.开始测试_Click);
             // 
@@ -181,7 +181,7 @@
             this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton6.Size = new System.Drawing.Size(57, 22);
             this.toolStripButton6.Text = "手动拍摄";
             this.toolStripButton6.Click += new System.EventHandler(this.手动拍摄_Click_1);
             // 
@@ -191,7 +191,7 @@
             this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(96, 22);
+            this.toolStripButton8.Size = new System.Drawing.Size(93, 22);
             this.toolStripButton8.Text = "自定义暗场测试";
             this.toolStripButton8.Click += new System.EventHandler(this.自定义暗场测试_Click);
             // 
@@ -201,7 +201,7 @@
             this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(59, 22);
+            this.toolStripButton7.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton7.Text = "FPN测试";
             this.toolStripButton7.Click += new System.EventHandler(this.FPN测试_Click);
             // 
@@ -286,7 +286,7 @@
             // StatusLabelInfo
             // 
             this.StatusLabelInfo.Name = "StatusLabelInfo";
-            this.StatusLabelInfo.Size = new System.Drawing.Size(52, 22);
+            this.StatusLabelInfo.Size = new System.Drawing.Size(47, 22);
             this.StatusLabelInfo.Text = "nothing";
             // 
             // StatusLabelInfoTrash
@@ -310,7 +310,7 @@
             // PixelDataValue
             // 
             this.PixelDataValue.Name = "PixelDataValue";
-            this.PixelDataValue.Size = new System.Drawing.Size(102, 22);
+            this.PixelDataValue.Size = new System.Drawing.Size(101, 22);
             this.PixelDataValue.Text = "data not avaible";
             this.PixelDataValue.Visible = false;
             // 
@@ -318,19 +318,19 @@
             // 
             this.lTest.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.lTest.Name = "lTest";
-            this.lTest.Size = new System.Drawing.Size(96, 22);
+            this.lTest.Size = new System.Drawing.Size(95, 22);
             this.lTest.Text = "toolStripLabel1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(56, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(53, 22);
             this.toolStripLabel1.Text = "曝光时间";
             // 
             // toolStripLabel3
             // 
             this.toolStripLabel3.Name = "toolStripLabel3";
-            this.toolStripLabel3.Size = new System.Drawing.Size(96, 22);
+            this.toolStripLabel3.Size = new System.Drawing.Size(95, 22);
             this.toolStripLabel3.Text = "toolStripLabel3";
             // 
             // splitContainer1
@@ -497,30 +497,33 @@
             series2.BorderWidth = 3;
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Color = System.Drawing.Color.Red;
             series2.IsXValueIndexed = true;
             series2.Legend = "Legend2";
             series2.LegendText = "方差";
             series2.MarkerSize = 8;
             series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "Series2";
+            series2.Name = "R";
             series3.BorderWidth = 3;
             series3.ChartArea = "ChartArea1";
             series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Color = System.Drawing.Color.Lime;
             series3.IsVisibleInLegend = false;
             series3.IsXValueIndexed = true;
             series3.Legend = "Legend1";
             series3.LegendText = "信噪比";
             series3.MarkerSize = 8;
             series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series3.Name = "Series3";
+            series3.Name = "G";
             series4.BorderWidth = 3;
             series4.ChartArea = "ChartArea1";
             series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Color = System.Drawing.Color.Blue;
             series4.IsVisibleInLegend = false;
             series4.Legend = "Legend1";
             series4.LegendText = "光电响应曲线";
             series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series4.Name = "Series4";
+            series4.Name = "B";
             this.chart2.Series.Add(series1);
             this.chart2.Series.Add(series2);
             this.chart2.Series.Add(series3);

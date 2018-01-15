@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WFNetLib;
+
 using CMOSTestLib.SaperaGUI;
 using System.Diagnostics;
 
@@ -139,12 +139,12 @@ namespace CMOSTestLib
             if(bLight)
             {
                 R_miu_y.Add(y);
-                R_delta_y.Add(y);
+                R_delta_y.Add(d);
             }
             else
             {
                 R_miu_y_dark.Add(y);
-                R_delta_y_dark.Add(y);
+                R_delta_y_dark.Add(d);
             }
             y1 = 0;
             d1 = 0;
@@ -160,12 +160,12 @@ namespace CMOSTestLib
             if (bLight)
             {
                 G_miu_y.Add(y);
-                G_delta_y.Add(y);
+                G_delta_y.Add(d);
             }
             else
             {
                 G_miu_y_dark.Add(y);
-                G_delta_y_dark.Add(y);
+                G_delta_y_dark.Add(d);
             }
 
             y1 = 0;
@@ -182,12 +182,12 @@ namespace CMOSTestLib
             if (bLight)
             {
                 B_miu_y.Add(y);
-                B_delta_y.Add(y);
+                B_delta_y.Add(d);
             }
             else
             {
                 B_miu_y_dark.Add(y);
-                B_delta_y_dark.Add(y);
+                B_delta_y_dark.Add(d);
             }
         }
 

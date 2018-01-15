@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form3));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
+            this.tbPath = new System.Windows.Forms.TextBox();
             this.bRGB = new System.Windows.Forms.CheckBox();
             this.RGB4 = new System.Windows.Forms.ComboBox();
             this.RGB3 = new System.Windows.Forms.ComboBox();
@@ -40,6 +42,7 @@
             this.label32 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -103,9 +106,6 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.label33 = new System.Windows.Forms.Label();
-            this.tbPath = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -179,13 +179,31 @@
             this.tabPage4.Controls.Add(this.label24);
             this.tabPage4.Controls.Add(this.numericUpDown18);
             this.tabPage4.Controls.Add(this.label26);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 21);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(448, 232);
+            this.tabPage4.Size = new System.Drawing.Size(448, 233);
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "图像传感器信息";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(360, 190);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "浏览";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // tbPath
+            // 
+            this.tbPath.Location = new System.Drawing.Point(95, 192);
+            this.tbPath.Name = "tbPath";
+            this.tbPath.ReadOnly = true;
+            this.tbPath.Size = new System.Drawing.Size(250, 21);
+            this.tbPath.TabIndex = 10;
             // 
             // bRGB
             // 
@@ -218,7 +236,7 @@
             "R",
             "G",
             "B"});
-            this.RGB3.Location = new System.Drawing.Point(342, 146);
+            this.RGB3.Location = new System.Drawing.Point(339, 146);
             this.RGB3.Name = "RGB3";
             this.RGB3.Size = new System.Drawing.Size(42, 20);
             this.RGB3.TabIndex = 8;
@@ -244,7 +262,7 @@
             "R",
             "G",
             "B"});
-            this.RGB1.Location = new System.Drawing.Point(342, 111);
+            this.RGB1.Location = new System.Drawing.Point(339, 111);
             this.RGB1.Name = "RGB1";
             this.RGB1.Size = new System.Drawing.Size(41, 20);
             this.RGB1.TabIndex = 8;
@@ -291,6 +309,16 @@
             this.label31.TabIndex = 2;
             this.label31.Text = "滤光片波长：";
             this.label31.Click += new System.EventHandler(this.label28_Click);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(24, 195);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(65, 12);
+            this.label33.TabIndex = 2;
+            this.label33.Text = "配置文件：";
+            this.label33.Click += new System.EventHandler(this.label28_Click);
             // 
             // label30
             // 
@@ -344,6 +372,7 @@
             0,
             0,
             131072});
+            this.numericUpDown19.Visible = false;
             // 
             // label25
             // 
@@ -376,6 +405,7 @@
             0,
             0,
             0});
+            this.numericUpDown21.Visible = false;
             // 
             // numericUpDown20
             // 
@@ -399,6 +429,7 @@
             0,
             0,
             0});
+            this.numericUpDown20.Visible = false;
             // 
             // numericUpDown17
             // 
@@ -422,6 +453,7 @@
             0,
             0,
             0});
+            this.numericUpDown17.Visible = false;
             // 
             // label24
             // 
@@ -454,6 +486,7 @@
             0,
             0,
             0});
+            this.numericUpDown18.Visible = false;
             // 
             // label26
             // 
@@ -486,10 +519,10 @@
             this.tabPage2.Controls.Add(this.label21);
             this.tabPage2.Controls.Add(this.numericUpDown1);
             this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(448, 197);
+            this.tabPage2.Size = new System.Drawing.Size(448, 233);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "曝光时间测试";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -803,10 +836,10 @@
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.numericUpDown2);
             this.tabPage3.Controls.Add(this.label2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 21);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(448, 197);
+            this.tabPage3.Size = new System.Drawing.Size(448, 233);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "50%曝光测试";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -965,10 +998,10 @@
             this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.numericUpDown12);
             this.tabPage1.Controls.Add(this.label17);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 21);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(448, 197);
+            this.tabPage1.Size = new System.Drawing.Size(448, 233);
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "FPN测试";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1108,10 +1141,10 @@
             this.tabPage5.Controls.Add(this.label36);
             this.tabPage5.Controls.Add(this.numericUpDown24);
             this.tabPage5.Controls.Add(this.label37);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Location = new System.Drawing.Point(4, 21);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(448, 197);
+            this.tabPage5.Size = new System.Drawing.Size(448, 233);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "辐照度计算";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1229,7 +1262,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(96, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(93, 22);
             this.toolStripButton1.Text = "保存参数并退出";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
@@ -1240,37 +1273,9 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(96, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(93, 22);
             this.toolStripButton2.Text = "放弃修改并退出";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(24, 195);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(65, 12);
-            this.label33.TabIndex = 2;
-            this.label33.Text = "配置文件：";
-            this.label33.Click += new System.EventHandler(this.label28_Click);
-            // 
-            // tbPath
-            // 
-            this.tbPath.Location = new System.Drawing.Point(95, 192);
-            this.tbPath.Name = "tbPath";
-            this.tbPath.ReadOnly = true;
-            this.tbPath.Size = new System.Drawing.Size(250, 21);
-            this.tbPath.TabIndex = 10;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(360, 190);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(61, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "浏览";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // openFileDialog1
             // 

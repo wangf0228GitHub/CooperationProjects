@@ -75,12 +75,12 @@ namespace 采集测试
             toolStrip1.Enabled = false;            
             Calc1.p1 = (int)((Calc1.percent_base - Calc1.percent) * SystemParam.ExposureTest_Ns / 100);
             Calc1.p2 = (int)((Calc1.percent_base + Calc1.percent) * SystemParam.ExposureTest_Ns / 100);
-//             SystemParam.cmosInfo = SerialFunc.SerialCommand1();
-//             if (SystemParam.cmosInfo == null)
-//             {
-//                 MessageBox.Show("与采集器通信失败");
-//                 this.Close();
-//             }            
+            SystemParam.cmosInfo = SerialFunc.SerialCommand1();
+            if (SystemParam.cmosInfo == null)
+            {
+                MessageBox.Show("与采集器通信失败");
+                this.Close();
+            }            
             //第一步、采集图像
             testStep = 1;
             InitCam(2 + CamEx);

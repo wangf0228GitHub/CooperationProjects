@@ -31,17 +31,17 @@ namespace 采集测试
             toolStripTextBox3.Text = iniFileOP.Read("System Run", "PicN");
             if (!SerialFunc.OpenSerialPort())
                 this.Close();
-//             if (SystemParam.cmosInfo == null)
-//             {
-//                 SystemParam.cmosInfo = SerialFunc.SerialCommand1();
-//                 if (SystemParam.cmosInfo == null)
-//                 {
-//                     MessageBox.Show("与采集器通信失败");
-//                     this.Close();
-//                 }
-//                 SystemParam.Ts = (double)SystemParam.cmosInfo.Ts / 100 / 1000 / 1000;//ms
-//                 SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
-//             }
+            if (SystemParam.cmosInfo == null)
+            {
+                SystemParam.cmosInfo = SerialFunc.SerialCommand1();
+                if (SystemParam.cmosInfo == null)
+                {
+                    MessageBox.Show("与采集器通信失败");
+                    this.Close();
+                }
+                SystemParam.Ts = (double)SystemParam.cmosInfo.Ts / 100 / 1000 / 1000;//ms
+                SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
+            }
             if (!CreateObjects())
             {
                 DisposeObjects();
