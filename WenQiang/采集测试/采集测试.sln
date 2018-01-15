@@ -3,31 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "采集测试", "采集测试\采集测试.csproj", "{4DF7F811-BF15-4E87-A1D7-1D2C95E55A4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFNetLib40", "..\..\WFNetLib40\WFNetLib40.csproj", "{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFNetLib40", "..\..\..\WFLib\WFNetLib\WFNetLib40.csproj", "{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMOSTestLib", "..\CMOSTestLib\CMOSTestLib\CMOSTestLib.csproj", "{41F021E1-156D-4291-8767-2B6A06B1A970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFOffice2007_40", "..\..\WFOffice2007_40\WFOffice2007_40.csproj", "{9BC4D8DE-01F7-4535-97C3-C24926095EB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFOffice2007_40", "..\..\..\WFLib\WFOffice2007\WFOffice2007_40.csproj", "{9BC4D8DE-01F7-4535-97C3-C24926095EB9}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs33
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = 采集测试\\采集测试.csproj
-		SccProjectName1 = 采集测试
-		SccLocalPath1 = 采集测试
-		SccProjectUniqueName2 = ..\\..\\WFNetLib40\\WFNetLib40.csproj
-		SccProjectName2 = ../../WFNetLib40
-		SccLocalPath2 = ..\\..\\WFNetLib40
-		SccProjectUniqueName3 = ..\\CMOSTestLib\\CMOSTestLib\\CMOSTestLib.csproj
-		SccProjectName3 = ../CMOSTestLib/CMOSTestLib
-		SccLocalPath3 = ..\\CMOSTestLib\\CMOSTestLib
-		SccProjectUniqueName4 = ..\\..\\WFOffice2007_40\\WFOffice2007_40.csproj
-		SccProjectName4 = ../../WFOffice2007_40
-		SccLocalPath4 = ..\\..\\WFOffice2007_40
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms

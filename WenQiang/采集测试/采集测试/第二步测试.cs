@@ -907,7 +907,7 @@ namespace 采集测试
             Calc2.R_LightPoints = new List<PixelInfo>();
             for (int j = 0; j < Calc2.R_y50.Length; j++)
             {
-                if (Calc2.R_y50[j] >lP)
+                if (Calc2.R_y50_dark[j] >lP)
                 {
                     PixelInfo pD = wfSapGUI.RPixel[j];
                     pD.y = Calc2.R_y50_dark[j];
@@ -919,7 +919,7 @@ namespace 采集测试
             Calc2.G_LightPoints = new List<PixelInfo>();
             for (int j = 0; j < Calc2.G_y50.Length; j++)
             {
-                if (Calc2.G_y50[j] > lP)
+                if (Calc2.G_y50_dark[j] > lP)
                 {
                     PixelInfo pD = wfSapGUI.GPixel[j];
                     pD.y = Calc2.G_y50_dark[j];
@@ -931,7 +931,7 @@ namespace 采集测试
             Calc2.B_LightPoints = new List<PixelInfo>();
             for (int j = 0; j < Calc2.B_y50.Length; j++)
             {
-                if (Calc2.B_y50[j] > lP)
+                if (Calc2.B_y50_dark[j] > lP)
                 {
                     PixelInfo pD = wfSapGUI.BPixel[j];
                     pD.y = Calc2.B_y50_dark[j];
