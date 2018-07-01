@@ -9,9 +9,9 @@ namespace CMOSTestLib
 {
     public class CMOSInfo
     {
-        public int RowPixels;
-        public int ColPixels;
-        public int PixelDepth;
+        //public int RowPixels;
+        //public int ColPixels;
+        //public int PixelDepth;
         public int PixelArea;
         public double Ts;//最小曝光时间,ns
         public int Lambda;

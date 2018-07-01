@@ -12,10 +12,14 @@
     <AssemblyName>CMOSTestLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -138,6 +142,16 @@
     <Compile Include="生成测试报告.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\WFLib\WFNetLib\WFNetLib40.csproj">
+      <Project>{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}</Project>
+      <Name>WFNetLib40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WFLib\WFOffice2007\WFOffice2007_40.csproj">
+      <Project>{9BC4D8DE-01F7-4535-97C3-C24926095EB9}</Project>
+      <Name>WFOffice2007_40</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="SaperaGUI\AbortDlg.resx">
       <DependentUpon>AbortDlg.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,16 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="IAG3.ccf" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\WFLib\WFNetLib\WFNetLib40.csproj">
-      <Project>{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}</Project>
-      <Name>WFNetLib40</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\WFLib\WFOffice2007\WFOffice2007_40.csproj">
-      <Project>{9BC4D8DE-01F7-4535-97C3-C24926095EB9}</Project>
-      <Name>WFOffice2007_40</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

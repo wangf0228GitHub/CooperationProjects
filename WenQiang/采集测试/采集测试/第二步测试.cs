@@ -194,7 +194,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 byte[] p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i,Calc2.LightTempFile);
-                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth);
+                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,m_Buffers.PixelDepth);
                 for (int m = 0; m < m_Buffers.Height; m++)
                 {
                     for (int n = 0; n < m_Buffers.Width; n++)
@@ -228,7 +228,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 byte[] p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i ,Calc2.DarkTempFile);
-                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth);
+                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,m_Buffers.PixelDepth);
                 for (int m = 0; m < m_Buffers.Height; m++)
                 {
                     for (int n = 0; n < m_Buffers.Width; n++)
@@ -288,7 +288,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 byte[] p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i,Calc2.LightTempFile);
-                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth);
+                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth);
                 for (int m = 0; m < m_Buffers.Height; m++)
                 {
                     for (int n = 0; n < m_Buffers.Width; n++)
@@ -322,7 +322,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 byte[] p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i,Calc2.DarkTempFile);
-                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth);
+                ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth);
                 for (int m = 0; m < m_Buffers.Height; m++)
                 {
                     for (int n = 0; n < m_Buffers.Width; n++)
@@ -483,7 +483,7 @@ namespace 采集测试
             ushort[] yG;
             ushort[] yB;
             byte[] p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, 0, Calc2.LightTempFile);
-            wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth,
+            wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth,
                 SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4,
                 out yR, out yG, out yB);
             Calc2.R_y50 = new double[yR.Length];
@@ -505,7 +505,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i, Calc2.LightTempFile);
-                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth, 
+                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth, 
                     SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4,
                     out yR, out yG, out yB);
                 for (int j = 0; j < yR.Length; j++)
@@ -551,7 +551,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i, Calc2.DarkTempFile);
-                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth,
+                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth,
                     SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4,
                     out yR, out yG, out yB);
                 for (int j = 0; j < yR.Length; j++)
@@ -576,15 +576,15 @@ namespace 采集测试
                     listView1.Items[14].SubItems[1].Text = (((double)(i + 1) + SystemParam.L) * 100 / count).ToString("F1") + "%";
                 }));
             }
-            for (int j = 0; j < Calc2.R_y50.Length; j++)
+            for (int j = 0; j < Calc2.R_y50_dark.Length; j++)
             {
                 Calc2.R_y50_dark[j] = Calc2.R_y50_dark[j] / SystemParam.L;
             }
-            for (int j = 0; j < Calc2.G_y50.Length; j++)
+            for (int j = 0; j < Calc2.G_y50_dark.Length; j++)
             {
                 Calc2.G_y50_dark[j] = Calc2.G_y50_dark[j] / SystemParam.L;
             }
-            for (int j = 0; j < Calc2.B_y50.Length; j++)
+            for (int j = 0; j < Calc2.B_y50_dark.Length; j++)
             {
                 Calc2.B_y50_dark[j] = Calc2.B_y50_dark[j] / SystemParam.L;
             }    
@@ -643,7 +643,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i, Calc2.LightTempFile);
-                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth,
+                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth,
                     SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4,
                     out yR, out yG, out yB);
                 for (int j = 0; j < yR.Length; j++)
@@ -689,7 +689,7 @@ namespace 采集测试
             for (int i = 0; i < SystemParam.L; i++)
             {
                 p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, i, Calc2.DarkTempFile);
-                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, SystemParam.cmosInfo.PixelDepth,
+                wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth,
                     SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4,
                     out yR, out yG, out yB);
                 for (int j = 0; j < yR.Length; j++)

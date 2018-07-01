@@ -61,7 +61,7 @@ namespace 采集测试
                 {
                     WaitMsTime++;
                 }
-                if (WaitMsTime > 2000)
+                if (WaitMsTime > SystemParam.WaitTimeOut)
                 {
                     bWaitTimeOut = true;
                     this.Invoke((EventHandler)(delegate
@@ -168,7 +168,7 @@ namespace 采集测试
                         }
                         Temperature = Temperature / Calc1.TList.Count;
                         
-                        E = (double)ei.E / 3 / SystemParam.eInfo.Rf / SystemParam.eInfo.rho / SystemParam.eInfo.S;
+                        E = (double)ei.E*3/4096 / SystemParam.eInfo.Rf / SystemParam.eInfo.rho / SystemParam.eInfo.S/100;
                         str111 += ",E=" + E.ToString("F1");
                         Calc1.EList.Add(E);
                         E = 0;
@@ -212,7 +212,7 @@ namespace 采集测试
 //                     SystemParam.WriteTempFile(ya, 0, "1.bin");
 //                     SystemParam.WriteTempFile(yb, 0, "2.bin");
                     Calc1.TestExposureTime(ya, yb, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth, out y, out d);
-                    Calc1.miu_y.Add(y);
+					Calc1.miu_y.Add(y);
                     Calc1.delta_y.Add(d);
                     if (SystemParam.cmosInfo.bRGB != 0)
                     {
@@ -241,15 +241,23 @@ namespace 采集测试
                 {
                     deltaD.Add(Calc1.delta_y[i + 1] - Calc1.delta_y[i]);
                 }
-                Calc1.saturation = 0;
-                for (int i = 0; i < SystemParam.ExposureTest_Ns - 5; i++)
-                {
-                    if (deltaD[i] <= 0 && deltaD[i + 1] <= 0 && deltaD[i + 2] <= 0 && deltaD[i + 3] <= 0)
-                    {
-                        Calc1.saturation = i;
-                        break;
-                    }
-                }
+                //Calc1.saturation = 0;
+				Calc1.saturation = SystemParam.ExposureTest_Ns - 1;
+				/************************************************************************/
+                /*                                                                      */
+                /************************************************************************/
+                //饱和点查找
+				for (int i = 0; i < SystemParam.ExposureTest_Ns - 5; i++)
+				{
+					if (deltaD[i] <= 0 && deltaD[i + 1] <= 0 && deltaD[i + 2] <= 0 && deltaD[i + 3] <= 0)
+					{
+						Calc1.saturation = i;
+						break;
+					}
+				}
+                /************************************************************************/
+                /*                                                                      */
+                /************************************************************************/
                 double SaturatedIPer = (double)Calc1.saturation / SystemParam.ExposureTest_Ns;
                 this.Invoke((EventHandler)(delegate
                 {
@@ -277,7 +285,18 @@ namespace 采集测试
                 }));
                 this.Invoke((EventHandler)(delegate
                 {
-                    textBox1.AppendText("曝光步长:"+(((double)SystemParam.eStep) * SystemParam.Ts).ToString("F2") + "ms,当前比例:" + SaturatedIPer.ToString("F2") + "\r\n");
+                    if (SaturatedIPer == (SystemParam.ExposureTest_Ns - 1) / SystemParam.ExposureTest_Ns)
+                    {
+                        textBox1.AppendText("曝光步长:" + (((double)SystemParam.eStep) * SystemParam.Ts).ToString("F2") + "ms,未找到方差极值点\n");
+                    }
+                    else
+                    {
+                        textBox1.AppendText("曝光步长:" + (((double)SystemParam.eStep) * SystemParam.Ts).ToString("F2") + "ms,方差极值点当前比例:" + SaturatedIPer.ToString("F2") + "\r\n");
+                    }
+					
+					textBox1.AppendText("均值输出的最后两个值为：" + (Calc1.miu_y[SystemParam.ExposureTest_Ns - 2]).ToString("F3") + " , " + (Calc1.miu_y[SystemParam.ExposureTest_Ns - 1]).ToString("F3") + "\n");
+					textBox1.AppendText("方差输出的最后两个值为：" + (Calc1.delta_y[SystemParam.ExposureTest_Ns - 2]).ToString("F3") + " , " + (Calc1.delta_y[SystemParam.ExposureTest_Ns - 1]).ToString("F3") + "\n");
+
                 }));
                 if (Calc1.CheckSaturatedIndex())
                 {
@@ -391,7 +410,7 @@ namespace 采集测试
                 ya = wfSapGUI.ReadPicDatas(m_Buffers, 0 + CamEx);
                 yb = wfSapGUI.ReadPicDatas(m_Buffers, 1 + CamEx);
                 Calc1.TestExposureTime(ya, yb, m_Buffers.Height, m_Buffers.Width, m_Buffers.PixelDepth, out y, out d);
-                Calc1.miu_y_dark.Add(y);
+				Calc1.miu_y_dark.Add(y);
                 Calc1.delta_y_dark.Add(d);
                 if (SystemParam.cmosInfo.bRGB != 0)
                 {
@@ -450,7 +469,7 @@ namespace 采集测试
                 else
                 {
                     snr = Calc1.miu_y[i] - Calc1.miu_y_dark[i];
-                    snr = snr / Calc1.delta_y[i];
+                    snr = snr / Math.Sqrt(Calc1.delta_y[i]);
                     Calc1.SNR.Add(snr);
                 }
             }
@@ -549,6 +568,17 @@ namespace 采集测试
             Calc1.AverageDarkSignal_b = fitret[0];
             Calc1.AverageDarkSignal_k = fitret[1];
 
+			double[] delta_y_dark = Calc1.delta_y_dark.ToArray();
+			double[] t22 = new double[delta_y_dark.Length];
+			for (int i = 0; i < delta_y_dark.Length; i++)
+			{
+				t22[i] = SystemParam.GetTime(i);
+			}
+			fitret = FittingMultiLine.MultiLine(t22, delta_y_dark, delta_y_dark.Length, 1);
+			Calc1.AverageDarkSignal_b2 = fitret[0];
+			Calc1.AverageDarkSignal_k2 = fitret[1];
+
+
             this.Invoke((EventHandler)(delegate
             {
                 listView1.Items[7].SubItems[1].Text = "完成";
@@ -569,6 +599,7 @@ namespace 采集测试
             double t3;
             double y1,y2;
             double diff;
+            Calc1.SaturatedIndex = Calc1.miu_y.Count;
             for (int i = fitlen; i < Calc1.miu_y.Count; i++)
             {
                 t3 = SystemParam.GetTime(i);
@@ -629,7 +660,8 @@ namespace 采集测试
                 listView1.Items[10].SubItems[1].Text = "完成";
                 listView1.Items[10].SubItems[2].Text =  Calc1.eta.ToString("F2");
             }));
-            Calc1.FullCapacity = Calc1.miu_y[Calc1.SaturatedIndex] / Calc1.OverAllGain_K;
+            //Calc1.FullCapacity = Calc1.miu_y[Calc1.SaturatedIndex] / Calc1.OverAllGain_K;
+			Calc1.FullCapacity = Calc1.miu_y[SystemParam.ExposureTest_Ns-1] / Calc1.OverAllGain_K;
             this.Invoke((EventHandler)(delegate
             {
                 listView1.Items[11].SubItems[1].Text = "完成";
@@ -670,7 +702,7 @@ namespace 采集测试
                 else
                 {
                     snr = Calc1.R_miu_y[i] - Calc1.R_miu_y_dark[i];
-                    snr = snr / Calc1.R_delta_y[i];
+                    snr = snr / Math.Sqrt(Calc1.R_delta_y[i]);
                     Calc1.R_SNR.Add(snr);
                 }
                 /************************************************************************/
@@ -683,7 +715,7 @@ namespace 采集测试
                 else
                 {
                     snr = Calc1.G_miu_y[i] - Calc1.G_miu_y_dark[i];
-                    snr = snr / Calc1.G_delta_y[i];
+                    snr = snr / Math.Sqrt(Calc1.G_delta_y[i]);
                     Calc1.G_SNR.Add(snr);
                 }
                 /************************************************************************/
@@ -696,7 +728,7 @@ namespace 采集测试
                 else
                 {
                     snr = Calc1.B_miu_y[i] - Calc1.B_miu_y_dark[i];
-                    snr = snr / Calc1.B_delta_y[i];
+                    snr = snr / Math.Sqrt(Calc1.B_delta_y[i]);
                     Calc1.B_SNR.Add(snr);
                 }
             }

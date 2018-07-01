@@ -30,9 +30,14 @@ namespace 采集测试
             toolStripTextBox2.Text = iniFileOP.Read("System Run", "PhotoNs");
             toolStripTextBox3.Text = iniFileOP.Read("System Run", "PicN");
             if (!SerialFunc.OpenSerialPort())
-                this.Close();
-            if (SystemParam.cmosInfo == null)
+                this.Close();            
+            if (!CreateObjects())
             {
+                DisposeObjects();
+                return;
+            }
+            //if (SystemParam.cmosInfo == null)
+            //{
                 SystemParam.cmosInfo = SerialFunc.SerialCommand1();
                 if (SystemParam.cmosInfo == null)
                 {
@@ -40,13 +45,8 @@ namespace 采集测试
                     this.Close();
                 }
                 SystemParam.Ts = (double)SystemParam.cmosInfo.Ts / 100 / 1000 / 1000;//ms
-                SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
-            }
-            if (!CreateObjects())
-            {
-                DisposeObjects();
-                return;
-            }
+                SystemParam.Pixel4Pic = m_Buffers.Height * m_Buffers.Width;
+           // }
         }
         CMOSTestLib.WaitingProc waitProc;
         DateTime dtStart;
@@ -147,7 +147,7 @@ namespace 采集测试
 //                 SystemParam.CreateBINFile(yByteArray, SystemParam.TxtCustomDarkDataPath + dtStart.ToString("yyyyMMdd_HHmmss") + "\\" + t.ToString("F3") + "_2.bin");
                 ya = wfSapGUI.ReadPicDatas(m_Buffers, PicN);
                 //yb = wfSapGUI.ReadPicDatas(m_Buffers, 2);
-                Calc1.TestExposureTime1(ya, m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth, out y, out d);
+                Calc1.TestExposureTime1(ya, m_Buffers.Height, m_Buffers.Width,m_Buffers.PixelDepth, out y, out d);
                 this.Invoke((EventHandler)(delegate
                 {                    
                     chart1.Series[0].Points.AddXY(t, y);
@@ -177,7 +177,7 @@ namespace 采集测试
                 {
                     WaitMsTime++;
                 }
-                if (WaitMsTime > 2000)
+                if (WaitMsTime > 20000)
                 {
                     bWaitTimeOut = true;
                     this.Invoke((EventHandler)(delegate
@@ -282,55 +282,66 @@ namespace 采集测试
         private string m_ConfigFileName;
         void InitCam(int n)
         {
-            DestroyObjects();
-            DisposeObjects();
-            m_ServerLocation = new SapLocation("X64-CL_iPro_1", 0);
-            m_ConfigFileName = "IAG3.ccf";
-            // define on-line object
-            m_Acquisition = new SapAcquisition(m_ServerLocation, m_ConfigFileName);
-
-            m_Buffers = new SapBufferWithTrash(n, m_Acquisition, SapBuffer.MemoryType.ScatterGather);
-
-            m_Buffers.PixelDepth = SystemParam.cmosInfo.PixelDepth;
-            m_Buffers.Format = SapFormat.Mono16;
-            m_Buffers.Height = SystemParam.cmosInfo.ColPixels;
-            m_Buffers.Width = SystemParam.cmosInfo.RowPixels;
-            m_Xfer = new SapAcqToBuf(m_Acquisition, m_Buffers);
-            //                 m_View = new SapView(m_Buffers);
-            //                 m_View.SetScalingMode(true);
-
-            //event for view
-            m_Xfer.Pairs[0].EventType = SapXferPair.XferEventType.EndOfFrame;
-            m_Xfer.XferNotify += new SapXferNotifyHandler(xfer_XferNotify);
-            m_Xfer.XferNotifyContext = this;
-
-            // event for signal status
-            m_Acquisition.SignalNotify += new SapSignalNotifyHandler(GetSignalStatus);
-            m_Acquisition.SignalNotifyContext = this;
-
-            //m_ImageBox.View = m_View;
             while (true)
             {
                 try
                 {
-                    if (!CreateObjects())
+                    DestroyObjects();
+                    DisposeObjects();
+                    m_ServerLocation = new SapLocation("X64-CL_iPro_1", 0);
+                    m_ConfigFileName = SystemParam.ccfPath;//@"C:\Program Files\Teledyne DALSA\Sapera\CamFiles\User\w512x512.ccf";
+                    // define on-line object
+                    m_Acquisition = new SapAcquisition(m_ServerLocation, m_ConfigFileName);
+
+                    m_Buffers = new SapBufferWithTrash(n, m_Acquisition, SapBuffer.MemoryType.ScatterGather);
+
+
+                    m_Xfer = new SapAcqToBuf(m_Acquisition, m_Buffers);
+                    //                 m_View = new SapView(m_Buffers);
+                    //                 m_View.SetScalingMode(true);
+
+                    //event for view
+                    m_Xfer.Pairs[0].EventType = SapXferPair.XferEventType.EndOfFrame;
+                    m_Xfer.XferNotify += new SapXferNotifyHandler(xfer_XferNotify);
+                    m_Xfer.XferNotifyContext = this;
+
+                    // event for signal status
+                    m_Acquisition.SignalNotify += new SapSignalNotifyHandler(GetSignalStatus);
+                    m_Acquisition.SignalNotifyContext = this;
+                    while (true)
                     {
-                        DisposeObjects();
-                        WFNetLib.WFGlobal.WaitMS(20);
-                        continue;
+                        try
+                        {
+                            if (!CreateObjects())
+                            {
+                                DisposeObjects();
+                                WFNetLib.WFGlobal.WaitMS(20);
+                                continue;
+                            }
+                            break;
+                        }
+                        catch
+                        {
+                            WFNetLib.WFGlobal.WaitMS(20);
+                        }
                     }
-                    break;
+                    //                     SystemParam.cmosInfo.PixelDepth = m_Buffers.PixelDepth;
+                    //                     SystemParam.cmosInfo.ColPixels = m_Buffers.Height;
+                    //                     SystemParam.cmosInfo.RowPixels = m_Buffers.Width;
+                    if (SystemParam.cmosInfo.bRGB != 0)
+                    {
+                        wfSapGUI.GetRGBPixelInfo(m_Buffers.Width, m_Buffers.Height, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
+                    }
+                    SystemParam.Pixel4Pic = m_Buffers.Height * m_Buffers.Width;//(int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
+                    EnableSignalStatus();
+                    SystemParam.ByteLen4Pic = SystemParam.Pixel4Pic * m_Buffers.BytesPerPixel;
+                    m_Xfer.Freeze();
+                    return;
                 }
                 catch
                 {
-                    WFNetLib.WFGlobal.WaitMS(20);
                 }
             }
-            //m_View.SetScalingMode(WidthScalor, HeightScalor);
-            //m_ImageBox.OnSize();
-            EnableSignalStatus();
-            SystemParam.ByteLen4Pic = SystemParam.Pixel4Pic * m_Buffers.BytesPerPixel;
-            m_Xfer.Freeze();
 
         }
         private void EnableSignalStatus()

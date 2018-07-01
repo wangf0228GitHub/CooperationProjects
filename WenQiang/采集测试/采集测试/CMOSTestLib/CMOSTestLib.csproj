@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41F021E1-156D-4291-8767-2B6A06B1A970}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CMOSTestLib</RootNamespace>
+    <AssemblyName>CMOSTestLib</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DALSA.SaperaLT.SapClassBasic, Version=7.40.0.1317, Culture=neutral, PublicKeyToken=4d8604101dcb6b58, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Program Files\Teledyne DALSA\Sapera\Components\NET\Bin\DALSA.SaperaLT.SapClassBasic.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="WaitingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitingForm.designer.cs">
+      <DependentUpon>WaitingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WaitingProc.cs" />
+    <Compile Include="曝光测试相关.cs" />
+    <Compile Include="同一曝光的相关参数.cs" />
+    <Compile Include="CP0314.cs" />
+    <Compile Include="SaperaGUI\AbortDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\AbortDlg.designer.cs">
+      <DependentUpon>AbortDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\AboutBox.designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\AcqConfigDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\AcqConfigDlg.designer.cs">
+      <DependentUpon>AcqConfigDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\AviFileDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\AviFileDlg.designer.cs">
+      <DependentUpon>AviFileDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\BayerDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\BayerDlg.designer.cs">
+      <DependentUpon>BayerDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\BufDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\BufDlg.designer.cs">
+      <DependentUpon>BufDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\FlatFieldDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\FlatFieldDlg.designer.cs">
+      <DependentUpon>FlatFieldDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\HighFrameDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\HighFrameDlg.Designer.cs" />
+    <Compile Include="SaperaGUI\ImageBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\ImageBox.Designer.cs">
+      <DependentUpon>ImageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SaperaGUI\ImageWnd.cs" />
+    <Compile Include="SaperaGUI\JpegFileDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\JpegFileDlg.Designer.cs" />
+    <Compile Include="SaperaGUI\LoadSaveDlg.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaperaGUI\RawFileDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\RawFileDlg.Designer.cs" />
+    <Compile Include="SaperaGUI\SystemMenu.cs" />
+    <Compile Include="SaperaGUI\TiffFileDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\TiffFileDlg.Designer.cs" />
+    <Compile Include="SaperaGUI\ViewDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaperaGUI\ViewDlg.designer.cs" />
+    <Compile Include="SaperaGUI\wfSapGUI.cs" />
+    <Compile Include="SerialFunc.cs" />
+    <Compile Include="SystemParam.cs" />
+    <Compile Include="生成测试报告.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SaperaGUI\AbortDlg.resx">
+      <DependentUpon>AbortDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\AcqConfigDlg.resx">
+      <DependentUpon>AcqConfigDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\AviFileDlg.resx">
+      <DependentUpon>AviFileDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\BayerDlg.resx">
+      <DependentUpon>BayerDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\BufDlg.resx">
+      <DependentUpon>BufDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\FlatFieldDlg.resx">
+      <DependentUpon>FlatFieldDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\HighFrameDlg.resx" />
+    <EmbeddedResource Include="SaperaGUI\ImageBox.resx">
+      <DependentUpon>ImageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaperaGUI\JpegFileDlg.resx" />
+    <EmbeddedResource Include="SaperaGUI\RawFileDlg.resx" />
+    <EmbeddedResource Include="SaperaGUI\TiffFileDlg.resx" />
+    <EmbeddedResource Include="SaperaGUI\ViewDlg.resx" />
+    <EmbeddedResource Include="WaitingForm.resx">
+      <DependentUpon>WaitingForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="IAG3.ccf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\WFNetLib40\WFNetLib40.csproj">
+      <Project>{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}</Project>
+      <Name>WFNetLib40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\WFOffice2007_40\WFOffice2007_40.csproj">
+      <Project>{9BC4D8DE-01F7-4535-97C3-C24926095EB9}</Project>
+      <Name>WFOffice2007_40</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

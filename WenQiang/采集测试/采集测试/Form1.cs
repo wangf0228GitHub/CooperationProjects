@@ -23,7 +23,7 @@ namespace 采集测试
 {
     public partial class Form1 : Form
     {
-        public static int CamEx = 1;
+        public static int CamEx = 0;
         public Form1()
         {
             InitializeComponent();
@@ -87,7 +87,7 @@ namespace 采集测试
             /************************************************************************/
             /*                                                                      */
             /************************************************************************/
-            SystemParam.DeviceID = InputBox.ShowInputBox("请设定当前测试器件ID", SystemParam.DeviceID);
+			SystemParam.DeviceID = InputBox.ShowInputBox("请设定当前测试器件的芯片编号", SystemParam.DeviceID);
             iniFileOP.Write("System Run", "DeviceID", SystemParam.DeviceID);
             Calc1.p1 = (int)((Calc1.percent_base - Calc1.percent) * SystemParam.ExposureTest_Ns/100);
             Calc1.p2 = (int)((Calc1.percent_base + Calc1.percent) * SystemParam.ExposureTest_Ns/100);
@@ -115,7 +115,7 @@ namespace 采集测试
             InitCam(2+CamEx);
             if (SystemParam.cmosInfo.bRGB != 0)
             {
-                wfSapGUI.GetRGBPixelInfo(SystemParam.cmosInfo.RowPixels, SystemParam.cmosInfo.ColPixels, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
+                wfSapGUI.GetRGBPixelInfo(m_Buffers.Width, m_Buffers.Height, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
             }
             StatusLabelInfoTrash.Text = "";  
             m_Xfer.Grab();
@@ -502,15 +502,15 @@ namespace 采集测试
             Calc1.percent_base = double.Parse(iniFileOP.Read("System Setting", "percent_base"));
             Calc1.percent = double.Parse(iniFileOP.Read("System Setting", "percent"));
 
-            SystemParam.Dark_N = int.Parse(iniFileOP.Read("System Setting", "Dark_N"));
             SystemParam.PicDelay = int.Parse(iniFileOP.Read("System Setting", "PicDelay"));
+			SystemParam.WaitTimeOut = int.Parse(iniFileOP.Read("System Setting", "WaitTimeOut"));
 
             SystemParam.cmosInfo = new CMOSInfo();
-            SystemParam.cmosInfo.RowPixels = int.Parse(iniFileOP.Read("CMOS Param", "RowPixels"));
-            SystemParam.cmosInfo.ColPixels = int.Parse(iniFileOP.Read("CMOS Param", "ColPixels"));
-            SystemParam.cmosInfo.PixelDepth = int.Parse(iniFileOP.Read("CMOS Param", "PixelDepth"));
+//             SystemParam.cmosInfo.RowPixels = int.Parse(iniFileOP.Read("CMOS Param", "RowPixels"));
+//             SystemParam.cmosInfo.ColPixels = int.Parse(iniFileOP.Read("CMOS Param", "ColPixels"));
+//             SystemParam.cmosInfo.PixelDepth = int.Parse(iniFileOP.Read("CMOS Param", "PixelDepth"));
             SystemParam.cmosInfo.PixelArea = int.Parse(iniFileOP.Read("CMOS Param", "PixelArea"));
-            SystemParam.cmosInfo.Ts = double.Parse(iniFileOP.Read("CMOS Param", "Ts"));
+            //SystemParam.cmosInfo.Ts = double.Parse(iniFileOP.Read("CMOS Param", "Ts"));
             SystemParam.cmosInfo.Lambda = int.Parse(iniFileOP.Read("CMOS Param", "Lambda"));
             SystemParam.cmosInfo.bRGB = int.Parse(iniFileOP.Read("CMOS Param", "bRGB"));
             SystemParam.cmosInfo.RGB1 = int.Parse(iniFileOP.Read("CMOS Param", "RGB1"));
@@ -518,15 +518,15 @@ namespace 采集测试
             SystemParam.cmosInfo.RGB3 = int.Parse(iniFileOP.Read("CMOS Param", "RGB3"));
             SystemParam.cmosInfo.RGB4 = int.Parse(iniFileOP.Read("CMOS Param", "RGB4"));
 
-            SystemParam.Ts = SystemParam.cmosInfo.Ts / 1000 / 1000;//ns
-            SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
+            //SystemParam.Ts = SystemParam.cmosInfo.Ts / 1000 / 1000;//ns
+            //SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
 
             SystemParam.eInfo = new EInfo();
             SystemParam.eInfo.Rf = double.Parse(iniFileOP.Read("E Calc", "Rf"));
             SystemParam.eInfo.rho = double.Parse(iniFileOP.Read("E Calc", "rho"));
             SystemParam.eInfo.S = double.Parse(iniFileOP.Read("E Calc", "S"));
             
-            SystemParam.cmosInfo.ccfPath = iniFileOP.Read("CMOS Param", "ccfPath"); ;
+            SystemParam.ccfPath = iniFileOP.Read("CMOS Param", "ccfPath"); ;
 //             iniFileOP.GetAllKeyValues("System Setting", out keys, out values);
 // 
 //             iniFileOP.Write("System Param", "DarkPointPer", "20");
@@ -556,7 +556,7 @@ namespace 采集测试
                 toolStripButton6.Enabled = false;
                 toolStripButton8.Enabled = false;
                 toolStripButton7.Enabled = false;
-                m_Buffers = new SapBuffer(1, SystemParam.cmosInfo.RowPixels, SystemParam.cmosInfo.ColPixels, SapFormat.Mono16, SapBuffer.MemoryType.ScatterGather);
+                m_Buffers = new SapBuffer(1, 600 , 480, SapFormat.Mono16, SapBuffer.MemoryType.ScatterGather);
                 //m_View = new SapView(m_Buffers);
                 StatusLabelInfo.Text = "offline... Load images";
                 float WidthScalor = (float)(splitContainer1.Panel2.Size.Width) / m_Buffers.Width;
@@ -786,7 +786,7 @@ namespace 采集测试
                     if (m_online)
                     {
                         m_ServerLocation = new SapLocation("X64-CL_iPro_1", 0);
-                        m_ConfigFileName = SystemParam.cmosInfo.ccfPath;//@"C:\Program Files\Teledyne DALSA\Sapera\CamFiles\User\w512x512.ccf";
+                        m_ConfigFileName = SystemParam.ccfPath;//@"C:\Program Files\Teledyne DALSA\Sapera\CamFiles\User\w512x512.ccf";
                         // define on-line object
                         m_Acquisition = new SapAcquisition(m_ServerLocation, m_ConfigFileName);
 
@@ -808,7 +808,7 @@ namespace 采集测试
                     }
                     else
                     {
-                        m_Buffers = new SapBuffer(1, SystemParam.cmosInfo.RowPixels, SystemParam.cmosInfo.ColPixels, SapFormat.Mono16, SapBuffer.MemoryType.ScatterGather);
+                        m_Buffers = new SapBuffer(1, 600, 480, SapFormat.Mono16, SapBuffer.MemoryType.ScatterGather);
                         //                 m_View = new SapView(m_Buffers);
                         //                 m_View.SetScalingMode(true);
                         StatusLabelInfo.Text = "offline... Load images";
@@ -832,14 +832,14 @@ namespace 采集测试
                             WFNetLib.WFGlobal.WaitMS(20);
                         }
                     }
-                    SystemParam.cmosInfo.PixelDepth = m_Buffers.PixelDepth;
-                    SystemParam.cmosInfo.ColPixels = m_Buffers.Height;
-                    SystemParam.cmosInfo.RowPixels = m_Buffers.Width;
+//                     SystemParam.cmosInfo.PixelDepth = m_Buffers.PixelDepth;
+//                     SystemParam.cmosInfo.ColPixels = m_Buffers.Height;
+//                     SystemParam.cmosInfo.RowPixels = m_Buffers.Width;
                     if (SystemParam.cmosInfo.bRGB != 0)
                     {
-                        wfSapGUI.GetRGBPixelInfo(SystemParam.cmosInfo.RowPixels, SystemParam.cmosInfo.ColPixels, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
+                        wfSapGUI.GetRGBPixelInfo(m_Buffers.Width, m_Buffers.Height, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
                     }
-                    SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
+                    SystemParam.Pixel4Pic = m_Buffers.Height*m_Buffers.Width;//(int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
                     float WidthScalor = (float)(splitContainer1.Panel2.Size.Width) / m_Buffers.Width;
                     float HeightScalor = (float)(splitContainer1.Panel2.Size.Height) / m_Buffers.Height;
                     //m_View.SetScalingMode(WidthScalor, HeightScalor);

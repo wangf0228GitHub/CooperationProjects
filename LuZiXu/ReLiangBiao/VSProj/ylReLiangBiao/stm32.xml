@@ -4,7 +4,7 @@
   <ToolchainVersion>
     <GCC>7.2.0</GCC>
     <GDB>8.0.1</GDB>
-    <Revision>2</Revision>
+    <Revision>3</Revision>
   </ToolchainVersion>
   <BspID>com.sysprogs.arm.stm32</BspID>
   <BspVersion>4.5R2</BspVersion>
@@ -41,7 +41,7 @@
     <AllDependencies>
       <ProjectDependency>
         <RelativePath>..\..\ReLiangBiao.gpdsc</RelativePath>
-        <Timestamp>131603301510674163</Timestamp>
+        <Timestamp>131603899244753973</Timestamp>
       </ProjectDependency>
     </AllDependencies>
     <RootDirectory>

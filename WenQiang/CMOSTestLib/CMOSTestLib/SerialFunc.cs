@@ -58,9 +58,9 @@ namespace CMOSTestLib
                     if (Rx0314.DataPacketed((byte)mySerialPort.ReadByte()))
                     {
                         CMOSInfo ret = new CMOSInfo();
-                        ret.RowPixels = BytesOP.MakeShort(Rx0314.Data[0], Rx0314.Data[1]);
-                        ret.ColPixels = BytesOP.MakeShort(Rx0314.Data[2], Rx0314.Data[3]);
-                        ret.PixelDepth = Rx0314.Data[4];
+                        //ret.RowPixels = BytesOP.MakeShort(Rx0314.Data[0], Rx0314.Data[1]);
+                        //ret.ColPixels = BytesOP.MakeShort(Rx0314.Data[2], Rx0314.Data[3]);
+                        //ret.PixelDepth = Rx0314.Data[4];
                         //ret.RGB = (RGBType)(BytesOP.MakeShort(Rx0314.Data[5], Rx0314.Data[6]));
                         ret.Ts = BytesOP.MakeShort(Rx0314.Data[7], Rx0314.Data[8]);
                         return ret;

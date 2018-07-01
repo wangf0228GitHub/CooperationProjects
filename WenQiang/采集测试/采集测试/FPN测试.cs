@@ -267,7 +267,7 @@ namespace 采集测试
                 for (int j = 0; j < FPN_Ns;j++ )
                 {
                     byte[] p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, j, FPNFile_Path + "TempData\\Light\\" + (i + 1).ToString() + "bin");
-                    ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth);
+                    ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,m_Buffers.PixelDepth);
                     for (int m = 0; m < m_Buffers.Height; m++)
                     {
                         for (int n = 0; n < m_Buffers.Width; n++)
@@ -313,7 +313,7 @@ namespace 采集测试
                 for (int j = 0; j < FPN_Ns; j++)
                 {
                     byte[] p = SystemParam.ReadTempFile(SystemParam.ByteLen4Pic, j, FPNFile_Path + "TempData\\Dark\\" + (i + 1).ToString() + "bin");
-                    ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,SystemParam.cmosInfo.PixelDepth);
+                    ushort[,] pic = wfSapGUI.TransPicDatas(p, m_Buffers.Height, m_Buffers.Width,m_Buffers.PixelDepth);
                     for (int m = 0; m < m_Buffers.Height; m++)
                     {
                         for (int n = 0; n < m_Buffers.Width; n++)

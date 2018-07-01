@@ -43,19 +43,20 @@ namespace 采集测试
         {            
             StatusLabelInfo.Text = "offline... Load images";
             if (!SerialFunc.OpenSerialPort())
-                this.Close();
-            if (SystemParam.cmosInfo == null)
-            {
+                this.Close();            
+            InitCam(1);
+//             if (SystemParam.cmosInfo == null)
+//             {
                 SystemParam.cmosInfo = SerialFunc.SerialCommand1();
                 if (SystemParam.cmosInfo == null)
                 {
                     MessageBox.Show("与采集器通信失败");
                     this.Close();
+                    return;
                 }
                 SystemParam.Ts = (double)SystemParam.cmosInfo.Ts / 100 / 1000 / 1000;//ms
-                SystemParam.Pixel4Pic = (int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
-            }
-            InitCam(1);
+                SystemParam.Pixel4Pic = m_Buffers.Height*m_Buffers.Width;
+            //}
             toolStripTextBox2.Text = (trackBar1.Value * SystemParam.Ts).ToString("F3");
         }
         private SapLocation m_ServerLocation;
@@ -106,57 +107,74 @@ namespace 采集测试
         }
         void InitCam(int n)
         {
-            DestroyObjects();
-            DisposeObjects();
-            m_ServerLocation = new SapLocation("X64-CL_iPro_1", 0);
-            m_ConfigFileName = "IAG3.ccf";
-            // define on-line object
-            m_Acquisition = new SapAcquisition(m_ServerLocation, m_ConfigFileName);
-
-            m_Buffers = new SapBufferWithTrash(n, m_Acquisition, SapBuffer.MemoryType.ScatterGather);
-
-            m_Buffers.PixelDepth = SystemParam.cmosInfo.PixelDepth;
-            m_Buffers.Format = SapFormat.Mono16;
-            m_Buffers.Height = SystemParam.cmosInfo.ColPixels;
-            m_Buffers.Width = SystemParam.cmosInfo.RowPixels;
-            m_Xfer = new SapAcqToBuf(m_Acquisition, m_Buffers);
-            m_View = new SapView(m_Buffers);
-            m_View.SetScalingMode(true);
-
-            //event for view
-            m_Xfer.Pairs[0].EventType = SapXferPair.XferEventType.EndOfFrame;
-            m_Xfer.XferNotify += new SapXferNotifyHandler(xfer_XferNotify1);
-            m_Xfer.XferNotifyContext = this;
-
-            // event for signal status
-            m_Acquisition.SignalNotify += new SapSignalNotifyHandler(GetSignalStatus1);
-            m_Acquisition.SignalNotifyContext = this;
-
-            m_ImageBox.View = m_View;
             while (true)
             {
                 try
                 {
-                    if (!CreateObjects())
+                    DestroyObjects();
+                    DisposeObjects();
+                    m_ServerLocation = new SapLocation("X64-CL_iPro_1", 0);
+                    m_ConfigFileName = SystemParam.ccfPath;//@"C:\Program Files\Teledyne DALSA\Sapera\CamFiles\User\w512x512.ccf";
+                    // define on-line object
+                    m_Acquisition = new SapAcquisition(m_ServerLocation, m_ConfigFileName);
+
+                    m_Buffers = new SapBufferWithTrash(n, m_Acquisition, SapBuffer.MemoryType.ScatterGather);
+
+
+                    m_Xfer = new SapAcqToBuf(m_Acquisition, m_Buffers);
+                    //                 m_View = new SapView(m_Buffers);
+                    //                 m_View.SetScalingMode(true);
+
+                    //event for view
+                    m_Xfer.Pairs[0].EventType = SapXferPair.XferEventType.EndOfFrame;
+                    m_Xfer.XferNotify += new SapXferNotifyHandler(xfer_XferNotify1);
+                    m_Xfer.XferNotifyContext = this;
+
+                    // event for signal status
+                    m_Acquisition.SignalNotify += new SapSignalNotifyHandler(GetSignalStatus1);
+                    m_Acquisition.SignalNotifyContext = this;
+                    m_View = new SapView(m_Buffers);
+                    m_View.SetScalingMode(true);
+                    m_ImageBox.View = m_View;
+                    while (true)
                     {
-                        DisposeObjects();
-                        WFNetLib.WFGlobal.WaitMS(20);
-                        continue;
+                        try
+                        {
+                            if (!CreateObjects())
+                            {
+                                DisposeObjects();
+                                WFNetLib.WFGlobal.WaitMS(20);
+                                continue;
+                            }
+                            break;
+                        }
+                        catch
+                        {
+                            WFNetLib.WFGlobal.WaitMS(20);
+                        }
                     }
-                    break;
+                    //                     SystemParam.cmosInfo.PixelDepth = m_Buffers.PixelDepth;
+                    //                     SystemParam.cmosInfo.ColPixels = m_Buffers.Height;
+                    //                     SystemParam.cmosInfo.RowPixels = m_Buffers.Width;
+                    if (SystemParam.cmosInfo.bRGB != 0)
+                    {
+                        wfSapGUI.GetRGBPixelInfo(m_Buffers.Width, m_Buffers.Height, SystemParam.cmosInfo.RGB1, SystemParam.cmosInfo.RGB2, SystemParam.cmosInfo.RGB3, SystemParam.cmosInfo.RGB4);
+                    }
+                    SystemParam.Pixel4Pic = m_Buffers.Height * m_Buffers.Width;//(int)SystemParam.cmosInfo.ColPixels * SystemParam.cmosInfo.RowPixels;
+                    float WidthScalor = (float)(this.Size.Width) / m_Buffers.Width;
+                    float HeightScalor = (float)(this.Size.Height) / m_Buffers.Height;
+                    
+                    m_View.SetScalingMode(WidthScalor, HeightScalor);
+                    m_ImageBox.OnSize();
+                    EnableSignalStatus();
+                    SystemParam.ByteLen4Pic = SystemParam.Pixel4Pic * m_Buffers.BytesPerPixel;
+                    m_Xfer.Grab();
+                    return;
                 }
                 catch
                 {
-                    WFNetLib.WFGlobal.WaitMS(20);
                 }
-            }
-            float WidthScalor = (float)(this.Size.Width) / m_Buffers.Width;
-            float HeightScalor = (float)(this.Size.Height) / m_Buffers.Height;
-            m_View.SetScalingMode(WidthScalor, HeightScalor);
-            m_ImageBox.OnSize();
-            EnableSignalStatus();
-            SystemParam.ByteLen4Pic = SystemParam.Pixel4Pic * m_Buffers.BytesPerPixel;
-            m_Xfer.Grab();
+            }            
         }
         private void EnableSignalStatus()
         {
@@ -274,17 +292,24 @@ namespace 采集测试
         CMOSTestLib.WaitingProc waitProc;
         ushort rxNeed;
         uint ls;
+        string saveFileFolder;
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             try
             {
                 rxNeed = ushort.Parse(toolStripTextBox1.Text);
+                if(rxNeed>20)
+                    MessageBox.Show("拍照张数不能超过20");
             }
             catch
             {
                 MessageBox.Show("拍照张数设定有误");
             }
-            ls = (uint)trackBar1.Value;
+            if (folderBrowserDialog1.ShowDialog() != DialogResult.OK)
+                return;
+            saveFileFolder = folderBrowserDialog1.SelectedPath;
+            uint t=uint.Parse(toolStripTextBox2.Text);
+            ls = (uint)(t / SystemParam.Ts);//trackBar1.Value;
             rxFrame = 0;            
             waitProc = new CMOSTestLib.WaitingProc();
             waitProc.MaxProgress = rxNeed;
@@ -313,7 +338,13 @@ namespace 采集测试
                 }
                 if (rxFrame == rxNeed)
                     break;
-            }            
+            }
+            for(int i=0;i<rxNeed;i++)
+            {
+                byte[] yByteArray = wfSapGUI.ReadPicDatas(m_Buffers, i);
+                SystemParam.CreateBINFile(yByteArray, saveFileFolder+"//" + toolStripTextBox2.Text + "(" + (i+1).ToString() + ")"+".bin"); 
+//                 SystemParam.WriteTempFile(yByteArray, i * FPN_Len + j - 1, FPNFile_Path + "TempData\\Light\\" + (k + 1).ToString() + "bin");
+            }
         }
     }
 }
