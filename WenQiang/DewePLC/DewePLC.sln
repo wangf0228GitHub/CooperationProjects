@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DewePLC", "DewePLC\DewePLC.csproj", "{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFNetLib461", "..\..\..\WFLib\WFNetLib\WFNetLib461.csproj", "{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		NET35|Any CPU = NET35|Any CPU
+		OffLine|Any CPU = OffLine|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.NET35|Any CPU.ActiveCfg = Release|Any CPU
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.NET35|Any CPU.Build.0 = Release|Any CPU
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.OffLine|Any CPU.ActiveCfg = Release|Any CPU
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.OffLine|Any CPU.Build.0 = Release|Any CPU
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B873EC91-CDF9-4E56-BA50-6E277BB5CA6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.NET35|Any CPU.ActiveCfg = NET35|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.NET35|Any CPU.Build.0 = NET35|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.OffLine|Any CPU.ActiveCfg = OffLine|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.OffLine|Any CPU.Build.0 = OffLine|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

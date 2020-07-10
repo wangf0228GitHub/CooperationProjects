@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfHelpSetting xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <HelpSetting>
+    <Section>SYSTEM RUN</Section>
+    <Name>Node1Addr</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuJu_dgain</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuJu_igain</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuJu_pgain</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuJu_sp</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuZhen_dgain</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuZhen_igain</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuZhen_pgain</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+  <HelpSetting>
+    <Section>SYSTEM SETTING</Section>
+    <Name>NiuZhen_sp</Name>
+    <Title><![CDATA[]]></Title>
+    <Description><![CDATA[]]></Description>
+  </HelpSetting>
+</ArrayOfHelpSetting>
