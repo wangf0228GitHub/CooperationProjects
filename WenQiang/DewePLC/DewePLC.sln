@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DewePLC", "DewePLC\DewePLC.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WFNetLib461", "..\..\..\WFLib\WFNetLib\WFNetLib461.csproj", "{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PLC", "PLC\PLC.csproj", "{209AFBA8-4187-431C-AF16-53C68D7E2AFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.OffLine|Any CPU.Build.0 = OffLine|Any CPU
 		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8FFA8D-5A95-4BCE-877D-00DF5076A2F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.NET35|Any CPU.ActiveCfg = Release|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.NET35|Any CPU.Build.0 = Release|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.OffLine|Any CPU.ActiveCfg = Release|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.OffLine|Any CPU.Build.0 = Release|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{209AFBA8-4187-431C-AF16-53C68D7E2AFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

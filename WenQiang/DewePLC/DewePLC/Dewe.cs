@@ -21,13 +21,13 @@ namespace DewePLC
             while (true)
             {
                 opcUaClient = new OpcUaClient();
-                OpcTask = opcUaClient.ConnectServer("opc.tcp://127.0.0.1:4840");
+                OpcTask = opcUaClient.ConnectServer(opcUrl);//("opc.tcp://127.0.0.1:4840");
                 try
                 {                    
                     OpcTask.Wait();
                     if (OpcTask.IsCompleted)
                     {
-                        opcUaClient.AddSubscription("A", "ns=1;s=data/OpcUaServer/channels/1/0_CUR_SCA_VAL", SubCallback1);
+                        //opcUaClient.AddSubscription("A", "ns=1;s=data/OpcUaServer/channels/1/0_CUR_SCA_VAL", SubCallback1);
                         break;
                     }
                     else
@@ -51,6 +51,31 @@ namespace DewePLC
                     }
                 }
             }
+        }
+        string[] deweNodes;
+        double deweNiuZhen, deweNiuJu;
+        void ReadDeweData()
+        {
+            try
+            {
+                // 因为不能保证读取的节点类型一致，所以只提供统一的DataValue读取，每个节点需要单独解析
+                double d1 = 0;
+                double d2 = 0;
+                int len = 8;
+                for (int i=0;i<len;i++)
+                {
+                    List<float> dewe = opcUaClient.ReadNodes<float>(deweNodes);
+                    d1 += dewe[0] * deweNiuJu_k + deweNiuJu_b;
+                    d2 += dewe[1] * deweNiuZhen_k + deweNiuZhen_b;
+                }
+                deweNiuJu = d1/len;
+                deweNiuZhen = d2/len;
+            }
+            catch (Exception ex)
+            {
+                ShowText("Dewe读取出错:" + ex.Message);
+            }
+            
         }
         public void SubCallback1(string key, MonitoredItem monitoredItem, MonitoredItemNotificationEventArgs args)
         {

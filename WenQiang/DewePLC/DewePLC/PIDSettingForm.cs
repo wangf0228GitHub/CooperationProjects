@@ -15,11 +15,13 @@ namespace DewePLC
     {
         int type;
         WFNetLib.PID.PID pid;
-        public PIDSettingForm(int _type, WFNetLib.PID.PID _pid)
+        _R2 R2;
+        public PIDSettingForm(int _type, WFNetLib.PID.PID _pid,_R2 r2)
         {
             InitializeComponent();
             type = _type;
             pid = _pid;
+            R2 = r2;
         }
 
         private void PIDSettingForm_Load(object sender, EventArgs e)
@@ -69,9 +71,9 @@ namespace DewePLC
             if (type==1)
             {
                 iniFileOP.Write("System Setting", "NiuZhen_sp", pid.pidParam.sp.ToString());
-                iniFileOP.Write("System Setting", "NiuZhen_pgain", pid.pidParam.pgain.ToString());
-                iniFileOP.Write("System Setting", "NiuZhen_igain", pid.pidParam.igain.ToString());
-                iniFileOP.Write("System Setting", "NiuZhen_dgain", pid.pidParam.dgain.ToString());
+                iniFileOP.Write(R2.ToString(), R2.ToString() + "_pgain", pid.pidParam.pgain.ToString());
+                iniFileOP.Write(R2.ToString(), R2.ToString() + "_igain", pid.pidParam.igain.ToString());
+                iniFileOP.Write(R2.ToString(), R2.ToString() + "_dgain", pid.pidParam.dgain.ToString());
             }
             else if (type == 2)
             {

@@ -1,25 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WFNetLib.PacketProc;
 using WFNetLib.TCP;
 
-namespace DewePLC
+namespace PLC
 {
     public partial class Form1 : Form
     {
+        public Form1()
+        {
+            InitializeComponent();
+        }
         TCPSyncClient tcpPLC;
+        public void ShowText(string str)
+        {
+            this.Invoke((EventHandler)(delegate
+            {
+                if (textBox1.Text.Length > 20000)
+                    textBox1.Clear();
+                textBox1.AppendText(str + "\r\n");
+            }));
+        }
         void PLCConnect()
         {
             tcpPLC = new TCPSyncClient();
             tcpPLC.TCPServerName = "127.0.0.1";// "192.168.3.250";
             tcpPLC.SaveDataProcessCallback = new SaveDataProcessCallbackDelegate(TcpModbusPacket.SaveDataProcessCallbackProc);
             tcpPLC.TCPServerPort = 502;
-            while(true)
+            while (true)
             {
                 if (!tcpPLC.Conn())
                 {
@@ -62,7 +77,7 @@ namespace DewePLC
             TcpModbusPacket tp = ModbusWork(tx, TcpModbusPacket.FunctionCode.Read);
             return tp;
         }
-        void SetMotor(double rev,double torque)
+        void SetMotor(double rev, double torque)
         {
             byte[] tx = new byte[8 + 5];
             tx[0] = 0x00;//起始地址
@@ -71,21 +86,21 @@ namespace DewePLC
             tx[3] = 4;
             tx[4] = 8;//写入字节数
             rev = rev * 360 * 1000;
-            if (!bForeward)
-            {
-                rev = rev * -1;
-                torque = torque * -1;
-            }
-            byte[] x=BitConverter.GetBytes((int)rev);
+//             if (!bForeward)
+//             {
+//                 rev = rev * -1;
+//                 torque = torque * -1;
+//             }
+            byte[] x = BitConverter.GetBytes((int)rev);
             tx[5] = x[1];
             tx[6] = x[0];
             tx[7] = x[3];
             tx[8] = x[2];
             torque = torque / 11000 * 10;
-            this.Invoke((EventHandler)(delegate
-            {
-                listView2.Items[6].SubItems[1].Text = ((int)torque).ToString();
-            }));
+//             this.Invoke((EventHandler)(delegate
+//             {
+//                 listView2.Items[6].SubItems[1].Text = ((int)torque).ToString();
+//             }));
             x = BitConverter.GetBytes((int)torque);
             tx[9] = x[1];
             tx[10] = x[0];
@@ -93,23 +108,24 @@ namespace DewePLC
             tx[12] = x[2];
             ModbusWork(tx, TcpModbusPacket.FunctionCode.Write);
         }
-//         void SetTorque(int torque)
-//         {
-//             byte[] tx = new byte[4 + 5];
-//             tx[0] = 0x00;//起始地址
-//             tx[1] = 0x02;
-//             tx[2] = 0;//长度
-//             tx[3] = 2;
-//             tx[4] = 4;//写入字节数
-//             //torque = torque * 360 * 1000;
-//             if (!bForeward)
-//                 torque = torque * -1;
-//             byte[] x = BitConverter.GetBytes(torque);
-//             tx[5] = x[1];
-//             tx[6] = x[0];
-//             tx[7] = x[3];
-//             tx[8] = x[2];
-//             ModbusWork(tx, TcpModbusPacket.FunctionCode.Write);
-//         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            PLCConnect();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                tcpPLC.Close();
+            }
+            catch
+            { }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SetMotor((double)numericUpDown1.Value, (double)numericUpDown2.Value);
+        }
     }
 }
