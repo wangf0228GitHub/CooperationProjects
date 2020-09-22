@@ -23,19 +23,19 @@ namespace DewePLC
     }
     public partial class Form1 : Form
     {
-        WFNetLib.PID.PID NiuZhenPID = new WFNetLib.PID.PID();
-        WFNetLib.PID.PID NiuJuPID = new WFNetLib.PID.PID();     
+        WFNetLib.PID.incrementPID NiuZhenPID = new WFNetLib.PID.incrementPID();
+        WFNetLib.PID.incrementPID NiuJuPID = new WFNetLib.PID.incrementPID();     
         private void label1_Click(object sender, EventArgs e)
         {
             PIDSettingForm f = new PIDSettingForm(1, NiuZhenPID,R2);
             if(f.ShowDialog()==DialogResult.OK)
             {
-                NiuZhenPID.pidParam.pgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_pgain"));
-                NiuZhenPID.pidParam.igain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_igain"));
-                NiuZhenPID.pidParam.dgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_dgain"));
-                listView1.Items[2].SubItems[1].Text = NiuZhenPID.pidParam.pgain.ToString();
-                listView1.Items[3].SubItems[1].Text = NiuZhenPID.pidParam.igain.ToString();
-                listView1.Items[4].SubItems[1].Text = NiuZhenPID.pidParam.dgain.ToString();
+                NiuZhenPID.pgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_pgain"));
+                NiuZhenPID.igain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_igain"));
+                NiuZhenPID.dgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_dgain"));
+                listView1.Items[2].SubItems[1].Text = NiuZhenPID.pgain.ToString();
+                listView1.Items[3].SubItems[1].Text = NiuZhenPID.igain.ToString();
+                listView1.Items[4].SubItems[1].Text = NiuZhenPID.dgain.ToString();
                 listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;// - listView1.Columns[1].Width;
             }
         }
@@ -44,12 +44,12 @@ namespace DewePLC
             PIDSettingForm f = new PIDSettingForm(2, NiuJuPID,R2);
             if (f.ShowDialog() == DialogResult.OK)
             {
-                NiuJuPID.pidParam.pgain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_pgain"));
-                NiuJuPID.pidParam.igain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_igain"));
-                NiuJuPID.pidParam.dgain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_dgain"));
-                listView2.Items[2].SubItems[1].Text = NiuJuPID.pidParam.pgain.ToString();
-                listView2.Items[3].SubItems[1].Text = NiuJuPID.pidParam.igain.ToString();
-                listView2.Items[4].SubItems[1].Text = NiuJuPID.pidParam.dgain.ToString();
+                NiuJuPID.pgain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_pgain"));
+                NiuJuPID.igain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_igain"));
+                NiuJuPID.dgain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_dgain"));
+                listView2.Items[2].SubItems[1].Text = NiuJuPID.pgain.ToString();
+                listView2.Items[3].SubItems[1].Text = NiuJuPID.igain.ToString();
+                listView2.Items[4].SubItems[1].Text = NiuJuPID.dgain.ToString();
                 listView2.Columns[1].Width = listView2.ClientSize.Width - listView2.Columns[0].Width;
             }
         }

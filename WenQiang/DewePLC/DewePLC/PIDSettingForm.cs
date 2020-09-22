@@ -14,9 +14,9 @@ namespace DewePLC
     public partial class PIDSettingForm : Form
     {
         int type;
-        WFNetLib.PID.PID pid;
+        WFNetLib.PID.incrementPID pid;
         _R2 R2;
-        public PIDSettingForm(int _type, WFNetLib.PID.PID _pid,_R2 r2)
+        public PIDSettingForm(int _type, WFNetLib.PID.incrementPID _pid,_R2 r2)
         {
             InitializeComponent();
             type = _type;
@@ -40,47 +40,47 @@ namespace DewePLC
                 label3.Text = "牛米";
                 this.Text = "扭矩参数设定";
             }
-            textBox1.Text = pid.pidParam.sp.ToString();
-            textBox2.Text = pid.pidParam.pgain.ToString();
-            textBox3.Text = pid.pidParam.igain.ToString();
-            textBox4.Text = pid.pidParam.dgain.ToString();
+            textBox1.Text = pid.sp.ToString();
+            textBox2.Text = pid.pgain.ToString();
+            textBox3.Text = pid.igain.ToString();
+            textBox4.Text = pid.dgain.ToString();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(!double.TryParse(textBox1.Text,out pid.pidParam.sp))
+            if(!double.TryParse(textBox1.Text,out pid.sp))
             {
                 MessageBox.Show("目标值输入有误");
                 return;          
             }
-            if (!double.TryParse(textBox2.Text, out pid.pidParam.pgain))
+            if (!double.TryParse(textBox2.Text, out pid.pgain))
             {
                 MessageBox.Show("P值输入有误");
                 return;
             }
-            if (!double.TryParse(textBox3.Text, out pid.pidParam.igain))
+            if (!double.TryParse(textBox3.Text, out pid.igain))
             {
                 MessageBox.Show("I值输入有误");
                 return;
             }
-            if (!double.TryParse(textBox4.Text, out pid.pidParam.dgain))
+            if (!double.TryParse(textBox4.Text, out pid.dgain))
             {
                 MessageBox.Show("D值输入有误");
                 return;
             }
             if (type==1)
             {
-                iniFileOP.Write("System Setting", "NiuZhen_sp", pid.pidParam.sp.ToString());
-                iniFileOP.Write(R2.ToString(), R2.ToString() + "_pgain", pid.pidParam.pgain.ToString());
-                iniFileOP.Write(R2.ToString(), R2.ToString() + "_igain", pid.pidParam.igain.ToString());
-                iniFileOP.Write(R2.ToString(), R2.ToString() + "_dgain", pid.pidParam.dgain.ToString());
+                iniFileOP.Write("System Setting", "NiuZhen_sp", pid.sp.ToString());
+                iniFileOP.Write(R2.ToString(), R2.ToString() + "_pgain", pid.pgain.ToString());
+                iniFileOP.Write(R2.ToString(), R2.ToString() + "_igain", pid.igain.ToString());
+                iniFileOP.Write(R2.ToString(), R2.ToString() + "_dgain", pid.dgain.ToString());
             }
             else if (type == 2)
             {
-                iniFileOP.Write("System Setting", "NiuJu_sp", pid.pidParam.sp.ToString());
-                iniFileOP.Write("System Setting", "NiuJu_pgain", pid.pidParam.pgain.ToString());
-                iniFileOP.Write("System Setting", "NiuJu_igain", pid.pidParam.igain.ToString());
-                iniFileOP.Write("System Setting", "NiuJu_dgain", pid.pidParam.dgain.ToString());
+                iniFileOP.Write("System Setting", "NiuJu_sp", pid.sp.ToString());
+                iniFileOP.Write("System Setting", "NiuJu_pgain", pid.pgain.ToString());
+                iniFileOP.Write("System Setting", "NiuJu_igain", pid.igain.ToString());
+                iniFileOP.Write("System Setting", "NiuJu_dgain", pid.dgain.ToString());
             }
             DialogResult = DialogResult.OK;
         }

@@ -23,6 +23,8 @@ namespace DewePLC
             comboBox1.SelectedIndex = int.Parse(iniFileOP.Read("System Setting", "R2"));
             numericUpDown1.Value= decimal.Parse(iniFileOP.Read("System Setting", "NiuJu_sp"));
             numericUpDown2.Value = decimal.Parse(iniFileOP.Read("System Setting", "NiuZhen_sp"));
+            numericUpDown3.Value = decimal.Parse(iniFileOP.Read("System Setting", "NiuJu_Deadband"));
+            numericUpDown4.Value = decimal.Parse(iniFileOP.Read("System Setting", "NiuZhen_Deadband"));
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -30,6 +32,8 @@ namespace DewePLC
             iniFileOP.Write("System Setting", "NiuZhen_sp", numericUpDown2.Value.ToString());
             iniFileOP.Write("System Setting", "NiuJu_sp", numericUpDown1.Value.ToString());
             iniFileOP.Write("System Setting", "R2", comboBox1.SelectedIndex.ToString());
+            iniFileOP.Write("System Setting", "NiuZhen_Deadband", numericUpDown4.Value.ToString());
+            iniFileOP.Write("System Setting", "NiuJu_Deadband", numericUpDown3.Value.ToString());            
             this.DialogResult = DialogResult.OK;
         }
     }
