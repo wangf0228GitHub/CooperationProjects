@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -9,12 +8,12 @@ using System.Windows.Forms;
 using WFNetLib.PacketProc;
 using WFNetLib.TCP;
 
-namespace DewePLC
+namespace sinTest
 {
-    public partial class Form1 : Form
+    public partial class sinTestForm : Form
     {
         TCPSyncClient tcpPLC;
-        public void PLCConnect()
+        void PLCConnect()
         {
             tcpPLC = new TCPSyncClient();
             tcpPLC.TCPServerName = "127.0.0.1";// "192.168.3.250";
@@ -52,7 +51,7 @@ namespace DewePLC
             ShowText("收到数据:" + WFNetLib.StringFunc.StringsFunction.byteToHexStr(tp.Data, " "));
             return tp;
         }
-        public TcpModbusPacket ReadPLC()
+        TcpModbusPacket ReadPLC()
         {
             byte[] tx = new byte[4];
             tx[0] = 0x00;//起始地址
@@ -62,12 +61,8 @@ namespace DewePLC
             TcpModbusPacket tp = ModbusWork(tx, TcpModbusPacket.FunctionCode.Read);
             return tp;
         }
-        public void SetMotor(double rev,double torque)
+        void SetMotor(double rev,double torque)
         {
-            Debug.Assert(rev>0);
-            Debug.Assert(torque>0);
-            if (torque > 28.6)
-                torque = 28.6;
             int retry = 3;
             while(true)
             {
@@ -77,22 +72,13 @@ namespace DewePLC
                 tx[2] = 0;//长度
                 tx[3] = 4;
                 tx[4] = 8;//写入字节数
-                rev = rev * 360 * 1000;
-                if (!bForeward)
-                {
-                    rev = rev * -1;
-                    torque = torque * -1;
-                }
+                rev = rev * 360 * 1000;                
                 byte[] x = BitConverter.GetBytes((int)rev);
                 tx[5] = x[1];
                 tx[6] = x[0];
                 tx[7] = x[3];
                 tx[8] = x[2];
                 torque = torque / 28.6 * 1000;
-                this.Invoke((EventHandler)(delegate
-                {
-                    listView2.Items[7].SubItems[1].Text = ((int)torque).ToString();
-                }));
                 x = BitConverter.GetBytes((int)torque);
                 tx[9] = x[1];
                 tx[10] = x[0];

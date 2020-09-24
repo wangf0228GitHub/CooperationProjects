@@ -36,16 +36,13 @@ namespace PLC
             tcpPLC.TCPServerPort = 502;
             while (true)
             {
-                if (!tcpPLC.Conn())
+                if (tcpPLC.Conn())
+                    break;
+                if (MessageBox.Show("无法连接连接到PLC,是否重试!", "PLC连接失败", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
                 {
-                    if (MessageBox.Show("无法连接连接到PLC,是否重试!", "PLC连接失败", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
-                    {
-                        this.Close();
-                        return;
-                    }
-
+                    this.Close();
+                    return;
                 }
-                break;
             }
             ShowText("成功连接到PLC");
         }
@@ -55,6 +52,8 @@ namespace PLC
             ShowText("发送数据:" + WFNetLib.StringFunc.StringsFunction.byteToHexStr(txBytes, " "));
             if (!tcpPLC.SendPacket(txBytes))
             {
+                tcpPLC.Close();
+                PLCConnect();
                 return null;
             }
             object o = tcpPLC.ReceivePacket();
@@ -96,7 +95,7 @@ namespace PLC
             tx[6] = x[0];
             tx[7] = x[3];
             tx[8] = x[2];
-            torque = torque / 11000 * 10;
+            torque = torque / 28.6*1000;
 //             this.Invoke((EventHandler)(delegate
 //             {
 //                 listView2.Items[6].SubItems[1].Text = ((int)torque).ToString();

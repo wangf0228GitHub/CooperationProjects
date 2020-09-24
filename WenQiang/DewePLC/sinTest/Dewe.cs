@@ -10,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DewePLC
+namespace sinTest
 {
-    public partial class Form1 : Form
+    public partial class sinTestForm : Form
     {
         private OpcUaClient opcUaClient;// = new OpcUaClient();
         Task OpcTask;
@@ -53,8 +53,8 @@ namespace DewePLC
             }
         }
         string[] deweNodes;
-        public double deweNiuZhen, deweNiuJu;
-        public void ReadDeweData()
+        double deweNiuZhen, deweNiuJu;
+        void ReadDeweData()
         {
             try
             {

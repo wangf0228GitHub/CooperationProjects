@@ -14,9 +14,9 @@ namespace DewePLC
     public partial class PIDSettingForm : Form
     {
         int type;
-        WFNetLib.PID.incrementPID pid;
+        WFNetLib.PID.positionPID pid;
         _R2 R2;
-        public PIDSettingForm(int _type, WFNetLib.PID.incrementPID _pid,_R2 r2)
+        public PIDSettingForm(int _type, WFNetLib.PID.positionPID _pid,_R2 r2)
         {
             InitializeComponent();
             type = _type;

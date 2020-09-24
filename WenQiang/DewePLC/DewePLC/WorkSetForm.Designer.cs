@@ -89,8 +89,13 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.DecimalPlaces = 1;
+            this.numericUpDown1.DecimalPlaces = 2;
             this.numericUpDown1.Location = new System.Drawing.Point(136, 106);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            286,
+            0,
+            0,
+            65536});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(87, 21);
             this.numericUpDown1.TabIndex = 2;
@@ -161,9 +166,9 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(447, 108);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(17, 12);
+            this.label6.Size = new System.Drawing.Size(11, 12);
             this.label6.TabIndex = 4;
-            this.label6.Text = "Nm";
+            this.label6.Text = "%";
             // 
             // label7
             // 
@@ -190,7 +195,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(11, 12);
             this.label9.TabIndex = 4;
-            this.label9.Text = "m";
+            this.label9.Text = "%";
             // 
             // numericUpDown4
             // 

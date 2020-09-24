@@ -51,6 +51,8 @@ namespace DewePLC
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            waitTimer.Enabled = false;
+            openTimer.Enabled = false;
             try
             {
                 opcUaClient.Disconnect();
@@ -72,9 +74,9 @@ namespace DewePLC
             NiuZhenPID.igain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_igain"));
             NiuZhenPID.dgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_dgain"));
             listView1.Items[0].SubItems[1].Text = NiuZhenPID.sp.ToString();
-            listView1.Items[2].SubItems[1].Text = NiuZhenPID.pgain.ToString();
-            listView1.Items[3].SubItems[1].Text = NiuZhenPID.igain.ToString();
-            listView1.Items[4].SubItems[1].Text = NiuZhenPID.dgain.ToString();
+            listView1.Items[3].SubItems[1].Text = NiuZhenPID.pgain.ToString();
+            listView1.Items[4].SubItems[1].Text = NiuZhenPID.igain.ToString();
+            listView1.Items[5].SubItems[1].Text = NiuZhenPID.dgain.ToString();
             listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;
 
 
@@ -94,9 +96,9 @@ namespace DewePLC
             deweNodes[1] = iniFileOP.Read("System Run", "Node2Addr");
 
             listView2.Items[0].SubItems[1].Text = NiuJuPID.sp.ToString();
-            listView2.Items[2].SubItems[1].Text = NiuJuPID.pgain.ToString();
-            listView2.Items[3].SubItems[1].Text = NiuJuPID.igain.ToString();
-            listView2.Items[4].SubItems[1].Text = NiuJuPID.dgain.ToString();
+            listView2.Items[3].SubItems[1].Text = NiuJuPID.pgain.ToString();
+            listView2.Items[4].SubItems[1].Text = NiuJuPID.igain.ToString();
+            listView2.Items[5].SubItems[1].Text = NiuJuPID.dgain.ToString();
             listView2.Columns[1].Width = listView2.ClientSize.Width - listView2.Columns[0].Width;// - listView1.Columns[1].Width;
         }
 
@@ -111,38 +113,48 @@ namespace DewePLC
         }
         _R2 R2;
         double openRev;
-        WaitingProc wpStart;        
+        WaitingProc wpStart;
+        int openTimesCount;     
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             NiuJuPID.ResetPIDParam();
             NiuZhenPID.ResetPIDParam();
             WorkSetForm f = new WorkSetForm();
             if(f.ShowDialog()==DialogResult.OK)
-            {
-                NiuJuPID.deadband = (double)f.numericUpDown3.Value;
-                NiuZhenPID.deadband = (double)f.numericUpDown4.Value;
+            {                
                 R2=(_R2)f.comboBox1.SelectedIndex;
                 NiuJuPID.sp = (double)f.numericUpDown1.Value;
                 listView2.Items[0].SubItems[1].Text = NiuJuPID.sp.ToString();
-                NiuZhenPID.sp = (double)f.numericUpDown2.Value;                
+                NiuZhenPID.sp = (double)f.numericUpDown2.Value;
+                NiuJuPID.deadband = (double)(f.numericUpDown3.Value)*NiuJuPID.sp;
+                NiuZhenPID.deadband = (double)(f.numericUpDown4.Value)*NiuZhenPID.sp;
                 NiuZhenPID.pgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString()+"_pgain"));
                 NiuZhenPID.igain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_igain"));
                 NiuZhenPID.dgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_dgain"));
                 listView1.Items[0].SubItems[1].Text = NiuZhenPID.sp.ToString();
-                listView1.Items[2].SubItems[1].Text = NiuZhenPID.pgain.ToString();
-                listView1.Items[3].SubItems[1].Text = NiuZhenPID.igain.ToString();
-                listView1.Items[4].SubItems[1].Text = NiuZhenPID.dgain.ToString();
+                listView1.Items[3].SubItems[1].Text = NiuZhenPID.pgain.ToString();
+                listView1.Items[4].SubItems[1].Text = NiuZhenPID.igain.ToString();
+                listView1.Items[5].SubItems[1].Text = NiuZhenPID.dgain.ToString();
                 listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;// - listView1.Columns[1].Width;
                 double a, b,c;
                 a= double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_a"));
                 b = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_b"));
                 c = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_c"));
-                openRev = a * NiuZhenPID.sp * NiuZhenPID.sp + b * NiuZhenPID.sp + c;               
+                openRev = a * NiuZhenPID.sp * NiuZhenPID.sp + b * NiuZhenPID.sp + c;
+                openRev = openRev * 7;
+                int ms1, ms2;
+                ms1 = int.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_AllTime1"));
+                ms2 = int.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_AllTime2"));
+                SetAllTime(ms1, ms2);
+                openTimesCount = ms1/openTimer.Interval;
                 wpStart = new WaitingProc();
                 wpStart.MaxProgress = 10;
                 WaitingProcFunc wpf = new WaitingProcFunc(WaitingStart);
                 if (wpStart.Execute(wpf, "等待电机启动", WaitingType.WithCancel, ""))
+                {
                     toolStripButton4.Enabled = false;
+                    splitContainer1.Enabled = true;
+                }
             }
         }
         bool bForeward;
@@ -177,8 +189,8 @@ namespace DewePLC
                         motorTorque = NiuJuPID.sp;
                         this.Invoke((EventHandler)(delegate
                         {
-                            listView1.Items[5].SubItems[1].Text = openRev.ToString("F3");
-                            listView2.Items[5].SubItems[1].Text = NiuJuPID.sp.ToString();
+                            listView1.Items[6].SubItems[1].Text = openRev.ToString("F3");
+                            listView2.Items[6].SubItems[1].Text = NiuJuPID.sp.ToString();
                             listView1.Items[1].SubItems[1].Text = "";
                             listView2.Items[1].SubItems[1].Text = "";
                             chart1.Series[0].Points.Clear();
@@ -213,16 +225,29 @@ namespace DewePLC
         }
 
         int openTimes;
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            sinTestForm f = new sinTestForm(this);
+            f.ShowDialog();
+        }
+
         private void openTimer_Tick(object sender, EventArgs e)
         {
             openTimes++;
-            if(openTimes<10)
+            if(openTimes<openTimesCount)
             {
                 ReadDeweData();
                 this.Invoke((EventHandler)(delegate
                 {
                     listView1.Items[1].SubItems[1].Text = deweNiuZhen.ToString();
                     listView2.Items[1].SubItems[1].Text = deweNiuJu.ToString();
+                    listView1.Items[2].SubItems[1].Text = (100*(NiuZhenPID.sp-deweNiuZhen)/NiuZhenPID.sp).ToString("F1");
+                    listView2.Items[2].SubItems[1].Text = (100*(NiuJuPID.sp - deweNiuJu) / NiuJuPID.sp).ToString("F1");
+                    chart1.Series[0].Points.AddY(deweNiuZhen);
+                    chart1.Series[1].Points.AddY(NiuZhenPID.sp);
+                    chart2.Series[0].Points.AddY(deweNiuJu);
+                    chart2.Series[1].Points.AddY(NiuJuPID.sp);
                 }));
             }
             else
@@ -234,19 +259,21 @@ namespace DewePLC
         double motorRev, motorTorque;
         private void waitTimer_Tick(object sender, EventArgs e)
         {
-            ReadDeweData();
-            motorRev = NiuZhenPID.PIDCalc(deweNiuZhen);            
-            chart1.Series[0].Points.AddY(deweNiuZhen);
-            chart1.Series[1].Points.AddY(NiuZhenPID.sp);
-            motorTorque = NiuJuPID.PIDCalc(deweNiuJu);
-            chart2.Series[0].Points.AddY(deweNiuJu);
-            chart2.Series[1].Points.AddY(NiuJuPID.sp);
+            ReadDeweData();            
             this.Invoke((EventHandler)(delegate
             {
-                listView1.Items[5].SubItems[1].Text = motorRev.ToString("F3");
+                motorRev = NiuZhenPID.PIDCalc(deweNiuZhen);
+                chart1.Series[0].Points.AddY(deweNiuZhen);
+                chart1.Series[1].Points.AddY(NiuZhenPID.sp);
+                motorTorque = NiuJuPID.PIDCalc(deweNiuJu);
+                chart2.Series[0].Points.AddY(deweNiuJu);
+                chart2.Series[1].Points.AddY(NiuJuPID.sp);
+                listView1.Items[6].SubItems[1].Text = motorRev.ToString("F3");
                 listView1.Items[1].SubItems[1].Text = deweNiuZhen.ToString();
-                listView2.Items[5].SubItems[1].Text = motorTorque.ToString();
+                listView2.Items[6].SubItems[1].Text = motorTorque.ToString();
                 listView2.Items[1].SubItems[1].Text = deweNiuJu.ToString();
+                listView1.Items[2].SubItems[1].Text = (100*(NiuZhenPID.sp - deweNiuZhen) / NiuZhenPID.sp).ToString("F1");
+                listView2.Items[2].SubItems[1].Text = (100*(NiuJuPID.sp - deweNiuJu) / NiuJuPID.sp).ToString("F1");
                 if (NiuZhenPID.bOk)
                     listView1.BackColor = Color.GreenYellow;
                 else
@@ -262,13 +289,12 @@ namespace DewePLC
             {
                 ushort D100 = BytesOP.MakeByte(tp.Data[1], tp.Data[2]);
                 if (!BytesOP.GetBit(D100, 0))//系统外部停机
-                {
-                    waitTimer.Enabled = false;
-                    splitContainer1.Enabled = false;
-                    toolStripButton4.Enabled = true;
+                {                    
                     MessageBox.Show("测试停止");
                     this.Invoke((EventHandler)(delegate
-                    {
+                    {                        waitTimer.Enabled = false;
+                        splitContainer1.Enabled = false;
+                        toolStripButton4.Enabled = true;
                         listView1.BackColor = SystemColors.Window;
                         listView2.BackColor = SystemColors.Window;
                     }));
