@@ -21,16 +21,13 @@ namespace DewePLC
             tcpPLC.TCPServerPort = 502;
             while(true)
             {
-                if (!tcpPLC.Conn())
+                if (tcpPLC.Conn())
+                    break;
+                if (MessageBox.Show("无法连接连接到PLC,是否重试!", "PLC连接失败", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
                 {
-                    if (MessageBox.Show("无法连接连接到PLC,是否重试!", "PLC连接失败", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1) == DialogResult.Cancel)
-                    {
-                        this.Close();
-                        return;
-                    }
-
+                    this.Close();
+                    return;
                 }
-                break;
             }
             ShowText("成功连接到PLC");
         }
@@ -40,6 +37,8 @@ namespace DewePLC
             ShowText("发送数据:" + WFNetLib.StringFunc.StringsFunction.byteToHexStr(txBytes, " "));
             if (!tcpPLC.SendPacket(txBytes))
             {
+                tcpPLC.Close();
+                PLCConnect();
                 return null;
             }
             object o = tcpPLC.ReceivePacket();

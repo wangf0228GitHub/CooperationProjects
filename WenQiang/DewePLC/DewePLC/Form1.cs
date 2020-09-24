@@ -133,10 +133,11 @@ namespace DewePLC
                 listView1.Items[3].SubItems[1].Text = NiuZhenPID.igain.ToString();
                 listView1.Items[4].SubItems[1].Text = NiuZhenPID.dgain.ToString();
                 listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;// - listView1.Columns[1].Width;
-                double k, b;
-                k= double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_k"));
+                double a, b,c;
+                a= double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_a"));
                 b = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_b"));
-                openRev = k * NiuZhenPID.sp + b;                
+                c = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_c"));
+                openRev = a * NiuZhenPID.sp * NiuZhenPID.sp + b * NiuZhenPID.sp + c;               
                 wpStart = new WaitingProc();
                 wpStart.MaxProgress = 10;
                 WaitingProcFunc wpf = new WaitingProcFunc(WaitingStart);
