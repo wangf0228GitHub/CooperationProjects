@@ -86,8 +86,12 @@
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.tbTime = new System.Windows.Forms.ToolStripLabel();
+            this.tbTime1 = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -105,7 +109,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.openTimer = new System.Windows.Forms.Timer(this.components);
             this.waitTimer = new System.Windows.Forms.Timer(this.components);
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -131,9 +135,12 @@
             // 
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton4,
+            this.toolStripButton5,
             this.toolStripButton3,
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.tbTime,
+            this.tbTime1});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(924, 25);
@@ -149,6 +156,16 @@
             this.toolStripButton4.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton4.Text = "开始工作";
             this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton5.Text = "参数设置";
+            this.toolStripButton5.Click += new System.EventHandler(this.toolStripButton5_Click);
             // 
             // toolStripButton3
             // 
@@ -169,6 +186,32 @@
             this.toolStripButton1.Size = new System.Drawing.Size(64, 22);
             this.toolStripButton1.Text = "opcRead";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton2.Text = "sinTest";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // tbTime
+            // 
+            this.tbTime.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tbTime.Name = "tbTime";
+            this.tbTime.Size = new System.Drawing.Size(96, 22);
+            this.tbTime.Text = "toolStripLabel1";
+            this.tbTime.Visible = false;
+            // 
+            // tbTime1
+            // 
+            this.tbTime1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tbTime1.Name = "tbTime1";
+            this.tbTime1.Size = new System.Drawing.Size(68, 22);
+            this.tbTime1.Text = "测试时间：";
+            this.tbTime1.Visible = false;
             // 
             // splitContainer1
             // 
@@ -408,15 +451,10 @@
             this.waitTimer.Interval = 1000;
             this.waitTimer.Tick += new System.EventHandler(this.waitTimer_Tick);
             // 
-            // toolStripButton2
+            // timer1
             // 
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton2.Text = "sinTest";
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // Form1
             // 
@@ -480,6 +518,10 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripLabel tbTime;
+        private System.Windows.Forms.ToolStripLabel tbTime1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

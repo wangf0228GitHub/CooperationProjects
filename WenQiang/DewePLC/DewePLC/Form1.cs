@@ -21,6 +21,7 @@ namespace DewePLC
         public Form1()
         {
             InitializeComponent();
+            iniFileOP.iniFilePath = System.Windows.Forms.Application.StartupPath + "\\Config.ini";
         }
         
         private delegate void ShowTextLog(string str, bool newSection);
@@ -44,7 +45,11 @@ namespace DewePLC
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            InitSystemParam();
+            opcUrl = iniFileOP.Read("System Run", "opcUrl");
+            deweNodes = new string[2];
+            deweNodes[0] = iniFileOP.Read("System Run", "Node1Addr");
+            deweNodes[1] = iniFileOP.Read("System Run", "Node2Addr");
+            //InitSystemParam();
             PLCConnect();
             //ConnectOPCServer();
         }
@@ -65,35 +70,58 @@ namespace DewePLC
         }
         string opcUrl;
         double deweNiuJu_k, deweNiuJu_b, deweNiuZhen_k, deweNiuZhen_b;
-        void InitSystemParam()
+        void ReadSystemParam()
         {
-            iniFileOP.iniFilePath = System.Windows.Forms.Application.StartupPath + "\\Config.ini";
-            R2 = (_R2)int.Parse(iniFileOP.Read("System Setting", "R2"));
-            NiuZhenPID.sp = double.Parse(iniFileOP.Read("System Setting", "NiuZhen_sp"));
-            NiuZhenPID.pgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_pgain"));
-            NiuZhenPID.igain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_igain"));
-            NiuZhenPID.dgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_dgain"));
-            listView1.Items[0].SubItems[1].Text = NiuZhenPID.sp.ToString();
-            listView1.Items[3].SubItems[1].Text = NiuZhenPID.pgain.ToString();
-            listView1.Items[4].SubItems[1].Text = NiuZhenPID.igain.ToString();
-            listView1.Items[5].SubItems[1].Text = NiuZhenPID.dgain.ToString();
-            listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;
-
-
-            NiuJuPID.sp = double.Parse(iniFileOP.Read("System Setting", "NiuJu_sp"));
+            double x;
             NiuJuPID.pgain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_pgain"));
             NiuJuPID.igain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_igain"));
             NiuJuPID.dgain = double.Parse(iniFileOP.Read("System Setting", "NiuJu_dgain"));
-
 
             deweNiuJu_k = double.Parse(iniFileOP.Read("System Setting", "deweNiuJu_k"));
             deweNiuJu_b = double.Parse(iniFileOP.Read("System Setting", "deweNiuJu_b"));
             deweNiuZhen_k = double.Parse(iniFileOP.Read("System Setting", "deweNiuZhen_k"));
             deweNiuZhen_b = double.Parse(iniFileOP.Read("System Setting", "deweNiuZhen_b"));
-            opcUrl = iniFileOP.Read("System Run", "opcUrl");
-            deweNodes = new string[2];
-            deweNodes[0] = iniFileOP.Read("System Run", "Node1Addr");
-            deweNodes[1] = iniFileOP.Read("System Run", "Node2Addr");
+
+            NiuZhenPID.sp = double.Parse(iniFileOP.Read("System Setting", "NiuZhen_sp"));
+            NiuJuPID.sp = double.Parse(iniFileOP.Read("System Setting", "NiuJu_sp"));
+            R2 = (_R2)int.Parse(iniFileOP.Read("System Setting", "R2"));
+
+            x = double.Parse(iniFileOP.Read("System Setting", "NiuZhen_Deadband"));
+            NiuZhenPID.deadband = x * NiuZhenPID.sp;
+            x = double.Parse(iniFileOP.Read("System Setting", "NiuJu_Deadband"));
+            NiuJuPID.deadband = x * NiuJuPID.sp;
+
+
+            NiuZhenPID.pgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_pgain"));
+            NiuZhenPID.igain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_igain"));
+            NiuZhenPID.dgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_dgain"));
+
+            double a, b, c;
+            a = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_a"));
+            b = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_b"));
+            c = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_c"));
+            openRev = a * NiuZhenPID.sp * NiuZhenPID.sp + b * NiuZhenPID.sp + c;
+            openRev = openRev * 7;
+
+
+            AllTime1 = int.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_AllTime1"));
+            AllTime2 = int.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_AllTime2"));
+            OpenTime = int.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_OpenTime"));
+            openTimesCount = OpenTime / openTimer.Interval;
+
+
+            listView1.Items[0].SubItems[1].Text = NiuZhenPID.sp.ToString();
+            listView1.Items[3].SubItems[1].Text = NiuZhenPID.pgain.ToString();
+            listView1.Items[4].SubItems[1].Text = NiuZhenPID.igain.ToString();
+            listView1.Items[5].SubItems[1].Text = NiuZhenPID.dgain.ToString();
+            listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;       
+
+            
+            
+
+
+            
+            
 
             listView2.Items[0].SubItems[1].Text = NiuJuPID.sp.ToString();
             listView2.Items[3].SubItems[1].Text = NiuJuPID.pgain.ToString();
@@ -114,7 +142,9 @@ namespace DewePLC
         _R2 R2;
         double openRev;
         WaitingProc wpStart;
-        int openTimesCount;     
+        int openTimesCount;
+        int AllTime1, AllTime2,OpenTime;
+        DateTime startDT;
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
             NiuJuPID.ResetPIDParam();
@@ -122,36 +152,20 @@ namespace DewePLC
             WorkSetForm f = new WorkSetForm();
             if(f.ShowDialog()==DialogResult.OK)
             {                
-                R2=(_R2)f.comboBox1.SelectedIndex;
-                NiuJuPID.sp = (double)f.numericUpDown1.Value;
-                listView2.Items[0].SubItems[1].Text = NiuJuPID.sp.ToString();
-                NiuZhenPID.sp = (double)f.numericUpDown2.Value;
-                NiuJuPID.deadband = (double)(f.numericUpDown3.Value)*NiuJuPID.sp;
-                NiuZhenPID.deadband = (double)(f.numericUpDown4.Value)*NiuZhenPID.sp;
-                NiuZhenPID.pgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString()+"_pgain"));
-                NiuZhenPID.igain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_igain"));
-                NiuZhenPID.dgain = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_dgain"));
-                listView1.Items[0].SubItems[1].Text = NiuZhenPID.sp.ToString();
-                listView1.Items[3].SubItems[1].Text = NiuZhenPID.pgain.ToString();
-                listView1.Items[4].SubItems[1].Text = NiuZhenPID.igain.ToString();
-                listView1.Items[5].SubItems[1].Text = NiuZhenPID.dgain.ToString();
-                listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;// - listView1.Columns[1].Width;
-                double a, b,c;
-                a= double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_a"));
-                b = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_b"));
-                c = double.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_c"));
-                openRev = a * NiuZhenPID.sp * NiuZhenPID.sp + b * NiuZhenPID.sp + c;
-                openRev = openRev * 7;
-                int ms1, ms2;
-                ms1 = int.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_AllTime1"));
-                ms2 = int.Parse(iniFileOP.Read(R2.ToString(), R2.ToString() + "_AllTime2"));
-                SetAllTime(ms1, ms2);
-                openTimesCount = ms1/openTimer.Interval;
+                ReadSystemParam();
+                SetAllTime(AllTime1, AllTime2);
                 wpStart = new WaitingProc();
                 wpStart.MaxProgress = 10;
                 WaitingProcFunc wpf = new WaitingProcFunc(WaitingStart);
                 if (wpStart.Execute(wpf, "等待电机启动", WaitingType.WithCancel, ""))
                 {
+                    startDT = DateTime.Now;
+                    DateTime dt = DateTime.Now;
+                    TimeSpan ts = dt.Subtract(startDT);
+                    tbTime1.Visible = true;
+                    tbTime.Visible = true;
+                    tbTime.Text = ts.ToString(@"hh\:mm\:ss");
+                    timer1.Enabled = true;
                     toolStripButton4.Enabled = false;
                     splitContainer1.Enabled = true;
                 }
@@ -232,6 +246,22 @@ namespace DewePLC
             f.ShowDialog();
         }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            DateTime dt = DateTime.Now;
+            TimeSpan ts = dt.Subtract(startDT);
+            tbTime.Text = ts.ToString(@"hh\:mm\:ss");
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            SettingForm f = new SettingForm();
+            if(f.ShowDialog()==DialogResult.OK)
+            {
+
+            }
+        }
+
         private void openTimer_Tick(object sender, EventArgs e)
         {
             openTimes++;
@@ -249,11 +279,36 @@ namespace DewePLC
                     chart2.Series[0].Points.AddY(deweNiuJu);
                     chart2.Series[1].Points.AddY(NiuJuPID.sp);
                 }));
+                checkPLC();
             }
             else
             {
                 openTimer.Enabled = false;
                 waitTimer.Enabled = true;
+            }
+        }
+        void checkPLC()
+        {
+            TcpModbusPacket tp = ReadPLC();
+            if (tp != null)
+            {
+                ushort D100 = BytesOP.MakeByte(tp.Data[1], tp.Data[2]);
+                if (!BytesOP.GetBit(D100, 0))//系统外部停机
+                {                    
+                    this.Invoke((EventHandler)(delegate
+                    {
+                        openTimer.Enabled = false;
+                        waitTimer.Enabled = false;
+                        splitContainer1.Enabled = false;
+                        toolStripButton4.Enabled = true;
+                        listView1.BackColor = SystemColors.Window;
+                        listView2.BackColor = SystemColors.Window;
+                        tbTime1.Visible = false;
+                        tbTime.Visible = false;
+                        timer1.Enabled = false;
+                    }));
+                    MessageBox.Show("测试停止");
+                }
             }
         }
         double motorRev, motorTorque;
@@ -284,22 +339,7 @@ namespace DewePLC
                     listView2.BackColor = SystemColors.Window;
             }));
             SetMotor(motorRev, motorTorque);
-            TcpModbusPacket tp = ReadPLC();
-            if (tp != null)
-            {
-                ushort D100 = BytesOP.MakeByte(tp.Data[1], tp.Data[2]);
-                if (!BytesOP.GetBit(D100, 0))//系统外部停机
-                {                    
-                    MessageBox.Show("测试停止");
-                    this.Invoke((EventHandler)(delegate
-                    {                        waitTimer.Enabled = false;
-                        splitContainer1.Enabled = false;
-                        toolStripButton4.Enabled = true;
-                        listView1.BackColor = SystemColors.Window;
-                        listView2.BackColor = SystemColors.Window;
-                    }));
-                }
-            }
+            checkPLC();
         }
     }
 }
