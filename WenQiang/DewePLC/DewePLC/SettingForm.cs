@@ -71,7 +71,8 @@ namespace DewePLC
                 MessageBox.Show("NiuJu_dgain输入有误");
                 return;
             }
-            iniFileOP.Write("System Setting", "NiuJu_dgain", x.ToString());            
+            iniFileOP.Write("System Setting", "NiuJu_dgain", x.ToString());
+            MessageBox.Show("设定扭矩参数成功");      
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -89,6 +90,7 @@ namespace DewePLC
                 return;
             }
             iniFileOP.Write("System Setting", "deweNiuJu_b", x.ToString());
+            MessageBox.Show("设定扭矩传感器参数成功");
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -106,6 +108,7 @@ namespace DewePLC
                 return;
             }
             iniFileOP.Write("System Setting", "deweNiuZhen_b", x.ToString());
+            MessageBox.Show("设定扭振参数成功");
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -151,6 +154,7 @@ namespace DewePLC
                 return;
             }
             iniFileOP.Write(R2.ToString(), R2.ToString() + "_OpenTime", t.ToString());
+            MessageBox.Show("设定质量块参数成功");
         }
     }
 }

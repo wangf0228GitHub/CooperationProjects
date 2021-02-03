@@ -63,6 +63,7 @@
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
+            "无质量块",
             "0.160 m",
             "0.182 m",
             "0.206 m",
@@ -92,10 +93,10 @@
             this.numericUpDown1.DecimalPlaces = 2;
             this.numericUpDown1.Location = new System.Drawing.Point(136, 106);
             this.numericUpDown1.Maximum = new decimal(new int[] {
-            286,
+            200,
             0,
             0,
-            65536});
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(87, 21);
             this.numericUpDown1.TabIndex = 2;

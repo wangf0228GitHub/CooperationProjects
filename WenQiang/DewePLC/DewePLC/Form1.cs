@@ -47,8 +47,8 @@ namespace DewePLC
         {
             opcUrl = iniFileOP.Read("System Run", "opcUrl");
             deweNodes = new string[2];
-            deweNodes[0] = iniFileOP.Read("System Run", "Node1Addr");
-            deweNodes[1] = iniFileOP.Read("System Run", "Node2Addr");
+            deweNodes[0] = iniFileOP.Read("System Run", "NodeNiuJuAddr");
+            deweNodes[1] = iniFileOP.Read("System Run", "NodeRevAddr");
             //InitSystemParam();
             PLCConnect();
             //ConnectOPCServer();
@@ -115,13 +115,6 @@ namespace DewePLC
             listView1.Items[4].SubItems[1].Text = NiuZhenPID.igain.ToString();
             listView1.Items[5].SubItems[1].Text = NiuZhenPID.dgain.ToString();
             listView1.Columns[1].Width = listView1.ClientSize.Width - listView1.Columns[0].Width;       
-
-            
-            
-
-
-            
-            
 
             listView2.Items[0].SubItems[1].Text = NiuJuPID.sp.ToString();
             listView2.Items[3].SubItems[1].Text = NiuJuPID.pgain.ToString();

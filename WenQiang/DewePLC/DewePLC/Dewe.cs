@@ -53,7 +53,7 @@ namespace DewePLC
             }
         }
         string[] deweNodes;
-        public double deweNiuZhen, deweNiuJu;
+        public double deweNiuZhen, deweNiuJu,deweRev;
         public void ReadDeweData()
         {
             try
@@ -76,6 +76,46 @@ namespace DewePLC
                 ShowText("Dewe读取出错:" + ex.Message);
             }
             
+        }
+        public void ReadDeweRev()
+        {
+            try
+            {
+                // 因为不能保证读取的节点类型一致，所以只提供统一的DataValue读取，每个节点需要单独解析
+                double d1 = 0;
+                int len = 8;
+                for (int i = 0; i < len; i++)
+                {
+                    float dewe = opcUaClient.ReadNode<float>(deweNodes[1]);
+                    d1 += dewe * deweNiuJu_k + deweNiuJu_b;
+                }
+                deweRev = d1 / len;
+            }
+            catch (Exception ex)
+            {
+                ShowText("Dewe读取出错:" + ex.Message);
+            }
+
+        }
+        public void ReadDeweNiuJu()
+        {
+            try
+            {
+                // 因为不能保证读取的节点类型一致，所以只提供统一的DataValue读取，每个节点需要单独解析
+                double d1 = 0;
+                int len = 8;
+                for (int i = 0; i < len; i++)
+                {
+                    float dewe = opcUaClient.ReadNode<float>(deweNodes[0]);
+                    d1 += dewe * deweNiuJu_k + deweNiuJu_b;
+                }
+                deweNiuJu = d1 / len;
+            }
+            catch (Exception ex)
+            {
+                ShowText("Dewe读取出错:" + ex.Message);
+            }
+
         }
         public void SubCallback1(string key, MonitoredItem monitoredItem, MonitoredItemNotificationEventArgs args)
         {

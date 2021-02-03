@@ -10,7 +10,8 @@ namespace DewePLC
 {
     public enum _R2
     {
-        R160=0,
+        R0=0,
+        R160=1,
         R182,
         R206,
         R219,

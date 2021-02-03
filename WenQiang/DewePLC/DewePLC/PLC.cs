@@ -65,7 +65,7 @@ namespace DewePLC
         public void SetMotor(double rev,double torque)
         {
             Debug.Assert(rev>0);
-            Debug.Assert(torque>0);
+            Debug.Assert(torque>=0);
             if (torque > 28.6)
                 torque = 28.6;
             int retry = 3;
@@ -88,7 +88,7 @@ namespace DewePLC
                 tx[6] = x[0];
                 tx[7] = x[3];
                 tx[8] = x[2];
-                torque = torque / 28.6 * 1000;
+                torque = torque/7 / 28.6 * 1000;
                 this.Invoke((EventHandler)(delegate
                 {
                     listView2.Items[7].SubItems[1].Text = ((int)torque).ToString();
