@@ -22,7 +22,7 @@ namespace udpCCDTest
         public static IWin32Window owner;
         public static bool CollectImage(IWin32Window _owner, int Tex, int nCount)
         {
-            MessageBox.Show(owner, "与采集板通信失败");
+            FormMain.ShowText("sljdljsf ");
             owner = _owner;
             ccdImageList=new List<ccdImage>(nCount);
             ccdImageRxConfirm = new List<bool>(nCount);

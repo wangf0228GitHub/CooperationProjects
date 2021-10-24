@@ -16,7 +16,6 @@ namespace udpCCDTest
         {
             InitializeComponent();
         }
-        WaitingProc wp;
         int nCount, Tex;
         private void toolStripButton1_Click(object sender, EventArgs e)
         {      
