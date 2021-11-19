@@ -22,35 +22,47 @@ namespace udpCCDTest
         public static IWin32Window owner;
         public static bool CollectImage(IWin32Window _owner, int Tex, int nCount)
         {
-            FormMain.ShowText("sljdljsf ");
-            owner = _owner;
-            ccdImageList=new List<ccdImage>(nCount);
-            ccdImageRxConfirm = new List<bool>(nCount);
-            for (int i = 0; i < nCount; i++)
-            {
-                ccdImageList.Add(new ccdImage());
-                ccdImageRxConfirm.Add(false);
-            }
+            owner = _owner;            
             if (UDPProc.UDPCommand_01() == null)
             {
                 MessageBox.Show(owner, "与采集板通信失败");
                 return false;
             }
-            if (UDPCommand_02(Tex, nCount) == null)
+            while(true)
             {
-                MessageBox.Show(owner,"与采集板通信失败");
-                return false;
-            }
-            wp = new WaitingProc(owner);
-            wp.MaxProgress = nCount;
-            WaitingProcFunc wpf = new WaitingProcFunc(WaitingImageList);
-            wp.Execute(wpf, "图像采集中", WaitingType.None, "是否取消？");
-            for (int i = 0; i < nCount; i++)
-            {
-                if (ccdImageRxConfirm[i] == false)
+                ccdImageList = new List<ccdImage>(nCount);
+                ccdImageRxConfirm = new List<bool>(nCount);
+                for (int i = 0; i < nCount; i++)
+                {
+                    ccdImageList.Add(new ccdImage());
+                    ccdImageRxConfirm.Add(false);
+                }
+                if (UDPCommand_02(Tex, nCount) == null)
+                {
+                    MessageBox.Show(owner, "与采集板通信失败");
                     return false;
+                }
+                wp = new WaitingProc(owner);
+                wp.MaxProgress = nCount;
+                WaitingProcFunc wpf = new WaitingProcFunc(WaitingImageList);
+                wp.Execute(wpf, "图像采集中", WaitingType.None, "是否取消？");
+                bool bok = true;
+                for (int i = 0; i < nCount; i++)
+                {
+                    if (ccdImageRxConfirm[i] == false)
+                    {
+                        bok = false;
+                        break;                        
+                    }
+                }
+                if(bok)
+                    return true;
+                else
+                {
+                    if (MessageBox.Show("图像采集失败，是否重试", "图像采集失败", MessageBoxButtons.RetryCancel) == DialogResult.Retry)
+                        return false;
+                }
             }
-            return true;
         }
         static void WaitingImageList(object LockWatingThread)
         {
@@ -82,25 +94,27 @@ namespace udpCCDTest
                             ImageIndex = BytesOP.MakeShort(rxList[3], rxList[4]);
                             RowCount = BytesOP.MakeShort(rxList[5], rxList[6]);
                             rowIndex = BytesOP.MakeShort(rxList[7], rxList[8]);
+                            //确认收到了某行
                             ccdImageList[ImageIndex].rxConfirm[rowIndex, rxList[9]] = true;
-                            int dataAddr;
-                            if (rxList[9] == 0)//前半行
-                                dataAddr = rowIndex * SystemParam.CCD_N * 2;
-                            else
-                                dataAddr = rowIndex * SystemParam.CCD_N * 2 + SystemParam.CCD_N;
-                            Array.Copy(rxList, 10, ccdImageList[ImageIndex].imageData, dataAddr, SystemParam.CCD_N);
-                            if (rowIndex == RowCount)//最后一帧
+                            int dataAddr= rowIndex * SystemParam.CCD_N * 2+1440*rxList[9];
+                            Array.Copy(rxList, 10, ccdImageList[ImageIndex].byteList, dataAddr, 1440);
+                            if (rowIndex == RowCount && rxList[9]==11)//最后一帧
                             {
                                 byte[] tx = new byte[34];
                                 tx[0] = 0x05;
                                 tx[1] = 0x01;//图像接收正确，无需重传
                                 for (int i = 0; i < SystemParam.CCD_M; i++)
                                 {
-                                    if ((ccdImageList[ImageIndex].rxConfirm[i, 0] == false) || ccdImageList[ImageIndex].rxConfirm[i, 1] == false)
+                                    for(int j=0;j<12;j++)
                                     {
-                                        tx[1] = 0x00;
-                                        break;
+                                        if (ccdImageList[ImageIndex].rxConfirm[i, j] == false)
+                                        {
+                                            tx[1] = 0x00;
+                                            break;
+                                        }
                                     }
+                                    if(tx[1] == 0x00)
+                                        break;
                                 }
                                 tx[2] = BytesOP.GetLowByte(ImageIndex);
                                 tx[3] = BytesOP.GetHighByte(ImageIndex);
@@ -237,23 +251,5 @@ namespace udpCCDTest
 
             }));
         }
-    }
-    public class ccdImage
-    {
-        public ushort ImageCount;//此次拍照的总图片数
-        public ushort ImageIndex;//此幅照片的序号
-        public ushort RowCount;//行总数
-        public byte[] imageData;
-        public Boolean[,] rxConfirm;
-        public ccdImage()
-        {
-            imageData = new byte[SystemParam.CCD_M*SystemParam.CCD_N*2];
-            rxConfirm = new Boolean[SystemParam.CCD_M,2];
-            for (int i = 0; i < SystemParam.CCD_M; i++)
-            {
-                rxConfirm[i, 0] = false;
-                rxConfirm[i, 1] = false;
-            }
-        }
-    }
+    }    
 }

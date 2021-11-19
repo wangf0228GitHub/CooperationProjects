@@ -34,27 +34,31 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cbCCD_phi = new System.Windows.Forms.ComboBox();
+            this.label37 = new System.Windows.Forms.Label();
             this.cbCCD_PGA = new System.Windows.Forms.ComboBox();
-            this.cbCCD_ADL = new System.Windows.Forms.ComboBox();
+            this.nCCD_M = new System.Windows.Forms.NumericUpDown();
+            this.nCCD_N = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.cbCCD_ADL = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.nCCD_N = new System.Windows.Forms.NumericUpDown();
             this.nCCD_Pb = new System.Windows.Forms.NumericUpDown();
             this.nCCD_Sb = new System.Windows.Forms.NumericUpDown();
-            this.nCCD_M = new System.Windows.Forms.NumericUpDown();
             this.nCCD_Sch = new System.Windows.Forms.NumericUpDown();
             this.nCCD_Pa = new System.Windows.Forms.NumericUpDown();
             this.label10 = new System.Windows.Forms.Label();
             this.nCCD_Sa = new System.Windows.Forms.NumericUpDown();
             this.label4 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.tbCCDModel = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -96,17 +100,14 @@
             this.label26 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.cbCCD_phi = new System.Windows.Forms.ComboBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nCCD_M)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_N)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Pb)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Sb)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nCCD_M)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Sch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Pa)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Sa)).BeginInit();
@@ -126,7 +127,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ndelta_lambda)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nlambda_Oe)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nOe)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -204,6 +204,78 @@
             this.tabPage1.Text = "图像传感器信息";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.cbCCD_phi);
+            this.groupBox1.Controls.Add(this.label37);
+            this.groupBox1.Controls.Add(this.cbCCD_PGA);
+            this.groupBox1.Controls.Add(this.nCCD_M);
+            this.groupBox1.Controls.Add(this.nCCD_N);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Location = new System.Drawing.Point(20, 227);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(365, 129);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(30, 26);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(83, 12);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "像素数量 行：";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(245, 62);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(110, 58);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "设定图像采集板";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(222, 26);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(29, 12);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "列：";
+            // 
+            // cbCCD_phi
+            // 
+            this.cbCCD_phi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCCD_phi.FormattingEnabled = true;
+            this.cbCCD_phi.Items.AddRange(new object[] {
+            "30",
+            "40",
+            "50",
+            "60",
+            "72",
+            "75",
+            "80"});
+            this.cbCCD_phi.Location = new System.Drawing.Point(119, 62);
+            this.cbCCD_phi.Name = "cbCCD_phi";
+            this.cbCCD_phi.Size = new System.Drawing.Size(58, 20);
+            this.cbCCD_phi.TabIndex = 13;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(183, 65);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(23, 12);
+            this.label37.TabIndex = 10;
+            this.label37.Text = "MHz";
+            // 
             // cbCCD_PGA
             // 
             this.cbCCD_PGA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -221,19 +293,29 @@
             this.cbCCD_PGA.Size = new System.Drawing.Size(58, 20);
             this.cbCCD_PGA.TabIndex = 13;
             // 
-            // cbCCD_ADL
+            // nCCD_M
             // 
-            this.cbCCD_ADL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCCD_ADL.FormattingEnabled = true;
-            this.cbCCD_ADL.Items.AddRange(new object[] {
-            "8",
-            "10",
-            "12",
-            "16"});
-            this.cbCCD_ADL.Location = new System.Drawing.Point(113, 184);
-            this.cbCCD_ADL.Name = "cbCCD_ADL";
-            this.cbCCD_ADL.Size = new System.Drawing.Size(58, 20);
-            this.cbCCD_ADL.TabIndex = 13;
+            this.nCCD_M.Location = new System.Drawing.Point(119, 20);
+            this.nCCD_M.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.nCCD_M.Name = "nCCD_M";
+            this.nCCD_M.Size = new System.Drawing.Size(58, 21);
+            this.nCCD_M.TabIndex = 11;
+            // 
+            // nCCD_N
+            // 
+            this.nCCD_N.Location = new System.Drawing.Point(257, 20);
+            this.nCCD_N.Maximum = new decimal(new int[] {
+            1215752192,
+            23,
+            0,
+            0});
+            this.nCCD_N.Name = "nCCD_N";
+            this.nCCD_N.Size = new System.Drawing.Size(58, 21);
+            this.nCCD_N.TabIndex = 11;
             // 
             // label14
             // 
@@ -253,6 +335,20 @@
             this.label13.TabIndex = 12;
             this.label13.Text = "工作频率：";
             // 
+            // cbCCD_ADL
+            // 
+            this.cbCCD_ADL.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCCD_ADL.FormattingEnabled = true;
+            this.cbCCD_ADL.Items.AddRange(new object[] {
+            "8",
+            "10",
+            "12",
+            "16"});
+            this.cbCCD_ADL.Location = new System.Drawing.Point(113, 184);
+            this.cbCCD_ADL.Name = "cbCCD_ADL";
+            this.cbCCD_ADL.Size = new System.Drawing.Size(58, 20);
+            this.cbCCD_ADL.TabIndex = 13;
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -261,18 +357,6 @@
             this.label12.Size = new System.Drawing.Size(89, 12);
             this.label12.TabIndex = 12;
             this.label12.Text = "模数转换宽度：";
-            // 
-            // nCCD_N
-            // 
-            this.nCCD_N.Location = new System.Drawing.Point(257, 20);
-            this.nCCD_N.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.nCCD_N.Name = "nCCD_N";
-            this.nCCD_N.Size = new System.Drawing.Size(58, 21);
-            this.nCCD_N.TabIndex = 11;
             // 
             // nCCD_Pb
             // 
@@ -297,18 +381,6 @@
             this.nCCD_Sb.Name = "nCCD_Sb";
             this.nCCD_Sb.Size = new System.Drawing.Size(58, 21);
             this.nCCD_Sb.TabIndex = 11;
-            // 
-            // nCCD_M
-            // 
-            this.nCCD_M.Location = new System.Drawing.Point(119, 20);
-            this.nCCD_M.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
-            0,
-            0});
-            this.nCCD_M.Name = "nCCD_M";
-            this.nCCD_M.Size = new System.Drawing.Size(58, 21);
-            this.nCCD_M.TabIndex = 11;
             // 
             // nCCD_Sch
             // 
@@ -368,15 +440,6 @@
             this.label9.TabIndex = 10;
             this.label9.Text = "um";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(222, 26);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 12);
-            this.label6.TabIndex = 9;
-            this.label6.Text = "列：";
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -412,15 +475,6 @@
             this.label11.Size = new System.Drawing.Size(53, 12);
             this.label11.TabIndex = 9;
             this.label11.Text = "通道数：";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(30, 26);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(83, 12);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "像素数量 行：";
             // 
             // label7
             // 
@@ -956,8 +1010,8 @@
             // 
             this.nOe.Location = new System.Drawing.Point(184, 24);
             this.nOe.Maximum = new decimal(new int[] {
-            1215752192,
-            23,
+            1233977344,
+            465661,
             0,
             0});
             this.nOe.Minimum = new decimal(new int[] {
@@ -966,7 +1020,7 @@
             0,
             0});
             this.nOe.Name = "nOe";
-            this.nOe.Size = new System.Drawing.Size(78, 21);
+            this.nOe.Size = new System.Drawing.Size(80, 21);
             this.nOe.TabIndex = 1;
             this.nOe.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nOe.Value = new decimal(new int[] {
@@ -1000,7 +1054,7 @@
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(17, 12);
             this.label26.TabIndex = 2;
-            this.label26.Text = "um";
+            this.label26.Text = "nm";
             // 
             // label24
             // 
@@ -1020,60 +1074,6 @@
             this.label23.TabIndex = 2;
             this.label23.Text = "明场光照度：";
             // 
-            // cbCCD_phi
-            // 
-            this.cbCCD_phi.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbCCD_phi.FormattingEnabled = true;
-            this.cbCCD_phi.Items.AddRange(new object[] {
-            "30",
-            "40",
-            "50",
-            "60",
-            "72",
-            "75",
-            "80"});
-            this.cbCCD_phi.Location = new System.Drawing.Point(119, 62);
-            this.cbCCD_phi.Name = "cbCCD_phi";
-            this.cbCCD_phi.Size = new System.Drawing.Size(58, 20);
-            this.cbCCD_phi.TabIndex = 13;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(183, 65);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(23, 12);
-            this.label37.TabIndex = 10;
-            this.label37.Text = "MHz";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(245, 62);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(110, 58);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "设定图像采集板";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.cbCCD_phi);
-            this.groupBox1.Controls.Add(this.label37);
-            this.groupBox1.Controls.Add(this.cbCCD_PGA);
-            this.groupBox1.Controls.Add(this.nCCD_M);
-            this.groupBox1.Controls.Add(this.nCCD_N);
-            this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Location = new System.Drawing.Point(20, 227);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(365, 129);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            // 
             // FormParam
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1091,10 +1091,12 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nCCD_M)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_N)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Pb)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Sb)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nCCD_M)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Sch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Pa)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nCCD_Sa)).EndInit();
@@ -1116,8 +1118,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ndelta_lambda)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nlambda_Oe)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nOe)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

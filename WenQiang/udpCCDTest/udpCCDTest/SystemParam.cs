@@ -8,6 +8,11 @@ namespace udpCCDTest
 {
     public class SystemParam
     {
+        public static string TempPicPath = System.Windows.Forms.Application.StartupPath + "\\TempPic\\";
+        public static string TxtDataPath = System.Windows.Forms.Application.StartupPath + "\\TxtData\\";
+        public static string L_LightTempFilePath = System.Windows.Forms.Application.StartupPath + "\\TempData\\L_LightTemp.bin";
+        public static string L_DarkTempFilePath = System.Windows.Forms.Application.StartupPath + "\\TempData\\L_DarkTemp.bin";
+        public static string ccdParamFilePath = System.Windows.Forms.Application.StartupPath + "\\ccdParamFile\\";
         public static void InitSystemParam()
         {
             iniFileOP.iniFilePath = System.Windows.Forms.Application.StartupPath + "\\Config.ini";
@@ -78,12 +83,12 @@ namespace udpCCDTest
         public static string DeviceID;
         public static int CCD_Sa;
         public static int CCD_Sb;
-        public static int CCD_M;
-        public static int CCD_N;
+        public static int CCD_M;//图像传感器像素 行 数量 ，暂时固定6032
+        public static int CCD_N;//图像传感器像素 列 数量 ，暂时固定8640
         public static int CCD_Pa;
         public static int CCD_Pb;
         public static int CCD_Sch;
-        public static int CCD_ADL;
+        public static int CCD_ADL;//图像传感器模数转换宽度
         public static int CCD_phi;//8、 图像传感器工作频率
         public static int CCD_PGA;
 
@@ -97,7 +102,9 @@ namespace udpCCDTest
         public static int delta_Tdark;//22、	测试暗电流曝光递增步距周期数
 
 
-        public static int Oe;//16、 明场光照度
+        public static int Oe;//16、 明场光照度,单位为百分比
+        public static int Osat;//饱和光照度
+        public static double miu_sat;//饱和均值
         public static int lambda_Oe;//17、	明场测试光波长
         public static int Np;//18、	固定曝光时间系数
         public static double delta_lambda;//19、	量子效率曲线波长步进单位

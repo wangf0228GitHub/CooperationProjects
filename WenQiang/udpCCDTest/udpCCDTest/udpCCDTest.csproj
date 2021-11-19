@@ -45,6 +45,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ccdImage.cs" />
+    <Compile Include="CCDParamTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_Collect_DarkI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_Collect_etaCurve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_Collect_L.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_Collect_MinMax.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_Collect_Step.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDTestReport.cs" />
+    <Compile Include="ExposureTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExposureVerify.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,8 +89,20 @@
     <Compile Include="FormParam.Designer.cs">
       <DependentUpon>FormParam.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormParamTestChoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormParamTestChoice.Designer.cs">
+      <DependentUpon>FormParamTestChoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultCurveForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ResultCurveForm.Designer.cs">
+      <DependentUpon>ResultCurveForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SystemParam.cs" />
     <Compile Include="tcpCCS.cs" />
     <Compile Include="UDPProc.cs" />
@@ -77,6 +115,9 @@
     <EmbeddedResource Include="FormParam.resx">
       <DependentUpon>FormParam.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormParamTestChoice.resx">
+      <DependentUpon>FormParamTestChoice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -86,6 +127,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ResultCurveForm.resx">
+      <DependentUpon>ResultCurveForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ccdParamFileTemplate.ini">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Config.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -98,11 +145,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="测试报告模板.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\WFLib\WFNetLib\WFNetLib40.csproj">
       <Project>{ff8ffa8d-5a95-4bce-877d-00df5076a2f4}</Project>
       <Name>WFNetLib40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\WFLib\WFOffice2007\WFOffice2007_40.csproj">
+      <Project>{9bc4d8de-01f7-4535-97c3-c24926095eb9}</Project>
+      <Name>WFOffice2007_40</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

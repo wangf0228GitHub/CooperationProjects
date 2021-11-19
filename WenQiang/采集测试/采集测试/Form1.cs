@@ -536,6 +536,7 @@ namespace 采集测试
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            return;
             InitSystemParam();
 //            TestReport.MakeReport();
             //this.Controls.Add(this.m_ImageBox);

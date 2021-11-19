@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WFNetLib;
-using WFOffice2007;
+using WFOffice;
 
 
 namespace CMOSTestLib
