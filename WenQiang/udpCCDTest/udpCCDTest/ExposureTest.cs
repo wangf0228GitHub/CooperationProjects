@@ -112,9 +112,9 @@ namespace udpCCDTest
                 }
                 else//第一个就是减，那应该都是减函数
                 {
-                    SystemParam.Oe = _tcpCCS.Per2LX( Imin /(SystemParam.n-5));
+                    SystemParam.Oe = tcpCCS.Per2LX( Imin /(SystemParam.n-5));
                     iniFileOP.Write("Light Param", "Oe", SystemParam.Oe.ToString());
-                    SystemParam.Osat= _tcpCCS.Per2LX(Imin);
+                    SystemParam.Osat= tcpCCS.Per2LX(Imin);
                     iniFileOP.Write("CCD Param", "Osat", SystemParam.Osat.ToString(),strCCDINIPath);
                     SystemParam.miu_sat = miu[0];
                     iniFileOP.Write("CCD Param", "miu_sat", SystemParam.miu_sat.ToString(), strCCDINIPath);

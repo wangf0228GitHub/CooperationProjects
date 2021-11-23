@@ -23,6 +23,7 @@ namespace udpCCDTest
             exposureVerifyListView.Visible = false;
 
             CCDParamTestListView.Visible = false;
+            CCD3TTestListView.Visible = false;
             ParamTestChart1.Visible = false;
             ParamTestChart2.Visible = false;
 
@@ -34,6 +35,7 @@ namespace udpCCDTest
             exposureVerifyListView.Dock = DockStyle.Fill;
 
             CCDParamTestListView.Dock = DockStyle.Fill;
+            CCD3TTestListView.Dock = DockStyle.Fill;
             ParamTestChart1.Dock = DockStyle.Fill;
             ParamTestChart2.Dock = DockStyle.Fill;
 
@@ -47,7 +49,7 @@ namespace udpCCDTest
             }));            
         }
         public static _ShowText ShowText;
-        public _tcpCCS tcpCCS; 
+        
         public FormMain()
         {
             InitializeComponent();
@@ -76,7 +78,6 @@ namespace udpCCDTest
         {
             SystemParam.InitSystemParam();
             DeviceState.fMain = this;
-            tcpCCS = new _tcpCCS();
             //tcpCCS.Connect();
         }
 
@@ -130,7 +131,7 @@ namespace udpCCDTest
             {
                 FileOP.CopyFile(System.Windows.Forms.Application.StartupPath + "\\ccdParamFileTemplate.ini", strCCDINIPath);
             }
-            CCDParamTest();
+            CCDTest();
         }
 
         private void CCDParamTestListView_Resize(object sender, EventArgs e)
@@ -148,14 +149,14 @@ namespace udpCCDTest
             ListViewHitTestInfo info = CCDParamTestListView.HitTest(e.X, e.Y);
             if (info.Item != null)
             {
-                ResultCurveForm f = new ResultCurveForm();
-                for (int i = 0; i < 100; i++)
-                {
-                    f.chart.Series[0].Points.AddXY(i*10, i * 6);
-                }
-                f.ShowDialog();
-                //MessageBox.Show(info.Item.Text+e.Button.ToString());
+                
             }
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            FormCCS_Calibration f = new FormCCS_Calibration();
+            f.ShowDialog();
         }
     }
 }

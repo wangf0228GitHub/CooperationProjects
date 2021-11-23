@@ -20,6 +20,7 @@ namespace udpCCDTest
         public static List<ccdImage> ccdImageList;
         public static List<bool> ccdImageRxConfirm;
         public static IWin32Window owner;
+        public static object oImage=new object();
         public static bool CollectImage(IWin32Window _owner, int Tex, int nCount)
         {
             owner = _owner;            
@@ -42,10 +43,18 @@ namespace udpCCDTest
                     MessageBox.Show(owner, "与采集板通信失败");
                     return false;
                 }
-                wp = new WaitingProc(owner);
-                wp.MaxProgress = nCount;
-                WaitingProcFunc wpf = new WaitingProcFunc(WaitingImageList);
-                wp.Execute(wpf, "图像采集中", WaitingType.None, "是否取消？");
+                if(nCount<3)
+                {
+                    wp = null;
+                    WaitingImageList(oImage);
+                }
+                else
+                {
+                    wp = new WaitingProc(owner);
+                    wp.MaxProgress = nCount;
+                    WaitingProcFunc wpf = new WaitingProcFunc(WaitingImageList);
+                    wp.Execute(wpf, "图像采集中", WaitingType.None, "是否取消？");
+                }
                 bool bok = true;
                 for (int i = 0; i < nCount; i++)
                 {
@@ -83,9 +92,12 @@ namespace udpCCDTest
                     {
                         while (true)
                         {
-                            if (wp.HasBeenCancelled())
+                            if(wp!=null)
                             {
-                                return;
+                                if (wp.HasBeenCancelled())
+                                {
+                                    return;
+                                }
                             }
                             byte[] rxList = udpcRecv.Receive(ref dIP);
                             if (rxList[0] != 0x81)
@@ -121,7 +133,8 @@ namespace udpCCDTest
                                 udpcSend.Send(tx, tx.Length, dIP);
                                 if (tx[1] == 0x01)
                                 {
-                                    wp.SetProcessBarPerformStep();
+                                    if (wp != null)
+                                        wp.SetProcessBarPerformStep();
                                     ccdImageRxConfirm[ImageIndex] = true;
                                     ccdImageList[ImageIndex].ImageCount = ImageCount;
                                     ccdImageList[ImageIndex].ImageIndex = ImageIndex;

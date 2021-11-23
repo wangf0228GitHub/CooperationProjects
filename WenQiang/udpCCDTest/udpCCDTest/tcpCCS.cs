@@ -7,10 +7,21 @@ using WFNetLib.TCP;
 
 namespace udpCCDTest
 {
-    public class _tcpCCS
+    public class tcpCCS
     {
-        TCPSyncClient CCS;
-        public void Connect()
+        static TCPSyncClient CCS;
+        public static double[] L2E_a2;
+        public static double[] L2E_a1;
+        public static double[] L2E_a0;
+        
+        public static int[] lambdaList = new int[30]{
+            375,385,395,405,420,435,
+            450,460,470,490,505,520,
+            590,620,630,645,660,680,
+            700,720,740,760,780,810,
+            830,850,880,910,940,980
+        };
+        public static void Connect()
         {
             CCS = new TCPSyncClient();
             CCS.TCPServerName = "127.0.0.1";// "192.168.3.250";
@@ -30,76 +41,31 @@ namespace udpCCDTest
             }
             FormMain.ShowText("成功连接到CCS");
         }
-        public void LightSet(int lambda, int Oe)
+        public static void LightSet(int lambda, int Oe)
         {
-            LightSet(lambda, _tcpCCS.LX2Per(Oe));
+            LightSet(lambda, tcpCCS.LX2Per(Oe));
         }
-        public void LightSet(int lambda,double Oe)
+        public static void LightSet(int lambda,double Oe)
         {
             FormMain.ShowText("设定光源:    波长:" + lambda.ToString()+",照度:"+Oe.ToString("F2"));
             return;
             string str;// = "level:scale 0,0,0,0,0,0,0,0,0,0," + Oe.ToString("F2") + ",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0";
             int ledIndex = 0;
-            if (lambda < 385)
+            if (lambda < lambdaList[1])
                 ledIndex = 0;
-            else if (lambda < 395)
-                ledIndex = 1;
-            else if (lambda < 405)
-                ledIndex = 2;
-            else if (lambda < 420)
-                ledIndex = 3;
-            else if (lambda < 435)
-                ledIndex = 4;
-            else if (lambda < 450)
-                ledIndex = 5;
-            else if (lambda < 460)
-                ledIndex = 6;
-            else if (lambda < 470)
-                ledIndex = 7;
-            else if (lambda < 490)
-                ledIndex = 8;
-            else if (lambda < 505)
-                ledIndex = 9;
-            else if (lambda < 520)
-                ledIndex = 10;
-            else if (lambda < 590)
-                ledIndex = 11;
-            else if (lambda < 620)
-                ledIndex = 12;
-            else if (lambda < 630)
-                ledIndex = 13;
-            else if (lambda < 645)
-                ledIndex = 14;
-            else if (lambda < 660)
-                ledIndex = 15;
-            else if (lambda < 680)
-                ledIndex = 16;
-            else if (lambda < 700)
-                ledIndex = 17;
-            else if (lambda < 720)
-                ledIndex = 18;
-            else if (lambda < 740)
-                ledIndex = 19;
-            else if (lambda < 760)
-                ledIndex = 20;
-            else if (lambda < 780)
-                ledIndex = 21;
-            else if (lambda < 810)
-                ledIndex = 22;
-            else if (lambda < 830)
-                ledIndex = 23;
-            else if (lambda < 850)
-                ledIndex = 24;
-            else if (lambda < 880)
-                ledIndex = 25;
-            else if (lambda < 910)
-                ledIndex = 26;
-            else if (lambda < 940)
-                ledIndex = 27;
-            else if (lambda < 980)
-                ledIndex = 28;
+            else if (lambda >= lambdaList.Last())
+                ledIndex = lambdaList.Length - 1;
             else
-                ledIndex = 29;
+            {
+                for (int i = 1; i < lambdaList.Length; i++)
+                {
+                    if (lambda < lambdaList[i])
+                    {
+                        ledIndex = i - 1;
+                        break;
+                    }
+                }
+            }
             str = "level:scale ";
             for (int i = 0; i<29;i++)
             {
@@ -129,7 +95,7 @@ namespace udpCCDTest
                 FormMain.ShowText("光源反馈:"+(string)o);
             }
         }
-        public object SaveDataProcessCallbackProc(byte[] tempbuffer, ref byte[] buffer, ref int dataOffset, int length)
+        public static object SaveDataProcessCallbackProc(byte[] tempbuffer, ref byte[] buffer, ref int dataOffset, int length)
         {
             if (length <= 4)
                 return null;

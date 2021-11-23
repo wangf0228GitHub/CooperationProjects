@@ -45,6 +45,31 @@ namespace udpCCDTest
             SystemParam.delta_lambda = double.Parse(iniFileOP.Read("Light Param", "delta_lambda"));
             SystemParam.L_lambda = double.Parse(iniFileOP.Read("Light Param", "L_lambda"));
             SystemParam.H_lambda = double.Parse(iniFileOP.Read("Light Param", "H_lambda"));
+
+            string strL2E_a2 = iniFileOP.Read("Light Param", "L2E_a2");
+            string strL2E_a1 = iniFileOP.Read("Light Param", "L2E_a1");
+            string strL2E_a0 = iniFileOP.Read("Light Param", "L2E_a0");
+            string[] a2List = strL2E_a2.Split(',');
+            string[] a1List = strL2E_a1.Split(',');
+            string[] a0List = strL2E_a0.Split(',');
+            tcpCCS.L2E_a2 = new double[tcpCCS.lambdaList.Length];
+            tcpCCS.L2E_a1 = new double[tcpCCS.lambdaList.Length];
+            tcpCCS.L2E_a0 = new double[tcpCCS.lambdaList.Length];
+            for(int i=0;i<tcpCCS.lambdaList.Length;i++)
+            {
+                //try
+                //{
+                tcpCCS.L2E_a2[i] = double.Parse(a2List[i]);
+                tcpCCS.L2E_a1[i] = double.Parse(a1List[i]);
+                tcpCCS.L2E_a0[i] = double.Parse(a0List[i]);
+                //}
+                //catch
+                //{
+                //    tcpCCS.L2E_a2[i] = 0;
+                //    tcpCCS.L2E_a1[i] = 0;
+                //    tcpCCS.L2E_a0[i] = 0;
+                //}
+            }
         }
         public static void SaveSystemParam()
         {
@@ -110,5 +135,10 @@ namespace udpCCDTest
         public static double delta_lambda;//19、	量子效率曲线波长步进单位
         public static double L_lambda;//20、	光谱区间
         public static double H_lambda;//20、	光谱区间
+
+        public static double GetTime(int i)
+        {
+            return 1000 * Np * (NTmin + i * NTexp) / CCD_phi / 1000000;
+        }
     }
 }

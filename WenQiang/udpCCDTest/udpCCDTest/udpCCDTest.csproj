@@ -49,6 +49,12 @@
     <Compile Include="CCDParamTest.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CCDParamTest_Calc1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_Calc2.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CCDParamTest_Collect_DarkI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,12 @@
     </Compile>
     <Compile Include="ExposureVerify.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCCS_Calibration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCCS_Calibration.Designer.cs">
+      <DependentUpon>FormCCS_Calibration.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -97,15 +109,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResultCurveForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ResultCurveForm.Designer.cs">
-      <DependentUpon>ResultCurveForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SystemParam.cs" />
     <Compile Include="tcpCCS.cs" />
     <Compile Include="UDPProc.cs" />
+    <EmbeddedResource Include="FormCCS_Calibration.resx">
+      <DependentUpon>FormCCS_Calibration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -127,9 +136,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="ResultCurveForm.resx">
-      <DependentUpon>ResultCurveForm.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="3T测试报告模板.dot" />
     <None Include="ccdParamFileTemplate.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

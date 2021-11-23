@@ -28,7 +28,8 @@ namespace udpCCDTest
             }
             else
             {
-                lvTested.Items[0].SubItems[1].Text = str;                
+                lvTested.Items[0].SubItems[1].Text = str;
+                SystemParam.Osat = int.Parse(str);             
             }
 
             str = iniFileOP.Read("CCD Param", "miu_sat", strCCDINIPath);
@@ -39,6 +40,7 @@ namespace udpCCDTest
             else
             {
                 lvTested.Items[1].SubItems[1].Text = str;
+                SystemParam.miu_sat = double.Parse(str);
             }
 
             str = iniFileOP.Read("CCD Param", "K", strCCDINIPath);
@@ -50,6 +52,7 @@ namespace udpCCDTest
             else
             {
                 lvTested.Items[2].SubItems[1].Text = str;
+                CCDParamTestResult.K = double.Parse(str);
             }
 
             str = iniFileOP.Read("CCD Param", "eta", strCCDINIPath);
@@ -60,6 +63,7 @@ namespace udpCCDTest
             else
             {
                 lvTested.Items[3].SubItems[1].Text = str;
+                CCDParamTestResult.eta = double.Parse(str);
             }
         }
 

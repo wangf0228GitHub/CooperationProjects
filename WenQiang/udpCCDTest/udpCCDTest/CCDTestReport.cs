@@ -63,26 +63,97 @@ namespace udpCCDTest
                 report.InsertValue("读出噪声", CCDParamTestResult.delta_raed.ToString("F6"));
 
 
+            int curveIndex = 1;
 
+            if (CCDParamTestResult.bmiuCurve)
+            {
+                report.InsertPicture("图"+curveIndex.ToString(), SystemParam.TempPicPath + "K_1.jpg", 300, 122);
+                report.InsertValue("图" + curveIndex.ToString()+"图题", "明场测试曲线");
+                curveIndex++;
+            }
 
-            if (double.IsNaN(CCDParamTestResult.eta))
-                report.InsertValue("量子效率", "未测试");
-            else
-                report.InsertPicture("光电响应曲线", SystemParam.TempPicPath + "1.JPG", 300, 122);
-            if (double.IsNaN(CCDParamTestResult.eta))
-                report.InsertValue("量子效率", "未测试");
-            else
-                report.InsertPicture("平均暗信号", SystemParam.TempPicPath + "2.jpg", 300, 122);
-            if (double.IsNaN(CCDParamTestResult.eta))
-                report.InsertValue("量子效率", "未测试");
-            else
-                report.InsertPicture("暗信号均方差", SystemParam.TempPicPath + "3.jpg", 300, 122);
-            if (double.IsNaN(CCDParamTestResult.eta))
-                report.InsertValue("量子效率", "未测试");
-            else
-                report.InsertPicture("信噪比", SystemParam.TempPicPath + "4.jpg", 300, 122);
+            if (CCDParamTestResult.betaCurve)
+            {
+                report.InsertPicture("图" + curveIndex.ToString(), SystemParam.TempPicPath + "etaCurve.jpg", 300, 122);
+                report.InsertValue("图" + curveIndex.ToString() + "图题", "量子效率曲线");
+                curveIndex++;
+            }
 
+            if (CCDParamTestResult.bSNRCurve)
+            {
+                report.InsertPicture("图" + curveIndex.ToString(), SystemParam.TempPicPath + "SNR.jpg", 300, 122);
+                report.InsertValue("图" + curveIndex.ToString() + "图题", "信噪比SNR曲线");
+                curveIndex++;
+            }
+            if (CCDParamTestResult.bDarkICurve)
+            {
+                report.InsertPicture("图" + curveIndex.ToString(), SystemParam.TempPicPath + "DarkI1.jpg", 300, 122);
+                report.InsertValue("图" + curveIndex.ToString() + "图题", "暗信号均值曲线");
+                curveIndex++;
+
+                report.InsertPicture("图" + curveIndex.ToString(), SystemParam.TempPicPath + "DarkI2.jpg", 300, 122);
+                report.InsertValue("图" + curveIndex.ToString() + "图题", "暗信号方差曲线");
+                curveIndex++;
+            }
             report.SaveDocument(filename);
-        }        
+        }
+        public static void MakeReport3T(string filename)
+        {
+            WordReport report = new WordReport();
+            report.CreateNewDocument(System.Windows.Forms.Application.StartupPath + "\\3T测试报告模板.dot");
+            report.InsertValue("报告生成时间", DateTime.Now.ToString("yyyy.MM.dd   HH:mm"));
+            report.InsertValue("芯片编号", SystemParam.DeviceID);
+            report.InsertValue("系统增益", CCDParamTestResult.K.ToString("F6"));
+            for(int i=0;i<3;i++)
+            {
+                if(CCD3TTestResult.delta_mid==null)
+                {
+                    report.InsertValue("暗电流1_T"+(i+1).ToString(), "未测试");
+                    report.InsertValue("暗电流2_T" + (i + 1).ToString(), "未测试");
+                }
+                else
+                {
+                    report.InsertValue("暗电流1_T" + (i + 1).ToString(), CCD3TTestResult.miu_I_miu[i].ToString("F6"));
+                    report.InsertValue("暗电流2_T" + (i + 1).ToString(), CCD3TTestResult.miu_I_delta[i].ToString("F6"));
+                }
+
+                if(CCD3TTestResult.DSNU==null)
+                {
+                    report.InsertValue("DSNU_T" + (i + 1).ToString(), "未测试");
+                }
+                else
+                {
+                    report.InsertValue("DSNU_T" + (i + 1).ToString(), CCD3TTestResult.DSNU[i].ToString("F6"));
+                }
+
+                if (CCD3TTestResult.FPN == null)
+                {
+                    report.InsertValue("FPN_T" + (i + 1).ToString(), "未测试");
+                }
+                else
+                {
+                    report.InsertValue("FPN_T" + (i + 1).ToString(), CCD3TTestResult.DSNU[i].ToString("F6"));
+                }
+
+                if (CCD3TTestResult.delta_raed == null)
+                {
+                    report.InsertValue("读出噪声_T" + (i + 1).ToString(), "未测试");
+                }
+                else
+                {
+                    report.InsertValue("读出噪声_T" + (i + 1).ToString(), CCD3TTestResult.DSNU[i].ToString("F6"));
+                }
+
+                if (CCDParamTestResult.bDarkICurve)
+                {
+                    report.InsertPicture("图1_T" + (i+1).ToString(), SystemParam.TempPicPath + "DarkI1_T" + (i + 1).ToString() + ".jpg", 300, 122);
+                    report.InsertValue("图1图题_T" + (i + 1).ToString(), "暗信号均值曲线");
+
+                    report.InsertPicture("图2_T" + (i + 1).ToString(), SystemParam.TempPicPath + "DarkI2_T" + (i + 1).ToString() + ".jpg", 300, 122);
+                    report.InsertValue("图2图题_T" + (i + 1).ToString(), "暗信号均值曲线");
+                }
+            }            
+            report.SaveDocument(filename);
+        }
     }
 }

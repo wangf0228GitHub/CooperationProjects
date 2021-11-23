@@ -15,7 +15,6 @@ namespace udpCCDTest
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ResultCurveForm());
             FormMain f = new FormMain();
             if (!f.IsDisposed)
                 Application.Run(f);
