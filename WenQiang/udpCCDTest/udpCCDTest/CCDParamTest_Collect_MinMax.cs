@@ -17,15 +17,15 @@ namespace udpCCDTest
         {
             double miuCC;
             tcpCCS.LightSet(SystemParam.lambda_Oe, SystemParam.Osat);
-            if (!UDPProc.CollectImage(this, SystemParam.NTmin, 2))
+            if (!UDPProc.CollectImage(this, SystemParam.NTmin2, 2))
             {
                 return;
             }
             UDPProc.ccdImageList[0].save(SystemParam.TempPicPath + "Max_0.bin");
             UDPProc.ccdImageList[1].save(SystemParam.TempPicPath + "Max_1.bin");
             ccdImage.Calc_miu_delta(UDPProc.ccdImageList[0], UDPProc.ccdImageList[1], out miu_sat, out delta_sat, out miuCC);
-            tcpCCS.LightSet(SystemParam.lambda_Oe, 0);
-            if (!UDPProc.CollectImage(this, SystemParam.NTmin, 2))
+            tcpCCS.LightSet(SystemParam.lambda_Oe, 0.0);
+            if (!UDPProc.CollectImage(this, SystemParam.NTmin2, 2))
             {
                 return;
             }

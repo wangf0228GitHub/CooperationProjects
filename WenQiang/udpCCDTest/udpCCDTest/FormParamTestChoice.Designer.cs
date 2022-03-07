@@ -89,12 +89,12 @@
             listViewItem2,
             listViewItem3,
             listViewItem4});
-            this.lvTested.Location = new System.Drawing.Point(48, 23);
+            this.lvTested.Location = new System.Drawing.Point(12, 12);
             this.lvTested.MultiSelect = false;
             this.lvTested.Name = "lvTested";
             this.lvTested.Scrollable = false;
             this.lvTested.ShowGroups = false;
-            this.lvTested.Size = new System.Drawing.Size(176, 135);
+            this.lvTested.Size = new System.Drawing.Size(263, 135);
             this.lvTested.TabIndex = 4;
             this.lvTested.UseCompatibleStateImageBehavior = false;
             this.lvTested.View = System.Windows.Forms.View.Details;
@@ -102,20 +102,20 @@
             // columnHeader6
             // 
             this.columnHeader6.Text = "已测试内容";
-            this.columnHeader6.Width = 90;
+            this.columnHeader6.Width = 80;
             // 
             // columnHeader7
             // 
             this.columnHeader7.Text = "测试结果";
             this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader7.Width = 88;
+            this.columnHeader7.Width = 181;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.rbFixOe);
             this.groupBox1.Controls.Add(this.rbFixTime);
-            this.groupBox1.Location = new System.Drawing.Point(281, 23);
+            this.groupBox1.Location = new System.Drawing.Point(326, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(163, 135);
             this.groupBox1.TabIndex = 6;
@@ -207,7 +207,8 @@
             "DSNU(暗信号不均匀性)",
             "PRNU(光子响应不均匀性)",
             "FPN",
-            "读出噪声"});
+            "读出噪声",
+            "增益曲线"});
             this.cbParam.Location = new System.Drawing.Point(187, 179);
             this.cbParam.MultiColumn = true;
             this.cbParam.Name = "cbParam";

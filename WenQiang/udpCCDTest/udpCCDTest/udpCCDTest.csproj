@@ -49,28 +49,39 @@
     <Compile Include="CCDParamTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CCDParamTest_Calc1.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="CCDParamTest_Calc2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CCDParamTest_Collect_DarkI.cs">
+    <Compile Include="CCDParamTest_DarkI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CCDParamTest_Collect_etaCurve.cs">
+    <Compile Include="CCDParamTest_LE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_PGACurve.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_SNR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDParamTest_etaCurve.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CCDParamTest_Collect_L.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CCDParamTest_Collect_MinMax.cs">
+    <Compile Include="CCDParamTest_DR_FWC.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CCDParamTest_Collect_Step.cs">
+    <Compile Include="CCDParamTest_eta.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CCDTestReport.cs" />
+    <Compile Include="CCDParamTest_K.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CCDTestReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ExposureTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -136,13 +147,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="3T测试报告模板.dot" />
+    <None Include="3T测试报告模板.dot">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ccdParamFileTemplate.ini">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Config.ini">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="Config.ini" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -157,11 +168,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\WFLib\WFNetLib\WFNetLib40.csproj">
+    <ProjectReference Include="..\..\WFNetLib\WFNetLib40.csproj">
       <Project>{ff8ffa8d-5a95-4bce-877d-00df5076a2f4}</Project>
       <Name>WFNetLib40</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\WFLib\WFOffice2007\WFOffice2007_40.csproj">
+    <ProjectReference Include="..\..\WFOffice2007\WFOffice2007_40.csproj">
       <Project>{9bc4d8de-01f7-4535-97c3-c24926095eb9}</Project>
       <Name>WFOffice2007_40</Name>
     </ProjectReference>

@@ -37,16 +37,16 @@ namespace udpCCDTest
             double miu = 0;
             double miuCC;
             double delta;
-            int Tex;
+            uint Tex;
             //double E;
             this.Invoke((EventHandler)(delegate
             {
                 WFGlobal.WaitMS(1);
                 exposureChart.Series["miu"].Points.Clear();
                 exposureChart.Series["delta"].Points.Clear();
-                tcpCCS.LightSet(SystemParam.lambda_Oe, 0);//暗场
+                tcpCCS.LightSet(SystemParam.lambda_Oe, 0.0);//暗场
             }));
-            Tex = SystemParam.NTdark;
+            Tex = (uint)SystemParam.NTdark;
             //明场
             for(int i=0;i<16;i++)
             {
@@ -71,7 +71,7 @@ namespace udpCCDTest
                 {
                     return;
                 }
-                Tex += SystemParam.delta_Tdark;
+                Tex += (uint)SystemParam.delta_Tdark;
                 ParamTestWaitingProc.SetProcessBarPerformStep();
             }
         }

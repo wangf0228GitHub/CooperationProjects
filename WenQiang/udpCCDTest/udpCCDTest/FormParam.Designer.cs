@@ -372,6 +372,7 @@
             // 
             // nCCD_Sb
             // 
+            this.nCCD_Sb.DecimalPlaces = 1;
             this.nCCD_Sb.Location = new System.Drawing.Point(254, 62);
             this.nCCD_Sb.Maximum = new decimal(new int[] {
             1215752192,
@@ -412,6 +413,7 @@
             // 
             // nCCD_Sa
             // 
+            this.nCCD_Sa.DecimalPlaces = 1;
             this.nCCD_Sa.Location = new System.Drawing.Point(116, 62);
             this.nCCD_Sa.Maximum = new decimal(new int[] {
             1215752192,
@@ -593,7 +595,7 @@
             0,
             0});
             this.nL.Minimum = new decimal(new int[] {
-            100,
+            1,
             0,
             0,
             0});
@@ -652,7 +654,7 @@
             0,
             0});
             this.nn.Minimum = new decimal(new int[] {
-            50,
+            1,
             0,
             0,
             0});
@@ -688,8 +690,8 @@
             // 
             this.ndelta_Tdark.Location = new System.Drawing.Point(201, 344);
             this.ndelta_Tdark.Maximum = new decimal(new int[] {
-            5000,
-            0,
+            705032704,
+            1,
             0,
             0});
             this.ndelta_Tdark.Minimum = new decimal(new int[] {
@@ -698,7 +700,7 @@
             0,
             0});
             this.ndelta_Tdark.Name = "ndelta_Tdark";
-            this.ndelta_Tdark.Size = new System.Drawing.Size(58, 21);
+            this.ndelta_Tdark.Size = new System.Drawing.Size(100, 21);
             this.ndelta_Tdark.TabIndex = 1;
             this.ndelta_Tdark.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.ndelta_Tdark.Value = new decimal(new int[] {
@@ -720,8 +722,8 @@
             // 
             this.nNTdark.Location = new System.Drawing.Point(201, 297);
             this.nNTdark.Maximum = new decimal(new int[] {
-            5000,
-            0,
+            1783793664,
+            116,
             0,
             0});
             this.nNTdark.Minimum = new decimal(new int[] {
@@ -730,11 +732,11 @@
             0,
             0});
             this.nNTdark.Name = "nNTdark";
-            this.nNTdark.Size = new System.Drawing.Size(58, 21);
+            this.nNTdark.Size = new System.Drawing.Size(100, 21);
             this.nNTdark.TabIndex = 1;
             this.nNTdark.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nNTdark.Value = new decimal(new int[] {
-            2000,
+            2850,
             0,
             0,
             0});
@@ -752,8 +754,8 @@
             // 
             this.nNTexp.Location = new System.Drawing.Point(201, 249);
             this.nNTexp.Maximum = new decimal(new int[] {
-            5000,
-            0,
+            -1539607552,
+            11,
             0,
             0});
             this.nNTexp.Minimum = new decimal(new int[] {
@@ -762,11 +764,11 @@
             0,
             0});
             this.nNTexp.Name = "nNTexp";
-            this.nNTexp.Size = new System.Drawing.Size(58, 21);
+            this.nNTexp.Size = new System.Drawing.Size(100, 21);
             this.nNTexp.TabIndex = 1;
             this.nNTexp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nNTexp.Value = new decimal(new int[] {
-            2000,
+            100,
             0,
             0,
             0});
@@ -784,21 +786,21 @@
             // 
             this.nNTmin.Location = new System.Drawing.Point(201, 19);
             this.nNTmin.Maximum = new decimal(new int[] {
-            5000,
-            0,
+            -1539607552,
+            11,
             0,
             0});
             this.nNTmin.Minimum = new decimal(new int[] {
-            50,
+            2850,
             0,
             0,
             0});
             this.nNTmin.Name = "nNTmin";
-            this.nNTmin.Size = new System.Drawing.Size(58, 21);
+            this.nNTmin.Size = new System.Drawing.Size(100, 21);
             this.nNTmin.TabIndex = 1;
             this.nNTmin.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nNTmin.Value = new decimal(new int[] {
-            1150,
+            2850,
             0,
             0,
             0});
@@ -841,6 +843,7 @@
             // 
             // nNp
             // 
+            this.nNp.DecimalPlaces = 2;
             this.nNp.Location = new System.Drawing.Point(184, 119);
             this.nNp.Maximum = new decimal(new int[] {
             1215752192,
@@ -1008,15 +1011,11 @@
             // 
             // nOe
             // 
+            this.nOe.DecimalPlaces = 1;
             this.nOe.Location = new System.Drawing.Point(184, 24);
             this.nOe.Maximum = new decimal(new int[] {
             1233977344,
             465661,
-            0,
-            0});
-            this.nOe.Minimum = new decimal(new int[] {
-            50,
-            0,
             0,
             0});
             this.nOe.Name = "nOe";
@@ -1024,7 +1023,7 @@
             this.nOe.TabIndex = 1;
             this.nOe.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nOe.Value = new decimal(new int[] {
-            200000,
+            100,
             0,
             0,
             0});
@@ -1061,9 +1060,9 @@
             this.label24.AutoSize = true;
             this.label24.Location = new System.Drawing.Point(278, 26);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 12);
+            this.label24.Size = new System.Drawing.Size(35, 12);
             this.label24.TabIndex = 2;
-            this.label24.Text = "uW/cm2";
+            this.label24.Text = "cd/m2";
             // 
             // label23
             // 
@@ -1072,7 +1071,7 @@
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(77, 12);
             this.label23.TabIndex = 2;
-            this.label23.Text = "明场光照度：";
+            this.label23.Text = "明场光亮度：";
             // 
             // FormParam
             // 

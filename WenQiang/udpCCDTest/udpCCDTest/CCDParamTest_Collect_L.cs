@@ -15,40 +15,41 @@ namespace udpCCDTest
 //         List<double> Collect_L_miu_dark;
 //         List<double> Collect_L_delta_dark;
         string L_TempFilePath;
-        void CCDParamTest_Collect_L(bool bLight)
+        bool CCDParamTest_Collect_L(bool bLight)
         {
-            UIHide();
+            //UIHide();
             ParamTestChart1.Visible = true;
             ParamTestChart1.Dock = DockStyle.Fill;
-            string str = "";
             if (bLight)
             {
                 textBox1.AppendText("50%饱和空域测试\r\n");
-                str = "50%饱和空域测试中";
+                ParamTestWaitingProcTitle = "50%饱和空域测试中";
                 L_TempFilePath = SystemParam.L_LightTempFilePath;
-                tcpCCS.LightSet(SystemParam.lambda_Oe, SystemParam.Osat/2);
+                tcpCCS.LightSet(SystemParam.lambda_Oe, ccdParamTestResult.Osat/2);
             }
             else
             {
                 textBox1.AppendText("暗场空域测试\r\n");
-                str = "暗场空域测试中";
+                ParamTestWaitingProcTitle = "暗场空域测试中";
                 L_TempFilePath = SystemParam.L_DarkTempFilePath;
-                tcpCCS.LightSet(SystemParam.lambda_Oe, 0);
-            }
+                tcpCCS.LightSet(SystemParam.lambda_Oe, 0.0);
+            }            
             CreateTempFile(SystemParam.L, L_TempFilePath);
             ParamTestWaitingProc = new WaitingProc();            
-            WaitingProcFunc wpf = null;            
-            ParamTestWaitingProc.MaxProgress = SystemParam.L;
+            WaitingProcFunc wpf = null;
+            ParamTestWaitingProcMax = SystemParam.L;
+            ParamTestWaitingProc.MaxProgress = ParamTestWaitingProcMax;
             wpf = new WaitingProcFunc(WaitingCollect_L);
-            if (!ParamTestWaitingProc.Execute(wpf, str, WaitingType.With_ConfirmCancel, "是否取消？"))
+            if (!ParamTestWaitingProc.Execute(wpf, ParamTestWaitingProcTitle, WaitingType.With_ConfirmCancel, "是否取消？"))
             {
                 textBox1.AppendText("用户终止自动测试\r\n");
-                return;
+                return false;
             }
+            return true;
         }
         void WaitingCollect_L(object LockWatingThread)
         {
-            int Tex;
+            uint Tex;
             //double E;
             this.Invoke((EventHandler)(delegate
             {
@@ -57,7 +58,15 @@ namespace udpCCDTest
 //                 exposureChart.Series["delta"].Points.Clear();
 //                 tcpCCS.LightSet(SystemParam.lambda_Oe, 0);//暗场
             }));
-            Tex = SystemParam.NTmin;
+            Tex = ccdParamTestResult.NTmin1;
+            //else
+            {
+                if (!UDPProc.CollectImage(this, Tex, 2))
+                {
+                    ParamTestWaitingProc.ExitWatting();
+                    return;
+                }
+            }
             //明场
             for (int i = 0; i < SystemParam.L; i++)
             {
@@ -72,11 +81,13 @@ namespace udpCCDTest
                     }
                     WriteTempFile(UDPProc.ccdImageList[0].byteList, i, L_TempFilePath); 
                 }));
-                if (exposureWaitingProc.HasBeenCancelled())
+                if (ParamTestWaitingProc.HasBeenCancelled())
                 {
                     return;
                 }
                 ParamTestWaitingProc.SetProcessBarPerformStep();
+                ParamTestWaitingProc.SetTitle(ParamTestWaitingProcTitle + ":" + (i+1).ToString() + "/" + ParamTestWaitingProcMax.ToString());
+                WFGlobal.WaitMS(1);
             }
         }
         public byte[] ReadTempFile(int Len, int index, string fileName)

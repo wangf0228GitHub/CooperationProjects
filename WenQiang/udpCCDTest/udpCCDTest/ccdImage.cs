@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using WFNetLib;
@@ -36,17 +37,17 @@ namespace udpCCDTest
                     imageData[m, n] = BytesOP.MakeShort(byteList[k + 2 * SystemParam.CCD_N * m + 1], byteList[k + 2 * SystemParam.CCD_N * m]);
                     switch (SystemParam.CCD_ADL)//图像传感器模数转换宽度
                     {
-                        case 8:
+                        case 0://8
                             imageData[m, n] &= 0x00ff;
                             break;
-                        case 10:
+                        case 1://10
                             imageData[m, n] &= 0x03ff;
                             break;
-                        case 12:
+                        case 2://12
                             imageData[m, n] &= 0x0fff;
                             break;
-                        case 14:
-                            imageData[m, n] &= 0x3fff;
+                        case 3://16
+                            //imageData[m, n] &= 0x3fff;
                             break;
                     }
                 }
@@ -54,9 +55,20 @@ namespace udpCCDTest
         }
         public void save(string path)
         {
+            for(int i=0;i<byteList.Length;i+=2)
+            {
+                byteList[i + 1] = BytesOP.GetLowNibble(byteList[i + 1]);
+            }
             System.IO.Stream so = new System.IO.FileStream(path, System.IO.FileMode.Create);
             so.Write(byteList, 0, byteList.Length);
             so.Close();
+        }
+        public void LoadFile(string fileName)
+        {
+            Stream stream = File.OpenRead(fileName);
+            long x = stream.Seek(0, SeekOrigin.Begin);
+            stream.Read(byteList, 0, byteList.Length);
+            stream.Close();
         }
         public static ushort[,] TransImageDatas(byte[] byteList)//, int row, int col, int PixelDepth)
         {
@@ -70,16 +82,16 @@ namespace udpCCDTest
                     imageData[m, n] = BytesOP.MakeShort(byteList[k + 2 * SystemParam.CCD_N * m + 1], byteList[k + 2 * SystemParam.CCD_N * m]);
                     switch (SystemParam.CCD_ADL)//图像传感器模数转换宽度
                     {
-                        case 8:
+                        case 0:
                             imageData[m, n] &= 0x00ff;
                             break;
-                        case 10:
+                        case 1:
                             imageData[m, n] &= 0x03ff;
                             break;
-                        case 12:
+                        case 2:
                             imageData[m, n] &= 0x0fff;
                             break;
-                        case 14:
+                        case 3:
                             imageData[m, n] &= 0x3fff;
                             break;
                     }
@@ -92,6 +104,8 @@ namespace udpCCDTest
             ulong y0 = 0, y1 = 0;
             ulong d=0;
             int x;
+            pic0.TransImageDatas();
+            pic1.TransImageDatas();
             for (int m = 0; m < SystemParam.CCD_M; m++)
             {
                 for (int n = 0; n < SystemParam.CCD_N; n++)

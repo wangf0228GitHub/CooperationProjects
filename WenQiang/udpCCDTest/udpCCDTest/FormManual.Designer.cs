@@ -38,6 +38,11 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.tbLambda = new System.Windows.Forms.ToolStripTextBox();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.tbOePer = new System.Windows.Forms.ToolStripTextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -46,6 +51,11 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel3,
+            this.tbLambda,
+            this.toolStripLabel4,
+            this.tbOePer,
+            this.toolStripSeparator1,
             this.toolStripLabel1,
             this.tbCount,
             this.toolStripLabel2,
@@ -54,7 +64,7 @@
             this.toolStripSeparator2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(482, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(895, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -103,8 +113,8 @@
             this.trackBar1.Cursor = System.Windows.Forms.Cursors.HSplit;
             this.trackBar1.Dock = System.Windows.Forms.DockStyle.Right;
             this.trackBar1.LargeChange = 500000;
-            this.trackBar1.Location = new System.Drawing.Point(437, 25);
-            this.trackBar1.Maximum = 16776960;
+            this.trackBar1.Location = new System.Drawing.Point(850, 25);
+            this.trackBar1.Maximum = 500000000;
             this.trackBar1.Minimum = 1000;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Orientation = System.Windows.Forms.Orientation.Vertical;
@@ -122,23 +132,51 @@
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(0, 25);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(437, 362);
+            this.pictureBox1.Size = new System.Drawing.Size(850, 362);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 16;
             this.pictureBox1.TabStop = false;
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(35, 22);
+            this.toolStripLabel3.Text = "波长:";
+            // 
+            // tbLambda
+            // 
+            this.tbLambda.Name = "tbLambda";
+            this.tbLambda.Size = new System.Drawing.Size(100, 25);
+            this.tbLambda.Text = "632";
+            // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(59, 22);
+            this.toolStripLabel4.Text = "相对照度:";
+            // 
+            // tbOePer
+            // 
+            this.tbOePer.Name = "tbOePer";
+            this.tbOePer.Size = new System.Drawing.Size(100, 25);
+            this.tbOePer.Text = "0.5";
             // 
             // FormManual
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(482, 387);
+            this.ClientSize = new System.Drawing.Size(895, 387);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.trackBar1);
             this.Controls.Add(this.toolStrip1);
-            this.MaximizeBox = false;
             this.Name = "FormManual";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormManual";
+            this.Text = "手动拍照";
             this.Load += new System.EventHandler(this.FormManual_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -160,5 +198,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripTextBox tbLambda;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.ToolStripTextBox tbOePer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

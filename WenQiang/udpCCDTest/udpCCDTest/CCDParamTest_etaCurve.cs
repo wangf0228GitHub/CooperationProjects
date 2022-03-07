@@ -8,32 +8,172 @@ using WFNetLib;
 namespace udpCCDTest
 {
     public partial class FormMain : Form
-    {
-        //         List<List<double>> Collect_etaCurve_miu;
-        //         List<double> Collect_etaCurve_delta;
-        //         List<double> Collect_etaCurve_E;//照度
-        // 
-        //         List<List<double>> Collect_etaCurve_miu_dark;
-        //         List<double> Collect_etaCurve_delta_dark;
-        bool CCDParamTest_Collect_etaCurve()
+    {        
+        double[,] etaCurve;
+        double[] bak_Collect_Step_miu1;
+        double[] bak_Collect_Step_delta1;
+        double[] bak_Collect_Step_E1;//照度
+
+        double[] bak_Collect_Step_miu2;
+        double[] bak_Collect_Step_delta2;
+        double[] bak_Collect_Step_E2;//照度
+
+        double[] bak_Collect_Step_miu_dark2;
+        double[] bak_Collect_Step_delta_dark2;
+        int bak_lambda;
+        bool CCDParamTest_etaCurve()
         {
-            UIHide();
+            bak_lambda = SystemParam.lambda_Oe;
             List<int> lambdaList = new List<int>(tcpCCS.lambdaList);
             lambdaList.Sort();
-            CCDParamTestResult.etaCurve = new double[lambdaList.Count, 2];
+            etaCurve = new double[lambdaList.Count, 2];
+            for (int i = 0; i < lambdaList.Count; i++)
+            {                
+                ParamTestReset();
+                SystemParam.lambda_Oe = lambdaList[i];      
+                if(tcpCCS.Max_nit[tcpCCS.Get_lambadIndex(SystemParam.lambda_Oe)]==0)
+                {
+                    etaCurve[i, 0] = SystemParam.lambda_Oe;
+                    etaCurve[i, 1] = 0;
+                    continue;
+                }      
+                if (bTestMode==0 && !ExposureTest())
+                {
+                    CCDParamTest_etaCurve_recover();
+                    return false;
+                }
+                ccdParamTestResult.K = double.NaN;
+                if (!CCDParamTest_eta())
+                {
+                    CCDParamTest_etaCurve_recover();                    
+                    return false;
+                }
+                etaCurve[i, 0] = SystemParam.lambda_Oe;
+                etaCurve[i, 1] = ccdParamTestResult.eta;
+                if(bak_lambda==SystemParam.lambda_Oe)
+                {
+                    CCDParamTest_etaCurve_bak();
+                }
+            }
+            chart1.Series[0].Points.Clear();
+            chart1.ChartAreas[0].AxisY.Title = "量子效率";
+            chart1.ChartAreas[0].AxisX.Title = "波长(nm)";
+            chart1.ChartAreas[0].AxisX.LabelStyle.Format = "F0";
             for (int i = 0; i < lambdaList.Count; i++)
             {
+                if (tcpCCS.Max_nit[tcpCCS.Get_lambadIndex(lambdaList[i])] == 0)
+                {
+                    continue;
+                }
                 SystemParam.lambda_Oe = lambdaList[i];
-                if (!ExposureTest())
-                    return false;
-                if (!CCDParamTest_Collect_Step())
-                    return false;
-                CCDParamTest_Calc_K();
-                CCDParamTest_Calc_eta();
-                CCDParamTestResult.etaCurve[i, 0] = SystemParam.lambda_Oe;
-                CCDParamTestResult.etaCurve[i, 1] = CCDParamTestResult.eta;
+                chart1.Series[0].Points.AddXY(SystemParam.lambda_Oe, ccdParamTestResult.eta);
             }
+            chart1.SaveImage(SystemParam.TempPicPath + "etaCurve.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            ccdParamTestResult.betaCurve = true;
+            CCDParamTest_etaCurve_recover();
             return true;
+        }
+        void CCDParamTest_etaCurve_bak()
+        {
+            bak_Collect_Step_miu1=null;
+            bak_Collect_Step_delta1 = null;
+            bak_Collect_Step_E1 = null;//照度
+
+            bak_Collect_Step_miu2 = null;
+            bak_Collect_Step_delta2 = null;
+            bak_Collect_Step_E2 = null;//照度
+
+            bak_Collect_Step_miu_dark2 = null;
+            bak_Collect_Step_delta_dark2 = null;
+            if (Collect_Step_miu1 != null)
+            {
+                bak_Collect_Step_miu1 = new double[Collect_Step_miu1.Count];
+                Collect_Step_miu1.CopyTo(bak_Collect_Step_miu1);
+            }
+            if (Collect_Step_delta1 != null)
+            {
+                bak_Collect_Step_delta1 = new double[Collect_Step_delta1.Count];
+                Collect_Step_delta1.CopyTo(bak_Collect_Step_delta1);
+            }
+            if (Collect_Step_E1 != null)
+            {
+                bak_Collect_Step_E1 = new double[Collect_Step_E1.Count];
+                Collect_Step_E1.CopyTo(bak_Collect_Step_E1);
+            }
+
+            if (Collect_Step_miu2 != null)
+            {
+                bak_Collect_Step_miu2 = new double[Collect_Step_miu2.Count];
+                Collect_Step_miu2.CopyTo(bak_Collect_Step_miu2);
+            }
+            if (Collect_Step_delta2 != null)
+            {
+                bak_Collect_Step_delta2 = new double[Collect_Step_delta2.Count];
+                Collect_Step_delta2.CopyTo(bak_Collect_Step_delta2);
+            }
+            if (Collect_Step_E2 != null)
+            {
+                bak_Collect_Step_E2 = new double[Collect_Step_E2.Count];
+                Collect_Step_E2.CopyTo(bak_Collect_Step_E2);
+            }
+
+            if (Collect_Step_miu_dark2 != null)
+            {
+                bak_Collect_Step_miu_dark2 = new double[Collect_Step_miu_dark2.Count];
+                Collect_Step_miu_dark2.CopyTo(bak_Collect_Step_miu_dark2);
+            }
+            if (Collect_Step_delta_dark2 != null)
+            {
+                bak_Collect_Step_delta_dark2 = new double[Collect_Step_delta_dark2.Count];
+                Collect_Step_delta_dark2.CopyTo(bak_Collect_Step_delta_dark2);
+            }
+        }
+        void CCDParamTest_etaCurve_recover()
+        {
+            SystemParam.lambda_Oe = bak_lambda;
+            ParamTestReset();
+            if (bak_Collect_Step_miu1 != null)
+            {
+                Collect_Step_miu1 = new List<double>();
+                Collect_Step_miu1.AddRange(bak_Collect_Step_miu1);
+            }
+            if (bak_Collect_Step_delta1 != null)
+            {
+                Collect_Step_delta1 = new List<double>();
+                Collect_Step_delta1.AddRange(bak_Collect_Step_delta1);
+            }
+            if (bak_Collect_Step_E1 != null)
+            {
+                Collect_Step_E1 = new List<double>();
+                Collect_Step_E1.AddRange(bak_Collect_Step_E1);
+            }
+
+            if (bak_Collect_Step_miu2 != null)
+            {
+                Collect_Step_miu2 = new List<double>();
+                Collect_Step_miu2.AddRange(bak_Collect_Step_miu2);
+            }
+            if (bak_Collect_Step_delta2 != null)
+            {
+                Collect_Step_delta2 = new List<double>();
+                Collect_Step_delta2.AddRange(bak_Collect_Step_delta2);
+            }
+            if (bak_Collect_Step_E2 != null)
+            {
+                Collect_Step_E2 = new List<double>();
+                Collect_Step_E2.AddRange(bak_Collect_Step_E2);
+            }
+
+            if (bak_Collect_Step_miu_dark2 != null)
+            {
+                Collect_Step_miu_dark2 = new List<double>();
+                Collect_Step_miu_dark2.AddRange(bak_Collect_Step_miu_dark2);
+            }
+            if (bak_Collect_Step_delta_dark2 != null)
+            {
+                Collect_Step_delta_dark2 = new List<double>();
+                Collect_Step_delta_dark2.AddRange(bak_Collect_Step_delta_dark2);
+            }
         }
         /* 
                      ParamTestChart1.Visible = true;
@@ -51,14 +191,14 @@ namespace udpCCDTest
                      {
                          textBox1.AppendText("开始固定曝光时间，按逐步改变光源照度方式采集图像\r\n");
                          str = "固定曝光时间，按逐步改变光源照度方式采集图像中";
-                         ParamTestWaitingProc.MaxProgress = (int)(SystemParam.Osat / SystemParam.OeStep);
+                         ParamTestWaitingProc.MaxProgress = (int)(ccdParamTestResult.Osat / SystemParam.OeStep);
                          wpf = new WaitingProcFunc(WaitingCollect_etaCurve_1);
                      }
                      else if (ExType == 2)//固定光源照度，改变曝光时间
                      {
                          textBox1.AppendText("开始固定光源照度，按逐步改变曝光时间方式采集图像\r\n");
                          str = "固定光源照度，按逐步改变曝光时间方式采集图像中";
-                         ParamTestWaitingProc.MaxProgress = (int)(2 * SystemParam.Osat / SystemParam.OeStep);
+                         ParamTestWaitingProc.MaxProgress = (int)(2 * ccdParamTestResult.Osat / SystemParam.OeStep);
                          wpf = new WaitingProcFunc(WaitingCollect_etaCurve_2);
                      }
                      if (!ParamTestWaitingProc.Execute(wpf, str, WaitingType.With_ConfirmCancel, "是否取消？"))

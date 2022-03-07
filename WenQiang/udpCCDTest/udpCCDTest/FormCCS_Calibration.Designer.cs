@@ -49,15 +49,16 @@
             // 
             chartArea1.AlignWithChartArea = "ChartArea1";
             chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
-            chartArea1.AxisX.LabelStyle.Format = "F3";
+            chartArea1.AxisX.LabelStyle.Format = "F0";
             chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.Silver;
             chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea1.AxisX.Title = "曝光时间 /ms";
+            chartArea1.AxisX.Title = "NAD";
             chartArea1.AxisX.TitleFont = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisY.LabelStyle.Format = "F2";
             chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.Silver;
             chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-            chartArea1.AxisY.Title = "明暗场均值差值";
+            chartArea1.AxisY.Title = "照度";
             chartArea1.AxisY.TitleFont = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             chartArea1.Name = "ChartArea1";
             this.chart.ChartAreas.Add(chartArea1);
@@ -82,7 +83,6 @@
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point;
             series1.Color = System.Drawing.Color.Red;
-            series1.IsXValueIndexed = true;
             series1.Legend = "Legend1";
             series1.MarkerSize = 8;
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
@@ -91,7 +91,6 @@
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series2.Color = System.Drawing.Color.Black;
-            series2.IsXValueIndexed = true;
             series2.Legend = "Legend2";
             series2.LegendText = "方差";
             series2.MarkerSize = 8;
@@ -140,6 +139,7 @@
             // 
             this.tbStep.Name = "tbStep";
             this.tbStep.Size = new System.Drawing.Size(100, 25);
+            this.tbStep.Text = "1";
             // 
             // toolStripButton1
             // 

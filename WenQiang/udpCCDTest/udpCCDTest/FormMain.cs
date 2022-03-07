@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using WFNetLib;
 using WFNetLib.Forms;
+using WFNetLib.Log;
 
 namespace udpCCDTest
 {
@@ -21,12 +22,11 @@ namespace udpCCDTest
 
             exposureVerifyChart.Visible = false;
             exposureVerifyListView.Visible = false;
-
+            exposureChart.ChartAreas[0].AxisX.Title = "照度";
             CCDParamTestListView.Visible = false;
             CCD3TTestListView.Visible = false;
             ParamTestChart1.Visible = false;
             ParamTestChart2.Visible = false;
-
 
             exposureChart.Dock = DockStyle.Fill;
             exposureListView.Dock = DockStyle.Fill;
@@ -39,6 +39,13 @@ namespace udpCCDTest
             ParamTestChart1.Dock = DockStyle.Fill;
             ParamTestChart2.Dock = DockStyle.Fill;
 
+        }
+        void chartHide()
+        {
+            exposureChart.Visible = false;
+            exposureVerifyChart.Visible = false;
+            ParamTestChart1.Visible = false;
+            ParamTestChart2.Visible = false;
         }
         public delegate void _ShowText(string s);
         public void __ShowText(string s)
@@ -72,13 +79,17 @@ namespace udpCCDTest
         {
             FormParam f = new FormParam();
             f.ShowDialog();
+
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
             SystemParam.InitSystemParam();
+            ccdParamTestResult = new CCDParamTestResult();
+            ccd3TTestResult = new CCD3TTestResult();
             DeviceState.fMain = this;
-            //tcpCCS.Connect();
+            UDPProc.fMain = this;
+            tcpCCS.Connect();
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -89,7 +100,7 @@ namespace udpCCDTest
         
         private void toolStripButton4_Click(object sender, EventArgs e)
         {
-            tcpCCS.LightSet(550, 0.5);
+            
         }
 
 
@@ -111,26 +122,25 @@ namespace udpCCDTest
         private void btExposureTest_Click(object sender, EventArgs e)
         {
             SystemParam.DeviceID = InputBox.ShowInputBox("请设定当前测试器件的芯片编号", SystemParam.DeviceID);
-            iniFileOP.Write("System Run", "DeviceID", SystemParam.DeviceID);
-            strCCDINIPath = SystemParam.ccdParamFilePath + SystemParam.DeviceID + ".ini";
-            string Osat = iniFileOP.Read("CCD Param", "Osat", strCCDINIPath);
-            if (!FileOP.IsExist(strCCDINIPath, FileOPMethod.File))
-            {
-                FileOP.CopyFile(System.Windows.Forms.Application.StartupPath + "\\ccdParamFileTemplate.ini", strCCDINIPath);
-            }
-            ExposureTest();
+//             if (!FileOP.IsExist(SystemParam.strCCDINIPath, FileOPMethod.File))
+//             {
+//                 FileOP.CopyFile(System.Windows.Forms.Application.StartupPath + "\\ccdParamFileTemplate.ini", SystemParam.strCCDINIPath);
+//             }
+            if(ExposureTest())
+                MessageBox.Show("曝光步距测试完毕");
+            else
+                MessageBox.Show("曝光步距测试失败");
         }
 
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
             SystemParam.DeviceID = InputBox.ShowInputBox("请设定当前测试器件的芯片编号", SystemParam.DeviceID);
-            iniFileOP.Write("System Run", "DeviceID", SystemParam.DeviceID);
-            strCCDINIPath = SystemParam.ccdParamFilePath + SystemParam.DeviceID + ".ini";
-            string Osat = iniFileOP.Read("CCD Param", "Osat", strCCDINIPath);
-            if (!FileOP.IsExist(strCCDINIPath, FileOPMethod.File))
-            {
-                FileOP.CopyFile(System.Windows.Forms.Application.StartupPath + "\\ccdParamFileTemplate.ini", strCCDINIPath);
-            }
+//             iniFileOP.Write("System Run", "DeviceID", SystemParam.DeviceID);
+//             SystemParam.strCCDINIPath = SystemParam.ccdParamFilePath + SystemParam.DeviceID + "_" + SystemParam.lambda_Oe.ToString() + ".ini";
+//             if (!FileOP.IsExist(SystemParam.strCCDINIPath, FileOPMethod.File))
+//             {
+//                 FileOP.CopyFile(System.Windows.Forms.Application.StartupPath + "\\ccdParamFileTemplate.ini", SystemParam.strCCDINIPath);
+//             }
             CCDTest();
         }
 
@@ -149,7 +159,13 @@ namespace udpCCDTest
             ListViewHitTestInfo info = CCDParamTestListView.HitTest(e.X, e.Y);
             if (info.Item != null)
             {
-                
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+
+                    MakeReport(saveFileDialog1.FileName);
+                    textBox1.AppendText("测试报告保存位置为:\r\n");
+                    textBox1.AppendText(saveFileDialog1.FileName);
+                }
             }
         }
 
@@ -157,6 +173,31 @@ namespace udpCCDTest
         {
             FormCCS_Calibration f = new FormCCS_Calibration();
             f.ShowDialog();
+        }
+
+        private void CCD3TTestListView_SizeChanged(object sender, EventArgs e)
+        {
+            CCD3TTestListView.Columns[1].Width = CCD3TTestListView.ClientSize.Width - CCD3TTestListView.Columns[0].Width;
+        }
+
+        private void CCD3TTestListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo info = CCD3TTestListView.HitTest(e.X, e.Y);
+            if (info.Item != null)
+            {
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    MakeReport3T(saveFileDialog1.FileName);
+                    textBox1.AppendText("测试报告保存位置为:\r\n");
+                    textBox1.AppendText(saveFileDialog1.FileName);
+                }
+            }
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            tcpCCS.LightSet(SystemParam.lambda_Oe, 0);
+            e.Cancel = false;
         }
     }
 }

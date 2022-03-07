@@ -16,54 +16,45 @@ namespace udpCCDTest
         {
             InitializeComponent();
         }
-        string strCCDINIPath;
+        CCDParamTestResult ccdParamTestResult;
         private void FormParamTestChoice_Load(object sender, EventArgs e)
         {
-            strCCDINIPath = SystemParam.ccdParamFilePath + SystemParam.DeviceID + ".ini";                    
-            string str = iniFileOP.Read("CCD Param", "Osat", strCCDINIPath);
-            if (str == "xx")
+            ccdParamTestResult = new CCDParamTestResult();
+            if (double.IsNaN(ccdParamTestResult.Osat))
             {
                 lvTested.Items[0].SubItems[1].Text = "未测试";                
                 cbParam.SetItemChecked(0, true);
             }
             else
             {
-                lvTested.Items[0].SubItems[1].Text = str;
-                SystemParam.Osat = int.Parse(str);             
+                lvTested.Items[0].SubItems[1].Text = ccdParamTestResult.Osat.ToString("F6");         
             }
-
-            str = iniFileOP.Read("CCD Param", "miu_sat", strCCDINIPath);
-            if (str == "xx")
+            if (double.IsNaN(ccdParamTestResult.miu_sat))
             {
                 lvTested.Items[1].SubItems[1].Text = "未测试";
             }
             else
             {
-                lvTested.Items[1].SubItems[1].Text = str;
-                SystemParam.miu_sat = double.Parse(str);
+                lvTested.Items[1].SubItems[1].Text = ccdParamTestResult.miu_sat.ToString("F6");
             }
-
-            str = iniFileOP.Read("CCD Param", "K", strCCDINIPath);
-            if (str == "xx")
+            
+            if (double.IsNaN(ccdParamTestResult.K))
             {
                 lvTested.Items[2].SubItems[1].Text = "未测试";
                 cbParam.SetItemChecked(1, true);
             }
             else
             {
-                lvTested.Items[2].SubItems[1].Text = str;
-                CCDParamTestResult.K = double.Parse(str);
+                lvTested.Items[2].SubItems[1].Text = ccdParamTestResult.K.ToString("F6");
             }
-
-            str = iniFileOP.Read("CCD Param", "eta", strCCDINIPath);
-            if (str == "xx")
+            
+            if (double.IsNaN(ccdParamTestResult.eta))
             {
                 lvTested.Items[3].SubItems[1].Text = "未测试";
             }
             else
             {
-                lvTested.Items[3].SubItems[1].Text = str;
-                CCDParamTestResult.eta = double.Parse(str);
+                lvTested.Items[3].SubItems[1].Text = ccdParamTestResult.eta.ToString("F6");
             }
         }
 

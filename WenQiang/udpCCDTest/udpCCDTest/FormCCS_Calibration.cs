@@ -25,8 +25,11 @@ namespace udpCCDTest
                 cbLambda.Items.Add(tcpCCS.lambdaList[i].ToString() + " nm");
             }
             cbLambda.SelectedIndex = 0;
+            R = double.Parse(iniFileOP.Read("Light Param", "L2E_R"));
+            r = double.Parse(iniFileOP.Read("Light Param", "L2E_r"));
         }
-        string aFormat = "F3";
+        double R, r;
+        string aFormat = "F6";
         double step;
         int lambadIndex;
         WaitingProc ccsWaitingProc;
@@ -69,7 +72,7 @@ namespace udpCCDTest
                 {
                     chart.Series[0].Points.Clear();
                     chart.Series[1].Points.Clear();
-                    lambadIndex = cbLambda.SelectedIndex - 2;
+                    lambadIndex = i;
                     ccsWaitingProc = new WaitingProc();
                     ccsWaitingProc.MaxProgress = (int)(1 / step) + 1;
                     WaitingProcFunc wpf = new WaitingProcFunc(WaitingCCS);
@@ -77,7 +80,7 @@ namespace udpCCDTest
                     {
                         return;
                     }
-                    MessageBox.Show("波长" + tcpCCS.lambdaList[lambadIndex].ToString() + " nm校准完成");                 
+                    //MessageBox.Show("波长" + tcpCCS.lambdaList[lambadIndex].ToString() + " nm校准完成");                 
                 }
                 for (int i = 0; i < tcpCCS.lambdaList.Length; i++)
                 {
@@ -93,7 +96,7 @@ namespace udpCCDTest
             {
                 stra2 += tcpCCS.L2E_a2[i].ToString(aFormat)+",";
                 stra1 += tcpCCS.L2E_a1[i].ToString(aFormat)+",";
-                stra0 += tcpCCS.L2E_a1[i].ToString(aFormat)+",";
+                stra0 += tcpCCS.L2E_a0[i].ToString(aFormat)+",";
             }
             stra2 = stra2.Substring(0, stra2.Length - 1);
             stra1 = stra1.Substring(0, stra1.Length - 1);
@@ -108,13 +111,14 @@ namespace udpCCDTest
         List<double> a0;
         void WaitingCCS(object LockWatingThread)
         {
-            List<double> OeList = new List<double>();
+            List<double> ADList = new List<double>();
             List<double> EList = new List<double>();
-            for (double Oe = 0; Oe < 1; Oe += step)
+            for (double Oe_per = 0.02; Oe_per < 1; Oe_per += step)
             {
-                OeList.Add(Oe);
-                tcpCCS.LightSet(tcpCCS.lambdaList[lambadIndex], Oe);
-                WFGlobal.WaitMS(100);
+                //EList.Add(100*Math.PI/683.0*Oe_per*tcpCCS.Max_nit[lambadIndex]*R*R/(R*R+r*r));
+                EList.Add(Oe_per * tcpCCS.Max_nit[lambadIndex]);
+                tcpCCS.LightSet(tcpCCS.lambdaList[lambadIndex], tcpCCS.Per2LX(tcpCCS.lambdaList[lambadIndex],Oe_per));
+                WFGlobal.WaitMS(500);
                 DeviceState ds = UDPProc.UDPCommand_04();
                 if (ds == null)
                 {
@@ -122,27 +126,33 @@ namespace udpCCDTest
                     ccsWaitingProc.ExitWatting();
                     return;
                 }
-                EList.Add(ds.Illuminance);
+                ADList.Add(ds.IlluminanceAD);
                 this.Invoke((EventHandler)(delegate
                 {
-                    chart.Series[0].Points.AddXY(Oe, ds.Illuminance);
+                    chart.Series[0].Points.AddXY(ADList.Last(),EList.Last());
                 }));
+                ccsWaitingProc.SetProcessBarPerformStep();
                 if (ccsWaitingProc.HasBeenCancelled())
                 {
                     return;
                 }
             }
-            double[] fitret = FittingMultiLine.MultiLine(OeList.ToArray(), EList.ToArray(), OeList.Count, 2);
+            tcpCCS.LightSet(tcpCCS.lambdaList[lambadIndex], 0);
+            double[] fitret = FittingMultiLine.MultiLine(EList.ToArray(), ADList.ToArray(), ADList.Count, 2);
             a2.Add(double.Parse(fitret[2].ToString(aFormat)));
             a1.Add(double.Parse(fitret[1].ToString(aFormat)));
             a0.Add(double.Parse(fitret[0].ToString(aFormat)));
             this.Invoke((EventHandler)(delegate
             {
-                for (double Oe = 0; Oe < 1; Oe += step)
+                for (int i = 0; i < ADList.Count; i++)
                 {
-                    chart.Series[1].Points.AddXY(Oe, a2.Last() * Oe * Oe + a1.Last() * Oe + a0.Last());
+                    chart.Series[1].Points.AddXY(ADList[i], (-fitret[1] + Math.Sqrt(fitret[1] * fitret[1] - 4 * fitret[2] * (fitret[0] - ADList[i]))) / (2 * fitret[2]));
                 }
-                chart.SaveImage(SystemParam.TempPicPath + "ccs_"+tcpCCS.lambdaList[lambadIndex].ToString()+".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+                chart.ChartAreas[0].AxisX.Title = "NAD\r\n"
+                                        +a2.Last().ToString(aFormat)+"E*E+"
+                                        + a1.Last().ToString(aFormat) + "E+"
+                                        + a0.Last().ToString(aFormat);
+                chart.SaveImage(SystemParam.TempPicPath + "ccs_" + tcpCCS.lambdaList[lambadIndex].ToString() + ".jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
             }));
         }
     }

@@ -18,8 +18,8 @@ namespace udpCCDTest
             exposureVerifyChart.Dock = DockStyle.Fill;
             exposureVerifyListView.Visible = true;
             exposureVerifyListView.Dock = DockStyle.Fill;
-            exposureVerifyListView.Items[1].SubItems[1].Text = SystemParam.NTmin.ToString();
-            exposureVerifyListView.Items[2].SubItems[1].Text = SystemParam.Oe.ToString();
+            exposureVerifyListView.Items[1].SubItems[1].Text = SystemParam.NTmin2.ToString() + "(" + SystemParam.GetTime2(0, ccdParamTestResult.NTexp2).ToString("F3") + "ms)"; ; ;
+            exposureVerifyListView.Items[2].SubItems[1].Text = ccdParamTestResult.OeLight.ToString("F2") + "(" + tcpCCS.LX2Per(ccdParamTestResult.OeLight).ToString("F6") + "%)";
             exposureVerifyListView.Items[3].SubItems[1].Text = SystemParam.n.ToString();
             exposureVerifyListView.Items[4].SubItems[1].Text = "0";
 
@@ -46,19 +46,19 @@ namespace udpCCDTest
                     exposureVerifyChart.Series["miu"].Points.Clear();
                     exposureVerifyChart.Series["delta"].Points.Clear();
                     exposureVerifyChart.Series["miuCC"].Points.Clear();
+                    tcpCCS.LightSet(SystemParam.lambda_Oe, ccdParamTestResult.OeLight);
                     for (int step = 0; step < SystemParam.n; step++)
                     {
                         WFGlobal.WaitMS(1);
-                        int ex = SystemParam.NTmin + step * SystemParam.NTexp;
-                        tcpCCS.LightSet(SystemParam.lambda_Oe, SystemParam.Oe);
+                        uint ex = SystemParam.NTmin2 + (uint)step * ccdParamTestResult.NTexp2;                        
                         exposureVerifyListView.Items[4].SubItems[1].Text = step.ToString();
                         if (!UDPProc.CollectImage(this, ex, 2))
                         {
                             exposureVerifyWaitingProc.ExitWatting();
                             return;
                         }
-                        UDPProc.ccdImageList[0].save(SystemParam.TempPicPath + "Ev" + step.ToString() + "_0.bin");
-                        UDPProc.ccdImageList[1].save(SystemParam.TempPicPath + "Ev" + step.ToString() + "_1.bin");
+                        //UDPProc.ccdImageList[0].save(SystemParam.TempPicPath + "Ev" + step.ToString() + "_0.bin");
+                        //UDPProc.ccdImageList[1].save(SystemParam.TempPicPath + "Ev" + step.ToString() + "_1.bin");
                         ccdImage.Calc_miu_delta(UDPProc.ccdImageList[0], UDPProc.ccdImageList[1], out miu, out delta, out miuCC);
                         exposureVerifyChart.Series["miu"].Points.AddXY(step, miu);
                         exposureVerifyChart.Series["delta"].Points.AddXY(step, delta);
